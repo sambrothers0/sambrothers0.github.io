@@ -15,6 +15,7 @@ body {
   top: 20px;
   left: 1620px;
   transition: transform 0.1s;
+  z-index: 3;
 }
 #appearance-button:active {
   transform: scale(0.92);
@@ -28,10 +29,10 @@ body {
 .cover-container {
   display: flex;
   padding-top: 375px;
-  padding-left: 200px;
+  padding-left: 150px;
   padding-right: 200px;
   padding-bottom: 200px;
-  border: 3px solid #ccc; 
+  /*border: 3px solid #ccc; */
   justify-content: center;
 }
 .cover-panel{
@@ -42,11 +43,22 @@ body {
   margin: 10px;
   justify-content: center;
   align-items: center;
+  z-index:2
 }
-.cover-canvas{
+
+#cover-canvas{
   display: flex;
-  border: 3px solid #ccc;
-  
+  /*border: 3px solid #ccc; */
+  position: relative;
+  bottom: 650px;
+  z-index: 1;
+}
+
+#background-shapes{
+  position: relative;
+  bottom: 1190px;
+  left: 230px;
+  z-index:1;
 }
 
 .text-container{

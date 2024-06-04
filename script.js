@@ -10,7 +10,23 @@ let darkButtonImg = "image_assets/dark_button.png";
 
 darkButton.onclick = toggleAppearance;
 
-drawCircle(ctx, 750, 750, 100, lightColor);
+startBlinking();
+
+function startBlinking() {
+    window.setInterval(blinking,1500);
+ }
+
+function blinking() {
+    if (appearanceMode == "dark") {
+        drawCircle(ctx, 1480, 465, 27, lightColor);
+    }
+    else {
+        drawCircle(ctx, 1480, 465, 27, darkColor);
+    }
+    window.setTimeout(function(){
+       ctx.clearRect(1450, 400, 1500, 500);
+  },750)
+}
 
 function toggleAppearance() {
     if (appearanceMode == "dark") {
@@ -26,7 +42,6 @@ function darkMode() {
     darkButton.style.backgroundColor = lightColor;
     var buttonImage = document.getElementById("button-image");
     buttonImage.src = darkButtonImg;
-    
     appearanceMode = "dark";
 }
 
