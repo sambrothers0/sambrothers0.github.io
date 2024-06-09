@@ -5,6 +5,27 @@ body,html {
     transition: background-color 0.5s;
 }
 
+.niramit-regular {
+  font-family: "Niramit", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+#website-body{
+  opacity: 0;
+  animation: fadeInAnimation ease 2s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeInAnimation {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
 #cover-banner{
   background-color: #bebebe;
   position: fixed;
@@ -56,35 +77,55 @@ body,html {
   z-index: 1;
 }
 
-#text-container{
-  margin-top: 25px;
+.text-container{
+  font-family: "Niramit", sans-serif;
   color: #bebebe;
 }
+
 #title-container{
+  height: 400px;
+  color: #bebebe;
+  /*border: 3px solid #ccc;*/
   padding-left: 400px;
-  padding-bottom: 200px;
-  padding-top: 50px;
-  font-family: Arial, sans-serif;
   font-size: 100px;
 }
-#im-sam-title-text{
+#second-line{
   padding-left: 100px;
+}
+
+#horizontal-line-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px; /* Adjust height as needed */
+  overflow: hidden;
+}
+#horizontal-line{
+  justify-content: center;
+  width: 0%;
+  height: 5px;
+  transition: 1s;
+  background-color: #34366d;
+}
+#horizontal-line.animated{
+  width: 85%;
 }
 
 #subtitle-container{
-  padding-left: 100px;
+  padding-left: 250px;
+  font-size: 20px;
 }
 
 
-.main-bottom-container {
+.lower-panel-container {
   display: flex;
   padding-left: 200px;
   padding-right: 200px;
 }
-.panel {
+.lower-panel {
   display: flex;
   flex: 1;
-  border: 3px solid #ccc;
+  border: 3px solid #bebebe;
   height: 750px;
   padding: 20px;
   margin: 30px;
@@ -92,9 +133,8 @@ body,html {
   align-items: center;
   box-sizing: border-box;
 }
-
-/*.rectangle1{
-  height: 500px;
-  width: 7px;
-  background-color: gray;
-}*/
+.panel-text{
+  font-family: "Niramit", sans-serif;
+  color: #bebebe;
+  font-size: 50px;
+}

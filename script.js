@@ -47,14 +47,17 @@ function darkMode() {
     coverBanner.style.backgroundColor = lightColor;
     appearanceButton.style.backgroundColor = lightColor;
     appearanceButton.style.border = "3px solid #1b1b1b";
+
     var buttonImage = document.getElementById("button-image");
     buttonImage.src = darkButtonImg;
 
     var coverImage = document.getElementById("cover-image");
     coverImage.src = darkCoverImage;
 
-    var textContainer = document.getElementById("text-container")
+    var textContainer = document.querySelector(".text-container")
     textContainer.style.color = lightColor;
+
+    var lowerPanel = document.querySelector(".lower-panel")
 
     appearanceMode = "dark";
 }
@@ -72,7 +75,7 @@ function lightMode() {
     var coverImage = document.getElementById("cover-image");
     coverImage.src = lightCoverImage;
 
-    var textContainer = document.getElementById("text-container")
+    var textContainer = document.querySelector(".text-container")
     textContainer.style.color = darkColor;
 
     appearanceMode = "light";
@@ -90,3 +93,25 @@ function drawCircle(ctx, x, y, radius, fillColor, strokeColor) {
         ctx.stroke();
     }
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    const line = document.getElementById('horizontal-line');
+    const offset = 150; // Trigger the animation a bit before the element is fully in view
+
+    function isElementInViewport(el) {
+        const rect = el.getBoundingClientRect();
+        return (
+            rect.top <= (window.innerHeight || document.documentElement.clientHeight) - offset
+        );
+    }
+
+    function onScroll() {
+        if (isElementInViewport(line)) {
+            line.classList.add('animated');
+            window.removeEventListener('scroll', onScroll);
+        }
+    }
+
+    window.addEventListener('scroll', onScroll);
+    onScroll(); // Check if the element is in view on page load
+});
