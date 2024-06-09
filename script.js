@@ -54,10 +54,10 @@ function darkMode() {
     var coverImage = document.getElementById("cover-image");
     coverImage.src = darkCoverImage;
 
-    var textContainer = document.querySelector(".text-container")
-    textContainer.style.color = lightColor;
-
-    var lowerPanel = document.querySelector(".lower-panel")
+    var textContainers = document.querySelectorAll(".text-container");
+    for (let i = 0; i < textContainers.length; i++) {
+        textContainers[i].style.color = lightColor;
+    }
 
     appearanceMode = "dark";
 }
@@ -75,8 +75,10 @@ function lightMode() {
     var coverImage = document.getElementById("cover-image");
     coverImage.src = lightCoverImage;
 
-    var textContainer = document.querySelector(".text-container")
-    textContainer.style.color = darkColor;
+    var textContainers = document.querySelectorAll(".text-container");
+    for (let i = 0; i < textContainers.length; i++) {
+        textContainers[i].style.color = darkColor;
+    }
 
     appearanceMode = "light";
 }
