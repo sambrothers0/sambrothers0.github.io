@@ -27,27 +27,44 @@ body,html {
 }
 
 #cover-banner{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: #bebebe;
   position: fixed;
   width: 100%;
-  height: 70px;
-  padding-left: 40px;
-  padding-top: 20px;
+  height: 100px;
   z-index: 2;
+  
 }
 
-#button-container{
-  float: right;
-  padding-right: 60px;
+#home-button-container{
+  margin-left: 20px;
+}
+#home-button{
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.1s;
+  z-index: 2;
+  background-color: #bebebe;
+}
+#home-button-image{
+  width: 100%;
+  max-width: 80px;
+  max-height: 80px;
 }
 
+#appearance-button-container{
+  margin-right: 20px;
+}
 #appearance-button{
   width: 50px;
   height: 50px;
   border: 3px solid #1b1b1b;
   padding: 10px 10px;
   border-radius: 50%;
-  font-size: 16px;
   cursor: pointer;
   transition: transform 0.1s;
   z-index: 2;
@@ -56,7 +73,7 @@ body,html {
 #appearance-button:active {
   transform: scale(0.92);
 }
-#appearance-button img#button-image {
+#appearance-button-image {
   width: 100%;
   max-width: 75px;
   max-height: 75px;
@@ -86,14 +103,14 @@ body,html {
 }
 
 #title-container{
-  height: 400px;
-  color: #bebebe;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  height: 150px;
+  color: #ccc;
   /*border: 3px solid #ccc;*/
-  padding-left: 400px;
   font-size: 100px;
-}
-#second-line{
-  padding-left: 100px;
 }
 
 #horizontal-line-container{
@@ -108,7 +125,7 @@ body,html {
   width: 0%;
   height: 5px;
   transition: 1s;
-  background-color: #34366d;
+  background-color: #3a4198;
 }
 #horizontal-line.animated{
   width: 85%;
@@ -128,7 +145,7 @@ body,html {
 .lower-panel {
   display: flex;
   flex: 1;
-  border: 3px solid #bebebe;
+  border: 3px solid #b48a00;
   height: 750px;
   padding: 20px;
   margin: 30px;
