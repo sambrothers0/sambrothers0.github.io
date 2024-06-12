@@ -49,11 +49,10 @@ body,html {
   transition: transform 0.1s;
   z-index: 2;
   background-color: #bebebe;
+  border: 3px solid #1b1b1b;
 }
 #home-button-image{
   width: 100%;
-  max-width: 80px;
-  max-height: 80px;
 }
 
 #appearance-button-container{
@@ -75,8 +74,6 @@ body,html {
 }
 #appearance-button-image {
   width: 100%;
-  max-width: 75px;
-  max-height: 75px;
 }
 
 .cover-container {
@@ -132,7 +129,9 @@ body,html {
 }
 
 #subtitle-container{
-  padding-left: 250px;
+
+  width: 80%;
+  padding-left: 200px;  
   font-size: 20px;
 }
 
@@ -152,4 +151,10 @@ body,html {
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
+}
+
+.footer{
+  display:flex;
+  justify-content: center;
+  align-items: center;
 }

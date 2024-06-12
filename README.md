@@ -2,4 +2,4 @@ This repository contains the code necessary to run my personal webpage, hosted b
 The website contains all kinds of information about me including images, projects, and contact information. Coded in HTML, CSS, and JavaScript using Microsoft VSCode.
 
 Author: Sam Brothers
-Date: June 9 2023
+Date: June 9 2024

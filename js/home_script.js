@@ -1,4 +1,5 @@
 const appearanceButton = document.getElementById("appearance-button");
+const homeButton = document.getElementById("home-button");
 const coverBanner = document.getElementById("cover-banner");
 const canvas = document.getElementById("cover-canvas");
 const ctx = canvas.getContext("2d");
@@ -13,6 +14,7 @@ let darkCoverImage = "image_assets/dark_cover_image.png";
 
 
 appearanceButton.onclick = toggleAppearance;
+homeButton.onclick = navigateHome;
 
 startBlinking();
 
@@ -30,6 +32,22 @@ function blinking() {
     window.setTimeout(function(){
        ctx.clearRect(1150, 250, 1250, 300);
   },750)
+}
+
+function navigateHome() {
+    window.location.href="index.html"
+}
+
+function navigateAbout() {
+    window.location.href="about.html"
+}
+
+function navigateCreations() {
+    window.location.href="creations.html"
+}
+
+function navigateContact() {
+    window.location.href="contact.html"
 }
 
 function toggleAppearance() {
@@ -59,6 +77,9 @@ function darkMode() {
         textContainers[i].style.color = lightColor;
     }
 
+    homeButton.style.backgroundColor = lightColor;
+    homeButton.style.border = "3px solid #1b1b1b";
+
     appearanceMode = "dark";
 }
 
@@ -79,6 +100,9 @@ function lightMode() {
     for (let i = 0; i < textContainers.length; i++) {
         textContainers[i].style.color = darkColor;
     }
+
+    homeButton.style.backgroundColor = darkColor;
+    homeButton.style.border = "3px solid #bebebe";
 
     appearanceMode = "light";
 }
