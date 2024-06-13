@@ -129,7 +129,6 @@ body,html {
 }
 
 #subtitle-container{
-
   width: 80%;
   padding-left: 200px;  
   font-size: 20px;
@@ -151,10 +150,23 @@ body,html {
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
+  background-color: #1b1b1b;
+  cursor: pointer;
+  border-radius: 75px;
 }
 
-.footer{
+#about-button{
+  
+}
+#creations-button{
+  
+}
+#contact-panel{
+
+}
+
+/*.footer{
   display:flex;
   justify-content: center;
   align-items: center;
-}
+}*/

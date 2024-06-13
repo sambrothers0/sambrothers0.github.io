@@ -1,5 +1,8 @@
 const appearanceButton = document.getElementById("appearance-button");
 const homeButton = document.getElementById("home-button");
+const aboutButton = document.getElementById("about-button");
+const creationsButton = document.getElementById("creations-button");
+const contactButton = document.getElementById("contact-button");
 const coverBanner = document.getElementById("cover-banner");
 const canvas = document.getElementById("cover-canvas");
 const ctx = canvas.getContext("2d");
@@ -15,6 +18,10 @@ let darkCoverImage = "image_assets/dark_cover_image.png";
 
 appearanceButton.onclick = toggleAppearance;
 homeButton.onclick = navigateHome;
+aboutButton.onclick = navigateAbout;
+creationsButton.onclick = navigateCreations;
+contactButton.onclick = navigateContact;
+
 
 startBlinking();
 
