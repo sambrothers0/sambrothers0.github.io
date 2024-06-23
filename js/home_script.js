@@ -1,3 +1,8 @@
+module.exports = {
+    getAppearance,
+    appearanceMode
+}
+
 const appearanceButton = document.getElementById("appearance-button");
 const homeButton = document.getElementById("home-button");
 const aboutButton = document.getElementById("about-button");
@@ -24,6 +29,19 @@ contactButton.onclick = navigateContact;
 
 
 startBlinking();
+
+function getAppearance() {
+    return appearanceMode;
+}
+
+function toggleAppearance() {
+    if (appearanceMode == "dark") {
+        lightMode();
+    }
+    else {
+        darkMode();
+    }
+}
 
 function startBlinking() {
     window.setInterval(blinking,1500);
@@ -55,15 +73,6 @@ function navigateCreations() {
 
 function navigateContact() {
     window.location.href="contact.html"
-}
-
-function toggleAppearance() {
-    if (appearanceMode == "dark") {
-        lightMode();
-    }
-    else {
-        darkMode();
-    }
 }
 
 function darkMode() {
@@ -107,6 +116,11 @@ function lightMode() {
     for (let i = 0; i < textContainers.length; i++) {
         textContainers[i].style.color = darkColor;
     }
+
+    var lowerPanelShadows = document.querySelectorAll(".lower-panel:hover");
+    for (let i = 0; i < lowerPanelShadows.length; i++) {
+        lowerPanelShadows[i].style.boxShadow = "0px 0px 20px 8px rgba(0, 0, 0, 1)";
+    } // this shit broke
 
     homeButton.style.backgroundColor = darkColor;
     homeButton.style.border = "3px solid #bebebe";
@@ -170,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Function to force a check of the mouse position
-    function forceCheckMousePosition() {
+    function checkOverAppearance() {
         if (isMouseOverElement(button)) {
             if (appearanceMode == "dark") {
                 image.src = 'image_assets/dark_button_hover.png'; // Change image source
@@ -188,5 +202,5 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
     
-    setInterval(forceCheckMousePosition, 1);
+    setInterval(checkOverAppearance, 1);
 });

@@ -150,13 +150,18 @@ body,html {
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  background-color: #1b1b1b;
+  background-color: transparent;
   cursor: pointer;
   border-radius: 75px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.lower-panel:hover {
+  transform: translateY(-5px); 
+  box-shadow: 0px 0px 20px 8px rgba(0, 0, 0, 0.1);
 }
 
 #about-button{
-  
+
 }
 #creations-button{
   

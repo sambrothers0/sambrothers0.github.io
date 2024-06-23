@@ -1,0 +1,77 @@
+body,html {
+    margin: 0;
+    padding: 0;
+    background-color: #1b1b1b;
+    transition: background-color 0.5s;
+}
+
+.niramit-regular {
+  font-family: "Niramit", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+#website-body{
+  opacity: 0;
+  animation: fadeInAnimation ease 2s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeInAnimation {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
+#cover-banner{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #bebebe;
+  position: fixed;
+  width: 100%;
+  height: 100px;
+  z-index: 2;
+  
+}
+
+#home-button-container{
+  margin-left: 20px;
+}
+#home-button{
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.1s;
+  z-index: 2;
+  background-color: #bebebe;
+  border: 3px solid #1b1b1b;
+}
+#home-button-image{
+  width: 100%;
+}
+
+#appearance-button-container{
+  margin-right: 20px;
+}
+#appearance-button{
+  width: 50px;
+  height: 50px;
+  border: 3px solid #1b1b1b;
+  padding: 10px 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.1s;
+  z-index: 2;
+  background-color: #bebebe;
+}
+#appearance-button:active {
+  transform: scale(0.92);
+}
+#appearance-button-image {
+  width: 100%;
+}
