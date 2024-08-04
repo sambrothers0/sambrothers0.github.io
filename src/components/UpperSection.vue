@@ -24,7 +24,7 @@ export default defineComponent({
 
       upperSection.style.backgroundColor = 'var(--dark-color)'
       upperSection.style.color = 'var(--light-color)'
-      image.src = '/img/dark_cover_image.png'
+      image.src = 'img/dark_cover_image.png'
     },
     lightMode () {
       var upperSection = document.getElementById('upper-section')
@@ -32,7 +32,7 @@ export default defineComponent({
 
       upperSection.style.backgroundColor = 'var(--light-color)'
       upperSection.style.color = 'var(--dark-color)'
-      image.src = '/img/light_cover_image.png'
+      image.src = 'img/light_cover_image.png'
     }
   },
   computed: {
