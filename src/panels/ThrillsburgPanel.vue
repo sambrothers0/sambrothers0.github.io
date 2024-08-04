@@ -38,7 +38,7 @@ export default defineComponent({
       'which dynamically pulls information from our database of recent events using a custom API. Working with our web designer, ' +
       'I delivered a solution which positions Thrillsburg as a modern, presentable, and user-friendly web app. ',
       imageOneSrc: 'img/thrillsburg_panel/logo.png',
-      imageTwoSrc: 'img/thrillsburg_panel/events_page.png',
+      imageTwoSrc: 'img/thrillsburg_panel/events_page.jpg',
       url: '',
       expanded: false
     }
