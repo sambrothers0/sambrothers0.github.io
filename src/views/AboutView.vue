@@ -144,8 +144,8 @@ export default {
 
 <style lang="scss" scoped>
 .about{
-  height: 185%;
-  width: 100%;
+  height: 1670px;
+  width: 1700px;
   position: absolute;
   display: flex;
   flex-direction: column;
