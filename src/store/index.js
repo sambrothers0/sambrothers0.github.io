@@ -2,13 +2,19 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-  },
-  getters: {
+    darkMode: true
   },
   mutations: {
+    toggleDarkMode (state) {
+      state.darkMode = !state.darkMode
+    }
   },
   actions: {
+    toggleDarkMode ({ commit }) {
+      commit('toggleDarkMode')
+    }
   },
-  modules: {
+  getters: {
+    isDarkModeOn: state => state.darkMode
   }
 })
