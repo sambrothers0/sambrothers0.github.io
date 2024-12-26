@@ -1,13 +1,13 @@
 <template>
-    <div class="wordle-panel" @click="handleClick">
-        <div class="left">
-          <img class='wordle-panel-image' :src=imageOneSrc
+    <div class="wordle" @click="handleClick">
+        <div class="wordle-left">
+          <img class='wordle-image' :src=imageOneSrc
           style="height: 27vh;
           border-radius: 15px;
           margin-top: 3vh;
           transition: all 0.2s ease">
         </div>
-        <div class="right">
+        <div class="wordle-right">
           <h1 style="font-size: 40px; margin-top: 3vh"> {{ title }} </h1>
           <div class="line-two-wrapper">
             <img class="external-link" @click="handleNavigate"
@@ -16,7 +16,7 @@
             margin-right: 1vw">
             <h3> {{ date }} </h3>
           </div>
-          <p class='wordle-panel-subtext' style="font-size: 3vh; line-height: 4.5vh; font-family: 'Outfit', sans-serif"> {{ shortText }} </p>
+          <p class='wordle-subtext' style="font-size: 3vh; line-height: 4.5vh; font-family: 'Outfit', sans-serif"> {{ shortText }} </p>
         </div>
     </div>
 </template>
@@ -25,12 +25,12 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'WordlePanel',
+  name: 'Wordle',
   data () {
     return {
       title: 'Wordle',
       date: 'Mar 2024',
-      shortText: 'I performed bug fixes and unit testing for an existing Wordle code base in Java Swing.',
+      shortText: 'I performed bug fixes and unit testing for an existing Wordle code base in Java Swing ...',
       longText: 'I performed bug fixes and unit testing for an existing Wordle code base in Java Swing. ' +
       "Using Gilbert LeBlanc's GitHub repository, I tested the extisting code using the JUnit Test module for Java, " +
       'to understand how testing works, and why test-driven design is important. ' +
@@ -50,19 +50,42 @@ export default defineComponent({
       this.handleClick()
     },
     expand () {
-      document.querySelector('.wordle-panel-subtext').textContent = this.longText
+      document.querySelector('.wordle-subtext').textContent = this.longText
       this.expanded = true
     },
     condense () {
-      document.querySelector('.wordle-panel-subtext').textContent = this.shortText
+      document.querySelector('.wordle-subtext').textContent = this.shortText
       this.expanded = false
+    },
+    mobileOn () {
+      this.expand()
+
+      document.querySelector('.wordle-left').style.width  = '0%'
+      document.querySelector('.wordle-right').style.width  = '85%'
+      document.querySelector('.wordle-image').style.display  = 'none'
+    },
+    mobileOff () {
+      this.condense()
+      document.querySelector('.wordle-left').style.width  = '40%'
+      document.querySelector('.wordle-right').style.width  = '60%'
+      document.querySelector('.wordle-image').style.display = 'flex'
     }
-  }
+  },
+  computed: {
+    isMobile () {
+      return this.$store.getters.isMobileOn
+    }
+  },
+  watch: {
+    isMobile (newVal) {
+      newVal ? this.mobileOn() : this.mobileOff()
+    }
+  },
 })
 </script>
 
 <style scoped lang="scss">
-.wordle-panel{
+.wordle{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -71,8 +94,9 @@ export default defineComponent({
     margin-bottom: 50px;
     background-color: #ebb80e33;
 }
-.wordle-panel:hover{
+.wordle:hover{
     transform: scale(1.03);
+    box-shadow: 0px 0px 20px 8px rgba(0, 0, 0, 0.1);
 }
 
 .line-two-wrapper{
@@ -85,16 +109,17 @@ export default defineComponent({
   margin-bottom: -2vh
 }
 
-.right{
+.wordle-right{
     height: 100%;
     width: 60%;
     flex-direction: column;
     text-align: right;
-    margin-right: 30px
+    margin-right: 30px;
 }
 
-.left{
+.wordle-left{
     height: 100%;
-    width: 45%;
+    width: 40%;
+    margin-left: 20px;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <CoverBanner/>
+  <UpperToolbar/>
   <SideBar/>
   <div class="about" id="master">
 
@@ -20,7 +20,7 @@
       <img class="img" src="img/about_page_upper_outline.png">
 
     </div>
-    <div id="middle" ref="middle" class="text-blob"  :class="{ 'scrolled-over': isMiddleScrolledOver }">
+    <div id="middle" ref="middle" class="text-blob"  :class="{ 'scrolled-over': isMiddleVisible }">
       <h1 class="title" id="middle-title"> Something I <br> don't know? Not for long </h1>
       <p class="text" id="middle-text1"> Computer science is one of the fastest changing industries, which is <br>
         why it requires a neuroplastic brain to excel. I'm constantly learning and <br> improving not just as a student, but as an engineer,
@@ -31,7 +31,7 @@
         create something that works for you. </p>
       <img class="img" src="img/about_page_middle_outline.png">
     </div>
-    <div id="lower" ref="lower" class="text-blob" :class="{ 'scrolled-over': isLowerScrolledOver }">
+    <div id="lower" ref="lower" class="text-blob" :class="{ 'scrolled-over': isLowerVisible }">
       <h1 class="title" id="lower-title"> You could <br> not pay me <br> to do this... </h1>
       <p class="text" id="lower-text1"> No, really, I love what I do so <br> much that I would do it for free if <br> I could (I can't). </p>
       <p class="text" id="lower-text2"> I strive to see tasks through the eyes of my collaborators and their users, <br>
@@ -43,28 +43,24 @@
 </template>
 
 <script>
-import CoverBanner from '@/components/CoverBanner.vue'
+import UpperToolbar from '@/components/UpperToolbar.vue'
 import SideBar from '@/components/SideBar.vue'
 
 export default {
   name: 'AboutView',
   components: {
-    CoverBanner,
+    UpperToolbar,
     SideBar
   },
   data () {
     return {
-      isMiddleScrolledOver: false,
-      isLowerScrolledOver: false
+      isMiddleVisible: false,
+      isLowerVisible: false
     }
   },
   methods: {
     checkAppearance () {
-      if (this.isDarkMode) {
-        this.darkMode()
-      } else {
-        this.lightMode()
-      }
+      this.isDarkMode ? this.darkMode() : this.lightMode()
     },
     lightMode () {
       const master = document.getElementById('master')
@@ -99,18 +95,6 @@ export default {
       upper.style.color = 'var(--light-color)'
       middle.style.color = 'var(--light-color)'
       lower.style.color = 'var(--light-color)'
-    },
-    handleScroll () {
-      const middle = this.$refs.middle
-      const lower = this.$refs.lower
-      const middleRect = middle.getBoundingClientRect()
-      const lowerRect = lower.getBoundingClientRect()
-      if (middleRect.top < (window.innerHeight - 500)) {
-        this.isMiddleScrolledOver = true
-      }
-      if (lowerRect.top < (window.innerHeight - 500)) {
-        this.isLowerScrolledOver = true
-      }
     }
   },
   computed: {
@@ -120,18 +104,18 @@ export default {
   },
   watch: {
     isDarkMode (newVal) {
-      newVal ? this.darkMode() : this.lightMode()
+      this.checkAppearance()
     }
   },
   mounted () {
     this.checkAppearance()
     window.scrollTo(0, 0)
-    window.addEventListener('scroll', this.handleScroll)
-    window.addEventListener('resize', this.handleScroll) // To handle resize events as well
-  },
-  beforeUnmount () {
-    window.removeEventListener('scroll', this.handleScroll)
-    window.removeEventListener('resize', this.handleScroll)
+    setTimeout(() => {
+      this.isMiddleVisible = true
+    }, 3000)
+    setTimeout(() => {
+      this.isLowerVisible = true
+    }, 6000)
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {

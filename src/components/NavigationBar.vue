@@ -37,8 +37,8 @@ export default defineComponent({
       document.getElementById('bar-creations-button').style.color = 'var(--dark-color)'
       document.getElementById('bar-contact-button').style.color = 'var(--dark-color)'
     },
-    updateNavBar () {
-      var highlighted = this.currentButton // set all to transparent, then set current button
+    updateNavBar () { // set all to transparent, then set current button
+      var highlighted = this.currentButton 
       document.getElementById('bar-home-button').style.border = 'transparent'
       document.getElementById('bar-about-button').style.border = 'transparent'
       document.getElementById('bar-creations-button').style.border = 'transparent'
@@ -70,8 +70,6 @@ export default defineComponent({
       } else if (this.route.path === '/creations') {
         return document.getElementById('bar-creations-button')
       } else if (this.route.path === '/contact') {
-        return document.getElementById('bar-contact-button')
-      } else if (this.route.path === '/resume') {
         return document.getElementById('bar-contact-button')
       } else {
         return document.getElementById('bar-home-button')

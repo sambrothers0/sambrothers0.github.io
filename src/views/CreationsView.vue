@@ -1,5 +1,5 @@
 <template>
-  <CoverBanner/>
+  <UpperToolbar/>
   <SideBar/>
   <div class="creations" id="master">
     <h1 class="title"> Creations </h1>
@@ -7,10 +7,10 @@
       <img class="frame" src="img/gold_frame.png">
     </div>
     <div class="panels-wrapper">
-      <ThrillsburgPanel/>
+      <Thrillsburg/>
       <PersonalWebsite/>
       <ConnectN/>
-      <WordlePanel/>
+      <Wordle/>
       <BST/>
       <DSQ/>
     </div>
@@ -18,40 +18,35 @@
 </template>
 
 <script>
-import CoverBanner from '@/components/CoverBanner.vue'
+import UpperToolbar from '@/components/UpperToolbar.vue'
 import SideBar from '@/components/SideBar.vue'
-import ThrillsburgPanel from '@/panels/ThrillsburgPanel.vue'
+import Thrillsburg from '@/panels/Thrillsburg.vue'
 import PersonalWebsite from '@/panels/PersonalWebsite.vue'
 import ConnectN from '@/panels/ConnectN.vue'
-import WordlePanel from '@/panels/WordlePanel.vue'
+import Wordle from '@/panels/Wordle.vue'
 import BST from '@/panels/BST.vue'
 import DSQ from '@/panels/DSQ.vue'
 
 export default {
   name: 'CreationsView',
   components: {
-    CoverBanner,
+    UpperToolbar,
     SideBar,
-    ThrillsburgPanel,
+    Thrillsburg,
     PersonalWebsite,
     ConnectN,
-    WordlePanel,
+    Wordle,
     BST,
     DSQ
   },
   methods: {
     checkAppearance () {
-      if (this.isDarkMode) {
-        this.darkMode()
-      } else {
-        this.lightMode()
-      }
+      this.isDarkMode ? this.darkMode() : this.lightMode()
     },
     lightMode () {
       document.getElementById('master').style.backgroundColor = 'var(--light-color)'
       document.getElementById('master').style.color = 'var(--dark-color)'
       const links = document.querySelectorAll('.external-link')
-      console.log(links)
       for (let i = 0; i < links.length; i++) {
         links[i].src = 'img/external_link_icon_dark.png'
       }
@@ -72,7 +67,7 @@ export default {
   },
   watch: {
     isDarkMode (newVal) {
-      newVal ? this.darkMode() : this.lightMode()
+      this.checkAppearance()
     }
   },
   mounted () {
