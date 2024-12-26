@@ -1,6 +1,6 @@
 <template>
     <div class="connectn" @click="handleClick">
-        <div class="left">
+        <div class="connectn-left">
             <h1 style="font-size: 40px; margin-top: 3vh"> {{ title }} </h1>
             <div class="line-two-wrapper">
                 <img class="external-link" @click="handleNavigate"
@@ -11,11 +11,12 @@
             </div>
             <p class='connectn-subtext' style="font-size: 3vh; line-height: 4.5vh; font-family: 'Outfit', sans-serif"> {{ shortText }} </p>
         </div>
-        <div class="right">
+        <div class="connectn-right">
             <img class='connectn-image' :src=imageOneSrc
             style="height: 27vh;
             border-radius: 15px;
-            margin-top: 2vh;
+            margin-top: 1vh;
+            margin-left: 1vw;
             transition: all 0.2s ease">
         </div>
     </div>
@@ -30,7 +31,7 @@ export default defineComponent({
     return {
       title: 'Connect N GUI',
       date: 'Apr 2024',
-      shortText: 'Connect N is a GUI game I made using the Java Swing API.',
+      shortText: 'Connect N is a GUI game I made using the Java Swing API ...',
       longText: 'Connect N is a GUI game I made using the Java Swing API. ' +
       'It functions similarly to Connect 4, but with variable board sizes, and was comprehensively planned using UML diagrams before starting. ' +
       'During development, I followed the Model-View-Controller artitecture in order to build a complete, functional, and bug-free desktop app ' +
@@ -56,8 +57,38 @@ export default defineComponent({
     condense () {
       document.querySelector('.connectn-subtext').textContent = this.shortText
       this.expanded = false
+    },
+    mobileOn () {
+      this.expand()
+    },
+    mobileOff () {
+      this.condense()
+    },
+    mobileOn () {
+      this.expand()
+
+      document.querySelector('.connectn-left').style.width = '90%'
+      document.querySelector('.connectn-right').style.width = '0%'
+      document.querySelector('.connectn-image').style.display  = 'none'
+    },
+    mobileOff () {
+      this.condense()
+      
+      document.querySelector('.connectn-left').style.width = '60%'
+      document.querySelector('.connectn-right').style.width = '40%'
+      document.querySelector('.connectn-image').style.display = 'flex'
     }
-  }
+  },
+  computed: {
+    isMobile () {
+      return this.$store.getters.isMobileOn
+    }
+  },
+  watch: {
+    isMobile (newVal) {
+      newVal ? this.mobileOn() : this.mobileOff()
+    }
+  },
 })
 </script>
 
@@ -73,6 +104,7 @@ export default defineComponent({
 }
 .connectn:hover{
     transform: scale(1.03);
+    box-shadow: 0px 0px 20px 8px rgba(0, 0, 0, 0.1);
 }
 
 .line-two-wrapper{
@@ -85,17 +117,19 @@ export default defineComponent({
   margin-bottom: -2vh
 }
 
-.left{
-    height: 100%;
-    width: 60%;
-    flex-direction: column;
-    text-align: left;
-    margin-left: 30px
+.connectn-left{
+  height: 100%;
+  width: 60%;
+  flex-direction: column;
+  text-align: left;
+  margin-left: 30px
   }
 
-.right{
-    height: 100%;
-    width: 40%;
-    margin-right: 30px
+.connectn-right{
+  height: 100%;
+  width: 40%;
+  margin-right: 30px;
+  margin-left: 2vw;
+  margin-bottom: 10px;
 }
 </style>

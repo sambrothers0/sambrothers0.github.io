@@ -1,11 +1,11 @@
 <template>
     <div class="personal-website" @click="handleClick">
-        <div class="left">
-            <img :src=imageOneSrc style="height: 25vh; border-radius: 15px;">
+        <div class="personal-website-left">
+            <img class="personal-website-top-image" :src=imageOneSrc style="height: 25vh; border-radius: 15px;">
             <img class="personal-website-bottom-image" :src=imageTwoSrc
-            style="height: 35vh; padding-top: 7vh; display: none">
+            style="height: 27vh; padding-top: 7vh; display: none">
         </div>
-        <div class="right">
+        <div class="personal-website-right">
             <h1 style="font-size: 40px; margin-top: 3vh"> {{ title }} </h1>
             <div class="line-two-wrapper">
               <img class="external-link" @click="handleNavigate"
@@ -28,12 +28,13 @@ export default defineComponent({
     return {
       title: 'Personal Website',
       date: 'Aug 2024',
-      shortText: "This website introduces me as a developer and shows off the cool things I've made.",
+      shortText: "This website introduces me as a developer and shows off the cool things I've made ...",
       longText: "This website introduces me as a developer and shows off the cool things I've made. " +
       'Designed and implemented completely from scratch, I created my portfolio website in under 3 months, ' +
-      'having never written so much as a line of HTML in my life. ' +
+      'having never written a line of HTML in my life. ' +
       'With the design, development, and deployment skills I taught myself from this project, I am now able to ' +
-      'create clean and appealing front-ends. This website employs Vue 3, with the Vue store and router for complex ' +
+      'create clean and appealing web front-ends. With full mobile compatability, this website employs Vue 3, ' +
+      'using the Vue store and router for complex ' +
       'state management and single-page routing. ',
       imageOneSrc: 'img/personal_website/logo.png',
       imageTwoSrc: 'img/personal_website/cover_banner.png',
@@ -58,8 +59,32 @@ export default defineComponent({
       document.querySelector('.personal-website-subtext').textContent = this.shortText
       document.querySelector('.personal-website-bottom-image').style.display = 'none'
       this.expanded = false
+    },
+    mobileOn () {
+      this.expand()
+      document.querySelector('.personal-website-bottom-image').style.display  = 'none'
+      document.querySelector('.personal-website-top-image').style.display  = 'none'
+      document.querySelector('.personal-website-right').style.width  = '85%'
+      document.querySelector('.personal-website-left').style.width  = '0%'
+      
+    },
+    mobileOff () {
+      this.condense()
+      document.querySelector('.personal-website-top-image').style.display  = 'flex'
+      document.querySelector('.personal-website-right').style.width  = '50%'
+      document.querySelector('.personal-website-left').style.width  = '45%'
     }
-  }
+  },
+  computed: {
+    isMobile () {
+      return this.$store.getters.isMobileOn
+    }
+  },
+  watch: {
+    isMobile (newVal) {
+      newVal ? this.mobileOn() : this.mobileOff()
+    }
+  },
 })
 </script>
 
@@ -75,6 +100,7 @@ export default defineComponent({
 }
 .personal-website:hover{
   transform: scale(1.03);
+  box-shadow: 0px 0px 20px 8px rgba(0, 0, 0, 0.1);
 }
 
 .line-two-wrapper{
@@ -87,7 +113,7 @@ export default defineComponent({
   margin-bottom: -2vh
 }
 
-.right{
+.personal-website-right{
   display: flex;
   height: 100%;
   width: 50%;
@@ -97,7 +123,7 @@ export default defineComponent({
   margin-right: 30px
 }
 
-.left{
+.personal-website-left{
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -27,6 +27,7 @@ export default {
     }
   },
   mounted () {
+    this.handleScroll()
     window.addEventListener('scroll', this.handleScroll)
     window.addEventListener('resize', this.handleScroll)
   },

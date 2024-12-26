@@ -1,10 +1,10 @@
 <template>
-  <CoverBanner/>
+  <UpperToolbar/>
   <SideBar/>
   <div class="contact" id="master">
     <div class='title'>
-      <h1 style="font-size: 9vw; font-weight: 100; margin-bottom: -6vh; margin-top: 0">Contact</h1>
-      <img src="img/gold_divider_bar.png" style="width: 30vw; margin-left: 10vw">
+      <h1 style="font-size: 8vw; font-weight: 100; margin-bottom: 0px;">Contact</h1>
+      <img style="width: 30vw; margin-left: 10vw" src="img/gold_divider_bar.png" >
     </div>
     <img class="paper-airplane-img">
     <div class="link-wrapper">
@@ -40,13 +40,13 @@
 </template>
 
 <script>
-import CoverBanner from '@/components/CoverBanner.vue'
+import UpperToolbar from '@/components/UpperToolbar.vue'
 import SideBar from '@/components/SideBar.vue'
 
 export default {
   name: 'ContactView',
   components: {
-    CoverBanner,
+    UpperToolbar,
     SideBar
   },
   data () {
@@ -55,17 +55,14 @@ export default {
       mouseY: 0,
       email: 'samjbrothers@icloud.com',
       phone: '+1 (919) 407-9965',
+      resume: 'img/Sam Brothers CV.pdf',
       github: 'https://github.com/sambrothers0',
       linkedin: 'https://www.linkedin.com/in/samjbrothers/'
     }
   },
   methods: {
     checkAppearance () {
-      if (this.isDarkMode) {
-        this.darkMode()
-      } else {
-        this.lightMode()
-      }
+      this.isDarkMode ? this.darkMode() : this.lightMode()
     },
     lightMode () {
       document.getElementById('master').style.backgroundColor = 'var(--light-color)'
@@ -146,7 +143,7 @@ export default {
     },
     handleClickResume () {
       setTimeout(() => {
-        this.$router.push('/resume')
+        window.open(this.resume, '_blank');
       }, 150)
     },
     handleMouseEnterGitHub () {
@@ -205,7 +202,7 @@ export default {
   },
   watch: {
     isDarkMode (newVal) {
-      newVal ? this.darkMode() : this.lightMode()
+      this.checkAppearance()
     }
   },
   mounted () {
@@ -235,8 +232,11 @@ export default {
 }
 
 .title{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   height: 20vh;
-  margin-top: 8vh;
+  margin-top: 0vh;
   margin-left: 40%;
   transition: all 0.5s ease
 }

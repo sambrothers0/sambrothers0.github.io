@@ -18,7 +18,7 @@ export default defineComponent({
   data () {
     return {
       textItems: ["I'm Sam Brothers, a software developer and computer science major at William & Mary",
-        'My skills range from frontend design to data structures and algorithms and my passion is uncovering elegant solutions to problems and creating beautiful, functional things like this website',
+        'My skills range from front-end design to data structures and algorithms. My passion is uncovering elegant solutions to problems and creating beautiful, functional things like this website',
         "Currently I'm a senior in college, and I love ultimate frisbee, good food, and hiking"]
     }
   },

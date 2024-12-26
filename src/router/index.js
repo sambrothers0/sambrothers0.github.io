@@ -3,7 +3,6 @@ import HomeView from '@/views/HomeView.vue'
 import AboutView from '@/views/AboutView.vue'
 import CreationsView from '@/views/CreationsView.vue'
 import ContactView from '@/views/ContactView.vue'
-import ResumeView from '@/views/ResumeView.vue'
 
 const routes = [
   {
@@ -32,13 +31,6 @@ const routes = [
     name: 'contact',
     component: ContactView,
     meta: { title: 'Contact | Sam Brothers | Software Developer' }
-  },
-  {
-    path: '/resume',
-    name: 'resume',
-    component: ResumeView,
-    meta: { title: 'Curriculum Vitae | Sam Brothers | Software Developer' }
-
   }
 ]
 

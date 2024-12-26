@@ -20,10 +20,11 @@ import { useRoute } from 'vue-router'
 import NavigationBar from './NavigationBar.vue'
 
 export default defineComponent({
-  name: 'CoverBanner',
+  name: 'UpperToolbar',
   data () {
     return {
-      expanded: true
+      expanded: true,
+      aspectRatioThreshold: 1
     }
   },
   methods: {
@@ -31,11 +32,7 @@ export default defineComponent({
       this.$store.dispatch('toggleDarkMode')
     },
     checkAppearance () {
-      if (this.isDarkMode) {
-        this.lightMode()
-      } else {
-        this.darkMode()
-      }
+      this.isDarkMode ? this.lightMode() : this.darkMode()
     },
     darkMode () {
       var coverBanner = document.getElementById('cover-banner')
@@ -74,7 +71,8 @@ export default defineComponent({
       return (window.innerWidth / window.innerHeight)
     },
     handleResize () {
-      if (this.getAspectRatio() > 1) {
+      this.getAspectRatio() < this.aspectRatioThreshold ? this.$store.dispatch('mobileOn') : this.$store.dispatch('mobileOff')
+      if (!this.isMobile) {
         document.getElementById('home-button-container').style.marginRight = '41vw'
         document.getElementById('home-button').style.height = '9vh'
         document.getElementById('home-button').style.width = '9vh'
@@ -94,14 +92,10 @@ export default defineComponent({
       }
     },
     handleScroll () {
-      if (this.getAspectRatio() < 1) {
+      if (this.isMobile) {
         return
       }
-      if (window.scrollY < 100) {
-        this.expand()
-      } else {
-        this.condense()
-      }
+      window.scrollY < 100 ? this.expand() : this.condense()
     },
     condense () {
       document.getElementById('cover-banner').style.backgroundColor = 'transparent'
@@ -155,11 +149,17 @@ export default defineComponent({
   computed: {
     isDarkMode () {
       return this.$store.getters.isDarkModeOn
+    },
+    isMobile () {
+      return this.$store.getters.isMobileOn
     }
   },
   watch: {
     isDarkMode (newVal) {
-      newVal ? this.lightMode() : this.darkMode()
+      this.checkAppearance()
+    },
+    isMobile (newVal) {
+      this.handleResize()
     }
   },
   mounted () {

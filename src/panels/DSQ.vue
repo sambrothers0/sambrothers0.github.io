@@ -1,11 +1,11 @@
 <template>
     <div class="dsq" @click="handleClick">
-        <div class="left">
-          <img :src=imageOneSrc style="width: 100%; border-radius: 15px; margin-top: 4vh">
+        <div class="dsq-left">
+          <img class="dsq-top-image" :src=imageOneSrc style="width: 100%; border-radius: 15px; margin-top: 4vh">
           <img class="dsq-bottom-image" :src=imageTwoSrc
           style="width: 100%; border-radius: 15px; margin-top: 10vh; display: none">
         </div>
-        <div class="right">
+        <div class="dsq-right">
             <h1 style="font-size: 40px; margin-top: 3vh"> {{ title }} </h1>
             <div class="line-two-wrapper">
                 <img class="external-link" @click="handleNavigate"
@@ -28,7 +28,7 @@ export default defineComponent({
     return {
       title: 'Deque',
       date: 'Nov 2022',
-      shortText: 'I implemented a deque from scratch with both the functionality of a stack and queue.',
+      shortText: 'I implemented a deque from scratch with both the functionality of a stack and queue ...',
       longText: 'I implemented a deque from scratch with both the funcitonality of a stack and queue. ' +
       'Thorough understanding of these data structures are fundamental to any programmer, ' +
       'so I coded a deque, which acts as a double ended stack and can be pushed or popped from either end. ' +
@@ -58,8 +58,33 @@ export default defineComponent({
       document.querySelector('.dsq-subtext').textContent = this.shortText
       document.querySelector('.dsq-bottom-image').style.display = 'none'
       this.expanded = false
+    },
+    mobileOn () {
+      this.expand()
+      document.querySelector('.dsq-top-image').style.display  = 'none'
+      document.querySelector('.dsq-bottom-image').style.display  = 'none'
+      document.querySelector('.dsq-left').style.width = '0%'
+      document.querySelector('.dsq-right').style.width = '90%'
+    },
+    mobileOff () {
+      this.condense()
+      document.querySelector('.dsq-top-image').style.display = 'flex'
+      document.querySelector('.dsq-bottom-image').style.display = 'none'
+      document.querySelector('.dsq-left').style.width= '45%'
+      document.querySelector('.dsq-right').style.width= '45%'
+
     }
-  }
+  },
+  computed: {
+    isMobile () {
+      return this.$store.getters.isMobileOn
+    }
+  },
+  watch: {
+    isMobile (newVal) {
+      newVal ? this.mobileOn() : this.mobileOff()
+    }
+  },
 })
 </script>
 
@@ -75,6 +100,7 @@ export default defineComponent({
 }
 .dsq:hover{
   transform: scale(1.03);
+  box-shadow: 0px 0px 20px 8px rgba(0, 0, 0, 0.1);
 }
 
 .line-two-wrapper{
@@ -87,15 +113,15 @@ export default defineComponent({
   margin-bottom: -2vh
 }
 
-.right{
+.dsq-right{
   height: 100%;
   width: 45%;
   flex-direction: column;
   text-align: right;
   margin-right: 30px
-  }
+}
   
-.left{
+.dsq-left{
   display: flex;
   flex-direction: column;
   align-items: center;
