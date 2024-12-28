@@ -3,6 +3,7 @@ import HomeView from '@/views/HomeView.vue'
 import AboutView from '@/views/AboutView.vue'
 import CreationsView from '@/views/CreationsView.vue'
 import ContactView from '@/views/ContactView.vue'
+import NotFound from '@/views/NotFound.vue'
 
 const routes = [
   {
@@ -31,6 +32,12 @@ const routes = [
     name: 'contact',
     component: ContactView,
     meta: { title: 'Contact | Sam Brothers | Software Developer' }
+  },
+  { 
+    path: '/:pathMatch(.*)*', 
+    name: 'NotFound',
+    component: NotFound,
+    meta: { title: 'Page not found | Sam Brothers | Software Developer'}
   }
 ]
 
