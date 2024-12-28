@@ -60,15 +60,12 @@ export default defineComponent({
       document.querySelector('.wordle-subtext').textContent = this.shortText
       this.expanded = false
     },
-    mobileOn () {
-      this.expand()
-
+    mobileOn () {      
       document.querySelector('.wordle-left').style.width  = '0%'
       document.querySelector('.wordle-right').style.width  = '85%'
       document.querySelector('.wordle-image').style.display  = 'none'
     },
     mobileOff () {
-      this.condense()
       document.querySelector('.wordle-left').style.width  = '40%'
       document.querySelector('.wordle-right').style.width  = '60%'
       document.querySelector('.wordle-image').style.display = 'flex'

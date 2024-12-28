@@ -62,21 +62,11 @@ export default defineComponent({
       this.expanded = false
     },
     mobileOn () {
-      this.expand()
-    },
-    mobileOff () {
-      this.condense()
-    },
-    mobileOn () {
-      this.expand()
-
       document.querySelector('.connectn-left').style.width = '90%'
       document.querySelector('.connectn-right').style.width = '0%'
       document.querySelector('.connectn-image').style.display  = 'none'
     },
     mobileOff () {
-      this.condense()
-      
       document.querySelector('.connectn-left').style.width = '60%'
       document.querySelector('.connectn-right').style.width = '40%'
       document.querySelector('.connectn-image').style.display = 'flex'

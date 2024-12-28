@@ -61,12 +61,10 @@ export default defineComponent({
       this.expanded = false
     },
     mobileOn () {
-      this.expand()
       document.querySelector('.rt-image').style.display  = 'none'
       document.querySelector('.rt-right').style.width = '0%'
     },
     mobileOff () {
-      this.condense()
       document.querySelector('.rt-image').style.display = 'flex'
       document.querySelector('.rt-right').style.width = '45%'
     }

@@ -70,14 +70,12 @@ export default defineComponent({
       this.expanded = false
     },
     mobileOn () {
-      this.expand()
       document.querySelector('.thrillsburg-bottom-image').style.display  = 'none'
       document.querySelector('.thrillsburg-top-image').style.display = 'none'
       document.querySelector('.thrillsburg-left').style.width = '90%'
       document.querySelector('.thrillsburg-right').style.width = '0%'
     },
     mobileOff () {
-      this.condense()
       document.querySelector('.thrillsburg-top-image').style.display = 'flex'
       document.querySelector('.thrillsburg-left').style.width = '45%'
       document.querySelector('.thrillsburg-left').style.marginLeft = '0vw'

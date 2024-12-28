@@ -63,14 +63,12 @@ export default defineComponent({
       this.expanded = false
     },
     mobileOn () {
-      this.expand()
       document.querySelector('.dsq-top-image').style.display  = 'none'
       document.querySelector('.dsq-bottom-image').style.display  = 'none'
       document.querySelector('.dsq-left').style.width = '0%'
       document.querySelector('.dsq-right').style.width = '90%'
     },
     mobileOff () {
-      this.condense()
       document.querySelector('.dsq-top-image').style.display = 'flex'
       document.querySelector('.dsq-bottom-image').style.display = 'none'
       document.querySelector('.dsq-left').style.width= '45%'

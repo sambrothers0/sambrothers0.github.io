@@ -64,7 +64,6 @@ export default defineComponent({
       this.expanded = false
     },
     mobileOn () {
-      this.expand()
       document.querySelector('.personal-website-bottom-image').style.display  = 'none'
       document.querySelector('.personal-website-top-image').style.display  = 'none'
       document.querySelector('.personal-website-right').style.width  = '85%'
@@ -72,7 +71,6 @@ export default defineComponent({
       
     },
     mobileOff () {
-      this.condense()
       document.querySelector('.personal-website-top-image').style.display  = 'flex'
       document.querySelector('.personal-website-right').style.width  = '50%'
       document.querySelector('.personal-website-left').style.width  = '45%'
