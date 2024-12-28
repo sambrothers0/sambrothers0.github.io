@@ -8,6 +8,7 @@
     </div>
     <div class="panels-wrapper">
       <Thrillsburg/>
+      <RT/>
       <PersonalWebsite/>
       <ConnectN/>
       <Wordle/>
@@ -21,6 +22,7 @@
 import UpperToolbar from '@/components/UpperToolbar.vue'
 import SideBar from '@/components/SideBar.vue'
 import Thrillsburg from '@/panels/Thrillsburg.vue'
+import RT from '@/panels/RT.vue'
 import PersonalWebsite from '@/panels/PersonalWebsite.vue'
 import ConnectN from '@/panels/ConnectN.vue'
 import Wordle from '@/panels/Wordle.vue'
@@ -33,6 +35,7 @@ export default {
     UpperToolbar,
     SideBar,
     Thrillsburg,
+    RT,
     PersonalWebsite,
     ConnectN,
     Wordle,

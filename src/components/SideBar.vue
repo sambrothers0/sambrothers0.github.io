@@ -45,7 +45,7 @@ export default defineComponent({
     getDate () {
       const currentDate = new Date()
       const dateOptions = { year: 'numeric', month: '2-digit', day: '2-digit' }
-      const formattedDate = currentDate.toLocaleDateString(undefined, dateOptions)
+      const formattedDate = currentDate.toLocaleDateString(undefined, dateOptions).replaceAll('/', '.')
       return formattedDate
     },
     isDarkMode () {
@@ -98,10 +98,10 @@ img{
     transform: rotate(270deg);
     position: absolute;
     top: 7%;
-    left: 0.5vw
-}
-
-.date-wrapper{
+    margin-left: 5px;
+  }
+  
+  .date-wrapper{
     width: 100%;
     height: 10%;
     display: flex;
@@ -114,6 +114,6 @@ img{
     position: absolute;
     transform: rotate(270deg);
     bottom: 9.5%;
-    left: 0.5vw
+    margin-left: 5px;
 }
 </style>

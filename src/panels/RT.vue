@@ -1,6 +1,6 @@
 <template>
-    <div class="bst" @click="handleClick">
-        <div class="bst-left">
+    <div class="rt" @click="handleClick">
+        <div class="rt-left">
             <h1 style="font-size: 40px; margin-top: 3vh"> {{ title }} </h1>
             <div class="line-two-wrapper">
                 <img class="external-link" @click="handleNavigate"
@@ -9,11 +9,11 @@
                 margin-right: 1vw">
                 <h3> {{ date }} </h3>
             </div>
-            <p class='bst-subtext' style="font-size: 3vh; line-height: 4.5vh; font-family: 'Outfit', sans-serif"> {{ shortText }} </p>
+            <p class='rt-subtext' style="font-size: 3vh; line-height: 4.5vh; font-family: 'Outfit', sans-serif"> {{ shortText }} </p>
         </div>
-        <div class="bst-right">
-            <img class="bst-image" :src=imageOneSrc
-            style="height: 27vh;
+        <div class="rt-right">
+            <img class="rt-image" :src=imageOneSrc
+            style="width: 25vw;
             border-radius: 15px;
             margin-top: 2vh;
             transition: height 0.2s ease, margin 0.2s ease">
@@ -25,19 +25,19 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'BST',
+  name: 'RT',
   data () {
     return {
-      title: 'BST',
-      date: 'Nov 2022',
-      shortText: 'This is a balanced binary search tree I coded from scratch using Python ... ',
-      longText: 'This is a balanced binary search tree I coded from scratch using Python. ' +
-      'Using this structure, numbers can be sorted and stored in mathematically optimal time, ' +
-      'since the tree automatically detects lopsidedness and rebalances itself to maintain the quickest performance. ' +
-      'During the implementation, I learned about heaps and trees as a means of organizing data, ' +
-      "and discovered the mechanism behind one of computer science's most important inventions. ",
-      imageOneSrc: 'img/BST/BST.png',
-      url: 'https://github.com/sambrothers0/Binary-Search-Tree',
+      title: 'Ray Tracer',
+      date: 'Nov 2024',
+      shortText: 'This is a program for rendering basic 3D shapes using ray tracing in C++ ...',
+      longText: 'This is a program for rendering basic 3D shapes using ray tracing in C++.' +
+      'The program reads in a text file continaing formatted information about the color and ' +
+      'position of the shapes and light source, and creates a linked list using C++ pointers. ' +
+      'It then uses ray tracing to render each object in space and perform realistic lighting ' +
+      'calculations based on the position of the light source.',
+      imageOneSrc: 'img/RT/rt.jpg',
+      url: 'https://github.com/sambrothers0/ray-tracer',
       expanded: false
     }
   },
@@ -53,22 +53,22 @@ export default defineComponent({
       this.handleClick()
     },
     expand () {
-      document.querySelector('.bst-subtext').textContent = this.longText
+      document.querySelector('.rt-subtext').textContent = this.longText
       this.expanded = true
     },
     condense () {
-      document.querySelector('.bst-subtext').textContent = this.shortText
+      document.querySelector('.rt-subtext').textContent = this.shortText
       this.expanded = false
     },
     mobileOn () {
       this.expand()
-      document.querySelector('.bst-image').style.display  = 'none'
-      document.querySelector('.bst-right').style.width = '0%'
+      document.querySelector('.rt-image').style.display  = 'none'
+      document.querySelector('.rt-right').style.width = '0%'
     },
     mobileOff () {
       this.condense()
-      document.querySelector('.bst-image').style.display = 'flex'
-      document.querySelector('.bst-right').style.width = '45%'
+      document.querySelector('.rt-image').style.display = 'flex'
+      document.querySelector('.rt-right').style.width = '45%'
     }
   },
   computed: {
@@ -88,16 +88,16 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.bst{
+.rt{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   border-radius: 35px;
   transition: transform 0.2s, box-shadow 0.2s, height 0.2s;
   margin-bottom: 50px;
-  background-color: #2376e433;
+  background-color: #00000033;
 }
-.bst:hover{
+.rt:hover{
   transform: scale(1.03);
   box-shadow: 0px 0px 20px 8px rgba(0, 0, 0, 0.1);
 }
@@ -112,7 +112,7 @@ export default defineComponent({
   margin-bottom: -2vh
 }
 
-.bst-left{
+.rt-left{
   height: 100%;
   width: auto;
   flex-direction: column;
@@ -121,7 +121,7 @@ export default defineComponent({
   margin-left: 30px;
 }
 
-.bst-right{
+.rt-right{
   align-items: center;
   height: 100%;
   width: 45%;

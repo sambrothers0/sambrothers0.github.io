@@ -42,6 +42,9 @@ export default defineComponent({
     }
   },
   methods: {
+    checkAppearance() {
+      this.$store.getters.isMobileOn ? this.mobileOn() : this.mobileOff()
+    },
     handleClick () {
       this.expanded ? this.condense() : this.expand()
     },
@@ -85,6 +88,9 @@ export default defineComponent({
       newVal ? this.mobileOn() : this.mobileOff()
     }
   },
+  mounted () {
+    this.checkAppearance()
+  }
 })
 </script>
 
