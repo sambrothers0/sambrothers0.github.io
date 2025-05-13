@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div class="master">
         <div class="location-wrapper">
             {{ getLocation }}
@@ -116,4 +116,18 @@ img{
     bottom: 9.5%;
     margin-left: 5px;
 }
-</style>
+</style> -->
+
+
+
+
+<template>
+</template>
+
+<script>
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'SideBar'
+})
+</script>
