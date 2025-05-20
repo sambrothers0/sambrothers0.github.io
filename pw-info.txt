@@ -1,1 +1,3 @@
+Personal Website
 This website introduces me as a developer and shows off the cool things I've made. Designed and implemented completely from scratch, I created my portfolio website in under 3 months, having never written a line of HTML in my life. With the design, development, and deployment skills I taught myself from this project, I am now able to create clean and appealing web front-ends. With full mobile compatability, this website employs Vue 3 and uses the Vue store and router for complex state management and single-page routing. The REST API is also used to dynamically fetch all my public github projects and display info about them on the website. My portfolio is live at https://sambrothers0.github.io
+Aug 2024
