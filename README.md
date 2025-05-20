@@ -1,3 +1,1 @@
-# Personal Website
-
-**This repo contains the code for running my personal portfolio website, written in Vue. The website was created during summer 2024 and is (somewhat) actively maintained. It is built from scratch with no prefabricated assets and shows information about me and the things I've done.**
+This website introduces me as a developer and shows off the cool things I've made. Designed and implemented completely from scratch, I created my portfolio website in under 3 months, having never written a line of HTML in my life. With the design, development, and deployment skills I taught myself from this project, I am now able to create clean and appealing web front-ends. With full mobile compatability, this website employs Vue 3 and uses the Vue store and router for complex state management and single-page routing.
