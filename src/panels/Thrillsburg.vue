@@ -4,6 +4,7 @@
             <h1 style="font-size: 40px; margin-top: 3vh"> {{ title }} </h1>
             <div class="line-two-wrapper">
                 <img class="external-link" @click="handleNavigate"
+                :src="this.darkMode ? 'img/external_link_icon_light.png' : 'img/external_link_icon_dark.png'"
                 style="height: 50%;
                 cursor: pointer;
                 margin-right: 1vw">
@@ -45,19 +46,21 @@ export default defineComponent({
       'I delivered a solution which positions Thrillsburg as a modern, presentable, and user-friendly web app. ',
       imageOneSrc: 'img/thrillsburg_panel/logo.png',
       imageTwoSrc: 'img/thrillsburg_panel/events_page.jpg',
-      url: '',
-      expanded: false
+      url: 'http://thrillsburg.com',
+      expanded: false,
+      darkMode: false
     }
   },
   methods: {
     checkAppearance() {
+      this.darkMode = this.$store.getters.isDarkModeOn
       this.$store.getters.isMobileOn ? this.mobileOn() : this.mobileOff()
     },
     handleClick () {
       this.expanded ? this.condense() : this.expand()
     },
     handleNavigate () {
-      
+      window.open(this.url)
     },
     expand () {
       document.querySelector('.thrillsburg-subtext').textContent = this.longText
@@ -85,11 +88,17 @@ export default defineComponent({
   computed: {
     isMobile () {
       return this.$store.getters.isMobileOn
+    },
+    isDarkMode () {
+      return this.$store.getters.isDarkModeOn
     }
   },
   watch: {
     isMobile (newVal) {
       newVal ? this.mobileOn() : this.mobileOff()
+    },
+    isDarkMode (newVal) {
+      newVal ? this.darkMode = true : this.darkMode = false
     }
   },
   mounted () {

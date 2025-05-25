@@ -55,7 +55,7 @@ export default {
       mouseY: 0,
       email: 'samjbrothers@icloud.com',
       phone: '+1 (919) 407-9965',
-      resume: 'img/Sam Brothers CV.pdf',
+      resume: '/resume',
       github: 'https://github.com/sambrothers0',
       linkedin: 'https://www.linkedin.com/in/samjbrothers/'
     }

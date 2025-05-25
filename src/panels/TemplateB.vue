@@ -1,13 +1,13 @@
 <template>
-    <div class="wordle" @click="handleClick">
-        <div class="wordle-left">
-          <img class='wordle-image' :src=imageOneSrc
+    <div class="template-a">
+        <div class="template-a-left">
+          <img class='template-a-image' :src=imageOneSrc
           style="height: 27vh;
           border-radius: 15px;
           margin-top: 3vh;
           transition: all 0.2s ease">
         </div>
-        <div class="wordle-right">
+        <div class="template-a-right">
           <h1 style="font-size: 40px; margin-top: 3vh"> {{ title }} </h1>
           <div class="line-two-wrapper">
             <img class="external-link" @click="handleNavigate"
@@ -16,7 +16,7 @@
             margin-right: 1vw">
             <h3> {{ date }} </h3>
           </div>
-          <p class='wordle-subtext' style="font-size: 3vh; line-height: 4.5vh; font-family: 'Outfit', sans-serif"> {{ shortText }} </p>
+          <p class='template-a-subtext' style="font-size: 3vh; line-height: 4.5vh; font-family: 'Outfit', sans-serif"> {{ shortText }} </p>
         </div>
     </div>
 </template>
@@ -25,19 +25,14 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'Wordle',
+  name: 'template-a',
   data () {
     return {
-      title: 'Wordle',
-      date: 'Mar 2024',
-      shortText: 'I performed bug fixes and unit testing for an existing Wordle code base in Java Swing ...',
-      longText: 'I performed bug fixes and unit testing for an existing Wordle code base in Java Swing. ' +
-      "Using Gilbert LeBlanc's GitHub repository, I tested the extisting code using the JUnit Test module for Java, " +
-      'to understand how testing works, and why test-driven design is important. ' +
-      'This project introduced me to basic GUI desktop applications using a common API, and furthered my ability to ' +
-      "parse and comprehend someone else's code, an essential skill for team-based programming. ",
-      imageOneSrc: 'img/wordle_panel/wordle_board.png',
-      url: 'https://github.com/sambrothers0/Wordle',
+      title: '',
+      date: '',
+      info: '',
+      url: '',
+      thumbnail: '',
       expanded: false
     }
   },
@@ -45,30 +40,27 @@ export default defineComponent({
     checkAppearance() {
       this.$store.getters.isMobileOn ? this.mobileOn() : this.mobileOff()
     },
-    handleClick () {
-      this.expanded ? this.condense() : this.expand()
-    },
     handleNavigate () {
       window.open(this.url, '_blank')
       this.handleClick()
     },
     expand () {
-      document.querySelector('.wordle-subtext').textContent = this.longText
+      document.querySelector('.template-a-subtext').textContent = this.longText
       this.expanded = true
     },
     condense () {
-      document.querySelector('.wordle-subtext').textContent = this.shortText
+      document.querySelector('.template-a-subtext').textContent = this.shortText
       this.expanded = false
     },
     mobileOn () {      
-      document.querySelector('.wordle-left').style.width  = '0%'
-      document.querySelector('.wordle-right').style.width  = '85%'
-      document.querySelector('.wordle-image').style.display  = 'none'
+      document.querySelector('.template-a-left').style.width  = '0%'
+      document.querySelector('.template-a-right').style.width  = '85%'
+      document.querySelector('.template-a-image').style.display  = 'none'
     },
     mobileOff () {
-      document.querySelector('.wordle-left').style.width  = '40%'
-      document.querySelector('.wordle-right').style.width  = '60%'
-      document.querySelector('.wordle-image').style.display = 'flex'
+      document.querySelector('.template-a-left').style.width  = '40%'
+      document.querySelector('.template-a-right').style.width  = '60%'
+      document.querySelector('.template-a-image').style.display = 'flex'
     }
   },
   computed: {
@@ -88,7 +80,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.wordle{
+.template-a{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -97,7 +89,7 @@ export default defineComponent({
     margin-bottom: 50px;
     background-color: #ebb80e33;
 }
-.wordle:hover{
+.template-a:hover{
     transform: scale(1.03);
     box-shadow: 0px 0px 20px 8px rgba(0, 0, 0, 0.1);
 }
@@ -112,7 +104,7 @@ export default defineComponent({
   margin-bottom: -2vh
 }
 
-.wordle-right{
+.template-a-right{
     height: 100%;
     width: 60%;
     flex-direction: column;
@@ -120,7 +112,7 @@ export default defineComponent({
     margin-right: 30px;
 }
 
-.wordle-left{
+.template-a-left{
     height: 100%;
     width: 40%;
     margin-left: 20px;
