@@ -3,7 +3,9 @@
   <div v-if="loading" class="indicator" id="master">
     <div class="spinner"></div>
   </div>
-  <div v-else class="creations" id="master">
+  <div v-else class="creations" id="master" :style="{
+        backgroundColor: isDarkMode ? 'var(--dark-color)' : 'var(--light-color)',
+        color: isDarkMode ? 'var(--light-color)' : 'var(--dark-color)' }">
     <h1 class="title"> Creations </h1>
     <div class="frame-wrapper">
       <img class="frame" src="img/gold_frame.png">
@@ -12,7 +14,7 @@
       <Thrillsburg/>
       <div v-for="(title, index) in titles" :key="index" @click="toggleSize(index)" class="panel">
         <div v-if="index % 2 === 0">
-          <div class="template-a">
+          <div class="template-a template">
             <div class="template-a-left">
               <h1 style="font-size: 40px; margin-top: 3vh"> {{ this.titles[index] }} </h1>
               <div class="a-line-two-wrapper">
@@ -39,7 +41,7 @@
           </div>
         </div>
         <div v-if="index % 2 === 1">
-          <div class="template-b">
+          <div class="template-b template">
             <div class="template-b-left">
               <img class='template-b-image'
                 style="height: 27vh;
@@ -62,7 +64,7 @@
                 {{ this.shortInfos[index] }} 
               </p>
             </div>
-            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -114,6 +116,78 @@ export default {
       for (let i = 0; i < links.length; i++) {
         links[i].src = 'img/external_link_icon_light.png'
       }
+    },
+    generateColors(grayEpsilon = 50, colorDifference = 80, seed = 42) {
+      let templates = document.querySelectorAll('.template')
+      let generatedColors = [];  // Track previously generated colors
+      const checkPrevious = 4;   // Number of previous colors to check against
+      
+      // Create seeded random function
+      let currentSeed = seed;
+      const seededRandom = function() {
+        currentSeed = (currentSeed * 9301 + 49297) % 233280;
+        return currentSeed / 233280;
+      };
+      
+      // First, generate all the colors
+      for (let i = 0; i < templates.length; i++) {
+        let r, g, b;
+        let isUnique = false;
+        
+        // Keep generating until we find a color that is different enough from recent ones
+        while (!isUnique) {
+          // Generate a color with sufficient internal contrast
+          while (true) {
+            r = Math.floor(seededRandom() * 256);
+            g = Math.floor(seededRandom() * 256);
+            b = Math.floor(seededRandom() * 256);
+            
+            if (
+              Math.abs(r - g) >= grayEpsilon ||
+              Math.abs(g - b) >= grayEpsilon ||
+              Math.abs(b - r) >= grayEpsilon
+            ) {
+              break;
+            }
+          }
+          
+          // If this is one of the first colors, fewer checks needed
+          if (generatedColors.length === 0) {
+            isUnique = true;
+          } else {
+            // Check if this color is different enough from previous colors
+            isUnique = true;
+            
+            // Determine how many previous colors to check (up to checkPrevious)
+            const startIdx = Math.max(0, generatedColors.length - checkPrevious);
+            
+            // Check against last 'checkPrevious' colors
+            for (let j = startIdx; j < generatedColors.length; j++) {
+              const prev = generatedColors[j];
+              // Calculate color distance using Euclidean distance in RGB space
+              const distance = Math.sqrt(
+                Math.pow(r - prev.r, 2) + 
+                Math.pow(g - prev.g, 2) + 
+                Math.pow(b - prev.b, 2)
+              );
+              
+              if (distance < colorDifference) {
+                isUnique = false;
+                break;
+              }
+            }
+          }
+        }
+        
+        // Store this color
+        generatedColors.push({ r, g, b });
+        
+        const toHex = (n) => n.toString(16).padStart(2, '0');
+        const hexColor = `#${toHex(r)}${toHex(g)}${toHex(b)}33`;
+        console.log(`Generated color ${i+1}: ${hexColor}`);
+        templates[templates.length - 1 - i].style.backgroundColor = hexColor;
+      }
+    
     },
     toggleSize(index) {
 
@@ -207,7 +281,16 @@ export default {
   },
   watch: {
     isDarkMode (newVal) {
-      this.checkAppearance()
+      this.checkAppearance();
+    },
+    loading(newVal, oldVal) {
+      // Only run when loading changes from true to false
+      if (oldVal === true && newVal === false) {
+        // Wait for DOM to be updated
+        this.$nextTick(() => {
+          this.generateColors();
+        });
+      }
     }
   },
   mounted () {
@@ -290,7 +373,6 @@ export default {
   border-radius: 35px;
   transition: transform 0.2s, box-shadow 0.2s, height 0.2s;
   margin-bottom: 50px;
-  background-color: #dd307433;
 }
 
 .template-a:hover{
@@ -331,7 +413,6 @@ export default {
   border-radius: 35px;
   transition: transform 0.2s, box-shadow 0.2s, height 0.2s;
   margin-bottom: 50px;
-  background-color: #ebb80e33;
 }
 .template-b:hover{
   transform: scale(1.03);

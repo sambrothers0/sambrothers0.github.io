@@ -1,10 +1,10 @@
 <template>
-    <div class="thrillsburg" @click="handleClick">
+    <div class="thrillsburg template" @click="handleClick">
         <div class="thrillsburg-left">
             <h1 style="font-size: 40px; margin-top: 3vh"> {{ title }} </h1>
             <div class="line-two-wrapper">
                 <img class="external-link" @click="handleNavigate"
-                :src="this.darkMode ? 'img/external_link_icon_light.png' : 'img/external_link_icon_dark.png'"
+                :src="darkMode ? 'img/external_link_icon_light.png' : 'img/external_link_icon_dark.png'"
                 style="height: 50%;
                 cursor: pointer;
                 margin-right: 1vw">
@@ -19,13 +19,6 @@
             margin-top: 15px; 
             margin-right: 15px;
             margin-left: 15px;">
-
-            <img class="thrillsburg-bottom-image" :src=imageTwoSrc
-            style="width: 25vw;
-            border-radius: 15px;
-            margin-top: 10px;
-            margin-left: 15px;
-            display: none;">
         </div>
     </div>
 </template>
@@ -45,7 +38,6 @@ export default defineComponent({
       'which dynamically pulls information from our database of recent events using a custom API. Working with our web designer, ' +
       'I delivered a solution which positions Thrillsburg as a modern, presentable, and user-friendly web app. ',
       imageOneSrc: 'img/thrillsburg_panel/logo.png',
-      imageTwoSrc: 'img/thrillsburg_panel/events_page.jpg',
       url: 'http://thrillsburg.com',
       expanded: false,
       darkMode: false
@@ -64,16 +56,13 @@ export default defineComponent({
     },
     expand () {
       document.querySelector('.thrillsburg-subtext').textContent = this.longText
-      document.querySelector('.thrillsburg-bottom-image').style.display = 'flex'
       this.expanded = true
     },
     condense () {
       document.querySelector('.thrillsburg-subtext').textContent = this.shortText
-      document.querySelector('.thrillsburg-bottom-image').style.display = 'none'
       this.expanded = false
     },
     mobileOn () {
-      document.querySelector('.thrillsburg-bottom-image').style.display  = 'none'
       document.querySelector('.thrillsburg-top-image').style.display = 'none'
       document.querySelector('.thrillsburg-left').style.width = '90%'
       document.querySelector('.thrillsburg-right').style.width = '0%'
@@ -83,6 +72,12 @@ export default defineComponent({
       document.querySelector('.thrillsburg-left').style.width = '45%'
       document.querySelector('.thrillsburg-left').style.marginLeft = '0vw'
       document.querySelector('.thrillsburg-right').style.width = '45%'
+    },
+    darkModeOn () {
+      return
+    },
+    darkModeOff () {
+      return
     }
   },
   computed: {
@@ -98,7 +93,7 @@ export default defineComponent({
       newVal ? this.mobileOn() : this.mobileOff()
     },
     isDarkMode (newVal) {
-      newVal ? this.darkMode = true : this.darkMode = false
+      newVal ? this.darkModeOn() : this.darkModeOff()
     }
   },
   mounted () {
