@@ -190,7 +190,7 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   position: fixed;
-  z-index: 1;
+  z-index: 10;
   width: 100vw;
   height: 11vh;
   transition: background-color 0.5s ease;

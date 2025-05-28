@@ -135,6 +135,37 @@ export default {
   align-items: center;
   text-align: center;
   font-size: 2em;
+  position: relative;
+  overflow: hidden;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/public/img/noise.png'); // Replace with your noise image path
+    opacity: 0.3; // Adjust the intensity of the grain effect
+    pointer-events: none; // Make sure clicks go through to the main content
+    mix-blend-mode: multiply; // Try different blend modes: multiply, overlay, screen
+    z-index: 1;
+    animation: noise 0.1s steps(20) infinite; // Creates subtle animation
+  }
+
+  @keyframes noise {
+    0% { transform: translate(0, 0); }
+    10% { transform: translate(-1%, -1%); }
+    20% { transform: translate(1%, 1%); }
+    30% { transform: translate(-1%, 1%); }
+    40% { transform: translate(1%, -1%); }
+    50% { transform: translate(-1%, 0%); }
+    60% { transform: translate(1%, 0%); }
+    70% { transform: translate(0%, 1%); }
+    80% { transform: translate(0%, -1%); }
+    90% { transform: translate(1%, -1%); }
+    100% { transform: translate(0, 0); }
+  }
 }
 
 .title {
