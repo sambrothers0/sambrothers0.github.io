@@ -25,7 +25,7 @@
       <article> 
         <h2 class="header">Something I don't know? Not for long</h2> 
         <p>
-          Computer science is one of the fastest changing industries, which is
+          Software development is one of the fastest changing industries, which is
           why it requires a neuroplastic brain to excel. I'm constantly learning and
           improving not just as a student, but as an engineer, and this is something
           I plan to never change.
@@ -146,7 +146,7 @@ export default {
     width: 100%;
     height: 100%;
     background-image: url('/public/img/noise.png'); // Replace with your noise image path
-    opacity: 0.3; // Adjust the intensity of the grain effect
+    opacity: 0.35; // Adjust the intensity of the grain effect
     pointer-events: none; // Make sure clicks go through to the main content
     mix-blend-mode: multiply; // Try different blend modes: multiply, overlay, screen
     z-index: 1;
@@ -168,9 +168,10 @@ export default {
   }
 }
 
-.title {
+#title {
   font-size: 3em;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  z-index: 2;
 } 
   
 .content {

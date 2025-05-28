@@ -191,8 +191,11 @@ export default {
       }
     
     },
-    toggleSize(index) {
-
+    expand(index) {
+  
+    },
+    condense(index) {
+  
     },
     async fetchData(repo) {
       try {
