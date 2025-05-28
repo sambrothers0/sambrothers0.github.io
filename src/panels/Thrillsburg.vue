@@ -10,10 +10,14 @@
                 margin-right: 1vw">
                 <h3> {{ date }} </h3>
             </div>
-            <p class='thrillsburg-subtext' style="font-size: 3vh; line-height: 4.5vh; font-family: 'Outfit', sans-serif"> {{ shortText }} </p>
+            <p class='thrillsburg-subtext' 
+            style="font-size: 3vh; line-height: 4.5vh; font-family: 'Outfit', sans-serif"> 
+            {{ shortText }} 
+            </p>
         </div>
         <div class="thrillsburg-right">
-            <img class="thrillsburg-top-image" :src=imageOneSrc 
+            <img class="thrillsburg-top-image" 
+            :src=imageOneSrc 
             style="width: 30vw; 
             border-radius: 15px; 
             margin-top: 15px; 
@@ -53,6 +57,7 @@ export default defineComponent({
     },
     handleNavigate () {
       window.open(this.url)
+      this.handleClick()
     },
     expand () {
       document.querySelector('.thrillsburg-subtext').textContent = this.longText

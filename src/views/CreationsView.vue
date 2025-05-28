@@ -11,7 +11,7 @@
       <img class="frame" src="img/gold_frame.png">
     </div>
     <div class="panels-wrapper">
-      <Thrillsburg/>
+    <Thrillsburg/>
       <div v-for="(title, index) in titles" :key="index" @click="toggleSize(index)" class="panel">
         <div v-if="index % 2 === 0">
           <div class="template-a template">
@@ -32,6 +32,7 @@
             </div>
             <div class="template-a-right">
                 <img class='template-a-image'
+                :src="this.thumbnails[index]"
                 style="height: 27vh;
                 border-radius: 15px;
                 margin-top: 1vh;
@@ -44,6 +45,7 @@
           <div class="template-b template">
             <div class="template-b-left">
               <img class='template-b-image'
+                :src="this.thumbnails[index]"
                 style="height: 27vh;
                 border-radius: 15px;
                 margin-top: 3vh;
@@ -117,7 +119,7 @@ export default {
         links[i].src = 'img/external_link_icon_light.png'
       }
     },
-    generateColors(grayEpsilon = 50, colorDifference = 80, seed = 42) {
+    generateColors(grayEpsilon = 50, colorDifference = 200, seed = 42) {
       let templates = document.querySelectorAll('.template')
       let generatedColors = [];  // Track previously generated colors
       const checkPrevious = 4;   // Number of previous colors to check against
