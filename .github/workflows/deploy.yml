@@ -32,5 +32,6 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}  # auto-injected by GitHub
+          github_token: ${{ secrets.MASTER_TOKEN }}  # auto-injected by GitHub
           publish_dir: ./dist  # or ./docs if using that
+          publish_branch: gh-pages
