@@ -1,0 +1,36 @@
+name: Build and Deploy Vue App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repo
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js environment
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'  # Match your local dev version
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: npm install  # or 'npm install' if you don't use lockfiles
+
+      # Step 4: Build the Vue app
+      - name: Build the app
+        run: npm run build
+
+      # Step 5: Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # auto-injected by GitHub
+          publish_dir: ./dist  # or ./docs if using that
