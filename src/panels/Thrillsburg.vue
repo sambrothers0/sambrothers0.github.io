@@ -77,12 +77,6 @@ export default defineComponent({
       document.querySelector('.thrillsburg-left').style.width = '45%'
       document.querySelector('.thrillsburg-left').style.marginLeft = '0vw'
       document.querySelector('.thrillsburg-right').style.width = '45%'
-    },
-    darkModeOn () {
-      return
-    },
-    darkModeOff () {
-      return
     }
   },
   computed: {
@@ -96,9 +90,6 @@ export default defineComponent({
   watch: {
     isMobile (newVal) {
       newVal ? this.mobileOn() : this.mobileOff()
-    },
-    isDarkMode (newVal) {
-      newVal ? this.darkModeOn() : this.darkModeOff()
     }
   },
   mounted () {

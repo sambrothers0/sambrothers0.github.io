@@ -2,8 +2,7 @@ TODO:
 
 dynamically pull and show projects from git in creations page
 
-sidebar: make it come out slightly further from the side so it
-works better on mobile, potentially remove
+chronologically order creations panels
 
 logo
 -animation (low priority)

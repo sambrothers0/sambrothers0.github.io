@@ -12,7 +12,7 @@
     </div>
     <div class="panels-wrapper">
     <Thrillsburg/>
-      <div v-for="(title, index) in titles" :key="index" @click="toggleSize(index)" class="panel">
+      <div v-for="(title, index) in titles" :key="index" @click="handleClick(index)" class="panel">
         <div v-if="index % 2 === 0">
           <div class="template-a template">
             <div class="template-a-left">
@@ -25,17 +25,17 @@
                   margin-right: 1vw">
                 <h3> {{ this.dates[index] }} </h3>
               </div>
-              <p class='template-a-info' 
+              <p class='template-a-info info' 
                 style="font-size: 3vh; line-height: 4.5vh; font-family: 'Outfit', sans-serif"> 
-                {{ this.shortInfos[index] }} 
+                {{ expanded[index] ? longInfos[index] : shortInfos[index] }} 
               </p>
             </div>
             <div class="template-a-right">
-                <img class='template-a-image'
+                <img class='template-a-image template-image'
                 :src="this.thumbnails[index]"
                 style="height: 27vh;
                 border-radius: 15px;
-                margin-top: 1vh;
+                margin-top: 2vh;
                 margin-left: 1vw;
                 transition: all 0.2s ease">
             </div>
@@ -44,7 +44,7 @@
         <div v-if="index % 2 === 1">
           <div class="template-b template">
             <div class="template-b-left">
-              <img class='template-b-image'
+              <img class='template-b-image template-image'
                 :src="this.thumbnails[index]"
                 style="height: 27vh;
                 border-radius: 15px;
@@ -61,9 +61,9 @@
                 margin-right: 1vw">
                 <h3> {{ this.dates[index] }} </h3>
               </div>
-              <p class='template-b-subtext' 
+              <p class='template-b-info info' 
                 style="font-size: 3vh; line-height: 4.5vh; font-family: 'Outfit', sans-serif"> 
-                {{ this.shortInfos[index] }} 
+                {{ expanded[index] ? longInfos[index] : shortInfos[index] }} 
               </p>
             </div>
           </div>
@@ -88,6 +88,7 @@ export default {
       dates: [],
       urls: [],
       thumbnails: [],
+      expanded: [],
       loading: true,
       error: null
     }
@@ -101,6 +102,7 @@ export default {
       if (this.loading) {
         return
       }
+      this.isMobile ? this.mobileOn() : this.mobileOff()
       this.isDarkMode ? this.darkMode() : this.lightMode()
     },
     lightMode () {
@@ -191,100 +193,85 @@ export default {
       }
     
     },
-    expand(index) {
-  
+    handleNavigate (index) {
+      window.open(this.urls[index], "_blank")
+      this.handleClick(index)
     },
-    condense(index) {
-  
+    handleClick (index) {
+      this.expanded[index] ? this.condense(index) : this.expand(index)
+      console.log('clicked on ' + index)
     },
-    async fetchData(repo) {
+    expand (index) {
+      this.expanded[index] = true
+    },
+    condense (index) {
+      this.expanded[index] = false
+    },
+    mobileOn () {
+      document.querySelectorAll('.template-image').forEach(img => {
+        img.style.display = 'none'
+      })
+      document.querySelectorAll('.template-a-left').forEach(el => {
+        el.style.width = '90%'
+      })
+      document.querySelectorAll('.template-a-right').forEach(el => {
+        el.style.width = '0%'
+      })
+      // TODO template b
+    },
+    mobileOff () {
+      document.querySelectorAll('.template-image').forEach(img => {
+        img.style.display = 'flex'
+      })
+      document.querySelectorAll('.template-a-left').forEach(el => {
+        el.style.width = '45%'
+      })
+      document.querySelectorAll('.template-a-left').forEach(el => {
+        el.style.marginLeft = '0vw'
+      })
+      document.querySelectorAll('.template-a-right').forEach(el => {
+        el.style.width = '45%'
+      })
+    },
+    async fetchData() {
+
       try {
-        const response = await fetch(`https://api.github.com/repos/${this.username}/${repo.name}/contents/pw-info.txt`);
-        
+        const response = await fetch('data/gh-data.json');
         if (!response.ok) {
-          return null;
+          throw new Error('Network response was not ok');
         }
-        
+
         const data = await response.json();
-        // GitHub returns txt content as base64 encoded
-        const content = atob(data.content);
-        const lines = content.split('\n');
 
-        this.titles.push(lines[0].trim());
-
-        let cutoff = 80;
-        let info = lines[1].trim();
-        if (info.length > cutoff) {
-          let shortInfo = info.substring(0, cutoff) + '...';
-          this.shortInfos.push(shortInfo);
-          this.longInfos.push(info);
-        } else {
-          this.shortInfos.push(info);
-          this.longInfos.push(info);
-        }
-
-        this.dates.push(lines[2].trim());
-
-      } catch (error) {
-        console.error(`Failed to fetch README for ${repo.name}:`, error);
-        
-      }
-    },
-    async fetchThumbnail(repo) {
-      try {
-        const response = await fetch(`https://api.github.com/repos/${this.username}/${repo.name}/contents/thumbnail.png`);
-        
-        if (!response.ok) {
-          return null;
-        }
-        
-        const data = await response.json();
-        // GitHub returns image content as base64 encoded
-        // For direct use in img src attribute
-        this.thumbnails.push(`data:image/png;base64,${data.content.replace(/\n/g, '')}`);
-      } catch (error) {
-        console.error(`Failed to fetch thumbnail for ${repo.name}:`, error);
-      }
-    },
-    async fetchGithubRepos() {
-      this.loading = true;
-      try {
-        const response = await fetch(`https://api.github.com/users/${this.username}/repos`);
-        
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status}`);
-        }
-        
-        const repos = await response.json();
-        
-        for (let i = 0; i < repos.length; i++) {
-          await this.fetchData(repos[i]);
-          await this.fetchThumbnail(repos[i]);
-          this.urls.push(repos[i].html_url);
-        }
-
-        console.log(this.titles);
-        console.log(this.shortInfos);
-        console.log(this.longInfos);
-        console.log(this.dates);
-        console.log(this.urls);
-        console.log(this.thumbnails);
-
-      } catch (error) {
-        this.error = error.message;
-        console.error('Failed to fetch repos:', error);
-      } finally {
+        this.titles = data.titles;
+        this.shortInfos = data.shortInfos;
+        this.longInfos = data.longInfos;
+        this.dates = data.dates;
+        this.urls = data.urls;
+        this.thumbnails = data.thumbnails;
+        this.expanded = Array(this.titles.length).fill(false);
         this.loading = false;
-        console.log('Fetched all repos');
+        this.error = null;
+
+        console.log('Fetched data: ', { titles: this.titles, shortInfos: this.shortInfos, longInfos: this.longInfos, dates: this.dates, urls: this.urls, thumbnails: this.thumbnails });
+      } catch (err) {
+        this.error = err.message || 'Failed to fetch data';
+        this.loading = false;
       }
     }
   },
   computed: {
+    isMobile () {
+      return this.$store.getters.isMobileOn
+    },
     isDarkMode () {
       return this.$store.getters.isDarkModeOn
     }
   },
   watch: {
+    isMobile (newVal) {
+      this.checkAppearance();
+    },
     isDarkMode (newVal) {
       this.checkAppearance();
     },
@@ -294,13 +281,14 @@ export default {
         // Wait for DOM to be updated
         this.$nextTick(() => {
           this.generateColors();
+          this.checkAppearance();
         });
       }
     }
   },
   mounted () {
     this.checkAppearance();
-    this.fetchGithubRepos();
+    this.fetchData();
     window.scrollTo(0, 0)
   },
   beforeRouteEnter (to, from, next) {
@@ -446,5 +434,6 @@ export default {
   height: 100%;
   width: 40%;
   margin-left: 20px;
+  margin-right: 20px;
 }
 </style>
