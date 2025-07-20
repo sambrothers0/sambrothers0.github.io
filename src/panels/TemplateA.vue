@@ -1,3 +1,4 @@
+<!-- IMAGE ON RIGHT -->
 <template>
     <div class="template-a" @click="handleClick">
         <div class="template-a-left">

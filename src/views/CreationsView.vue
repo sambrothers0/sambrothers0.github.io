@@ -11,7 +11,7 @@
       <img class="frame" src="img/gold_frame.png">
     </div>
     <div class="panels-wrapper">
-    <Thrillsburg/>
+      <Thrillsburg/>
       <div v-for="(title, index) in titles" :key="index" @click="handleClick(index)" class="panel">
         <div v-if="index % 2 === 0">
           <div class="template-a template">
@@ -81,7 +81,6 @@ export default {
   name: 'CreationsView',
   data() {
     return {
-      username: 'sambrothers0',
       titles: [],
       shortInfos: [],
       longInfos: [],
@@ -366,6 +365,7 @@ export default {
   border-radius: 35px;
   transition: transform 0.2s, box-shadow 0.2s, height 0.2s;
   margin-bottom: 50px;
+  padding-left: 30px;
 }
 
 .template-a:hover{
@@ -388,7 +388,7 @@ export default {
   width: 60%;
   flex-direction: column;
   text-align: left;
-  margin-left: 30px
+  margin-left: 30px;
   }
 
 .template-a-right{
@@ -435,5 +435,6 @@ export default {
   width: 40%;
   margin-left: 20px;
   margin-right: 20px;
+  margin-bottom: 30px;
 }
 </style>

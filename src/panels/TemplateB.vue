@@ -1,3 +1,4 @@
+<!-- IMAGE ON LEFT -->
 <template>
     <div class="template-a">
         <div class="template-a-left">
