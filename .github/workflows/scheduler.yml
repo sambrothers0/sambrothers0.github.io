@@ -1,0 +1,23 @@
+on:
+  schedule:
+    - cron: '0 9 * * *'  # daily at 9am UTC
+
+jobs:
+  update-json:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Scrape GH Repos
+        run: |
+          node scripts/scrape-gh.js
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+      
+          git add .
+          # Check if there's anything to commit
+          git diff --cached --quiet && echo "No changes, skipping commit." && exit 0
+      
+          git commit -m "chore(auto): Update JSON [CI]"
+          git push origin main
