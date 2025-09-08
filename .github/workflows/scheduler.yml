@@ -6,6 +6,10 @@ jobs:
   update-json:
     runs-on: ubuntu-latest
     steps:
+        # Check out the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
         # Set up Node.js environment
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -17,7 +21,6 @@ jobs:
           npm install
           
         #run
-      - uses: actions/checkout@v3
       - name: Scrape GH Repos
         run: |
           node scripts/gh-scraper.js
