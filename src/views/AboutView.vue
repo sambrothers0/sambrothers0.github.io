@@ -10,7 +10,7 @@
     </section>
     <section class="content"> 
       <article> 
-        <h2 class="header">Slop-free software, without hacks</h2> 
+        <h2 class="header">Slop-free software</h2> 
         <p>
           If there's one thing that bugs me, it's sloppy
           programming. That's why my code is future-proof,
@@ -23,7 +23,7 @@
         </p> 
       </article> 
       <article> 
-        <h2 class="header">Something I don't know? Not for long</h2> 
+        <h2 class="header">Keeping sharp</h2> 
         <p>
           Software development is one of the fastest changing industries, which is
           why it requires a neuroplastic brain to excel. I'm constantly learning and
@@ -40,7 +40,7 @@
       <article> 
         <h2 class="header">You could not pay me to do this...</h2> 
         <p>
-          No, really, I love what I do so much that I would do it for free if I could (I can't).
+          No, really, I love what I do so much that I would do it for free if I could.
         </p> 
         <p>
           I strive to see tasks through the eyes of my collaborators and their users, 
