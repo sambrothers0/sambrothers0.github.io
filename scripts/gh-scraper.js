@@ -101,9 +101,11 @@ async function fetchGithubRepos() {
     }
 
     for (let i = 0; i < allRepos.length; i++) {
-      await fetchData(allRepos[i]);
-      await fetchThumbnail(allRepos[i]);
-      urls.push(allRepos[i].html_url);
+      // if repo is missing info or thumbnail, dont add the url
+      // repo should be completely emitted from final json
+      if (await fetchData(allRepos[i]) && await fetchThumbnail(allRepos[i])) {
+        urls.push(allRepos[i].html_url);
+      }
     }
 
     // Sort all repo data reverse chronologically by dates
