@@ -143,7 +143,7 @@ export default {
     },
     handleClickResume () {
       setTimeout(() => {
-        window.open(this.resume, '_blank');
+        this.$router.push(this.resume);
       }, 150)
     },
     handleMouseEnterGitHub () {

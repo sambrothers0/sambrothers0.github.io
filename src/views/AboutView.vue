@@ -185,7 +185,7 @@ export default {
     border: 3px solid var(--indigo-color);
 
     h2 { 
-    font-size: 3.5em;
+    font-size: 1.5em;
     font-family: 'Niramit', sans-serif;
     margin-bottom: 0.5em;
     line-height: 1.5em;
