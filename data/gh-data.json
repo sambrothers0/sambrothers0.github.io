@@ -1,6 +1,5 @@
 {
   "titles": [
-    "50 States Accessibility Guide",
     "Class Dash",
     "Pong",
     "Ray Tracer",
@@ -11,7 +10,6 @@
     "Linked List"
   ],
   "shortInfos": [
-    "A dashboard for organizing state accessibilty rankings and information using the ...",
     "This game was made as a result of a team effort of 4 students during a 2-month ...",
     "This is a C++ version of the classic video game pong. It employs the SDL2 ...",
     "This is a program for rendering basic 3D shapes using ray tracing in C++. The ...",
@@ -22,7 +20,6 @@
     "This repository contains the Python code for a linked list implementation, which ..."
   ],
   "longInfos": [
-    "A dashboard for organizing state accessibilty rankings and information using the Python Dash library. It was created by 4 developers during the Competing Through Business Analytics graduate class at William & Mary, and practices web scraping and CSV managament for data visualization. Plotly is used for interactive graphs, and the entire website is accessible to anyone with a disability. This project was created entirely within one 48-hour sprint, challenging our programming, teamwork, and communication skills.",
     "This game was made as a result of a team effort of 4 students during a 2-month agile development period for the Game Design course at William & Mary in Spring 2025. In it, you play as a William & Mary senior during finals week who must rush across campus in order to get to your finals on time and graduate. Written in C++, this project was foundational in building my teamwork and version control skills, as well as sharpening my understanding of agile development in a deadline-filled environment.",
     "This is a C++ version of the classic video game pong. It employs the SDL2 library for rendering geometry, text, and audio. Starting from rudimentary skeleton files, I created this game within 2 weeks as an assignment for my Game Design course in Spring 2025. During development, I learned the basics of SDL2 for 2D graphics rendering, as well as other fundamental concepts in game design like game clocks, gameplay loops, and difficulty curves.",
     "This is a program for rendering basic 3D shapes using ray tracing in C++. The program reads in a text file continaing formatted information about the color and position of the shapes and light source, and stores them in a linked list using C++ pointers. It then uses ray tracing to render each object in space and perform realistic lighting calculations based on the position of the light source. With this project, I learned the underlying algorithms behind basic ray tracing which are used to render everything from video games to spaceship models.",
@@ -33,7 +30,6 @@
     "This repository contains the Python code for a linked list implementation, which I developed as part of my Data Structures class in the Fall of 2022. Users can append and remove elements from the list using simple commands in the terminal."
   ],
   "dates": [
-    "Sep 2025",
     "May 2025",
     "Mar 2025",
     "Nov 2024",
@@ -51,11 +47,9 @@
     null,
     null,
     null,
-    null,
     null
   ],
   "thumbnails": [
-    null,
     null,
     null,
     null,
