@@ -18,11 +18,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'  # Match your local dev version
+          node-version: '20'  
 
       # Step 3: Install dependencies
       - name: Install dependencies
-        run: npm install  # or 'npm install' if you don't use lockfiles
+        run: npm install  
 
       # Step 4: Build the Vue app
       - name: Build the app
@@ -33,5 +33,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.MASTER_TOKEN }}  # auto-injected by GitHub
-          publish_dir: ./dist  # or ./docs if using that
+          publish_dir: ./dist  
           publish_branch: gh-pages
