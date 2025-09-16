@@ -12,11 +12,11 @@ jobs:
     steps:
       # Step 1: Check out the repo
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
 
       # Step 2: Set up Node.js environment
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v5
         with:
           node-version: '20'  
 
@@ -30,7 +30,7 @@ jobs:
 
       # Step 5: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.MASTER_TOKEN }}  # auto-injected by GitHub
           publish_dir: ./dist  
