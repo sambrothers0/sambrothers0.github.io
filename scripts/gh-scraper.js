@@ -54,6 +54,7 @@ async function fetchData(repo) {
   } catch (error) {
     console.error(`Failed to fetch pw-info.txt for ${repo.name}:`, error);
   }
+  return true;
 }
 
 async function fetchThumbnail(repo) {
@@ -74,6 +75,7 @@ async function fetchThumbnail(repo) {
   } catch (error) {
     console.error(`Failed to fetch thumbnail for ${repo.name}:`, error);
   }
+  return true;
 }
 
 async function fetchGithubRepos() {
