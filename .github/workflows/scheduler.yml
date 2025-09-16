@@ -1,6 +1,7 @@
 on:
   schedule:
     - cron: '0 9 * * *'  # daily at 9am UTC
+  workflow_dispatch:
 
 jobs:
   update-json:
