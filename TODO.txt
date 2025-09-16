@@ -2,7 +2,7 @@ TODO:
 
 dynamically pull and show projects from git in creations page
 
-chronologically order creations panels
+add docs, specifically for any automated processes
 
 logo
 -animation (low priority)
