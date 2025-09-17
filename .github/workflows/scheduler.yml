@@ -1,3 +1,5 @@
+name: Scheduled GH Repo Scraper and Deploy
+
 on:
   schedule:
     - cron: '0 9 * * *'  # daily at 9am UTC
