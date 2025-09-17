@@ -35,6 +35,9 @@ jobs:
           git commit -m "chore(auto): Update Creations JSON [CI]"
           git push
 
+      - name: Build the app
+        run: npm run build
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
