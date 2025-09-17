@@ -49,6 +49,13 @@ async function fetchData(repo) {
       shortInfos.push(info);
     }
     longInfos.push(info);
+    // If line 4 exists and is a non-empty custom URL, use it instead of repo URL
+    let customUrl = lines[3] && lines[3].trim() ? lines[3].trim() : null;
+    if (customUrl) {
+      urls.push(customUrl);
+    } else {
+      urls.push(repo.html_url);
+    }
 
     dates.push(lines[2].trim());
   } catch (error) {
@@ -105,9 +112,8 @@ async function fetchGithubRepos() {
     for (let i = 0; i < allRepos.length; i++) {
       // if repo is missing info or thumbnail, dont add the url
       // repo should be completely emitted from final json
-      if (await fetchData(allRepos[i]) && await fetchThumbnail(allRepos[i])) {
-        urls.push(allRepos[i].html_url);
-      }
+      await fetchData(allRepos[i]);
+      await fetchThumbnail(allRepos[i]);
     }
 
     // Sort all repo data reverse chronologically by dates
