@@ -1,4 +1,4 @@
-name: Scheduled GH Repo Scraper and Deploy
+name: Schedule GH Repo Scraper and Deploy
 
 on:
   schedule:
