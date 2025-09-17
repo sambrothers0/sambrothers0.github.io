@@ -11,25 +11,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out the repo
       - name: Checkout code
         uses: actions/checkout@v5
 
-      # Step 2: Set up Node.js environment
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
           node-version: '20'  
 
-      # Step 3: Install dependencies
       - name: Install dependencies
         run: npm install  
 
-      # Step 4: Build the Vue app
       - name: Build the app
         run: npm run build
 
-      # Step 5: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:

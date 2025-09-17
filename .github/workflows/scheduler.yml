@@ -7,11 +7,9 @@ jobs:
   update-json:
     runs-on: ubuntu-latest
     steps:
-        # Check out the repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
-        # Set up Node.js environment
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -20,12 +18,10 @@ jobs:
       - name: Install dependencies
         run: npm install
           
-        #run
       - name: Scrape GH Repos
         run: |
           node scripts/gh-scraper.js
-          
-        #push
+
       - name: Commit and push changes
         run: |
           git config --global user.name "github-actions"
@@ -34,6 +30,13 @@ jobs:
           git add .
           git diff --cached --quiet && echo "No changes, skipping commit." && exit 0
       
-          git commit -m "chore(auto): Update JSON [CI]"
+          git commit -m "chore(auto): Update Creations JSON [CI]"
           git push https://x-access-token:${{ secrets.MASTER_TOKEN }}@github.com/${{ github.repository }} HEAD:main
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.MASTER_TOKEN }}  # auto-injected by GitHub
+          publish_dir: ./dist  
+          publish_branch: gh-pages
 
