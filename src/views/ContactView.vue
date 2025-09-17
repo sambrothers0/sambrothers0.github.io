@@ -53,7 +53,7 @@ export default {
     return {
       mouseX: 0,
       mouseY: 0,
-      email: 'samjbrothers@icloud.com',
+      email: 'samueljbrothers@gmail.com',
       phone: '+1 (919) 407-9965',
       resume: '/resume',
       github: 'https://github.com/sambrothers0',
@@ -143,7 +143,7 @@ export default {
     },
     handleClickResume () {
       setTimeout(() => {
-        this.$router.push(this.resume);
+        window.open(this.resume, '_blank');
       }, 150)
     },
     handleMouseEnterGitHub () {
