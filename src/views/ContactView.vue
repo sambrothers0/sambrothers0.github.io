@@ -142,9 +142,7 @@ export default {
       document.querySelector('.vitae-text').textContent = 'V'
     },
     handleClickResume () {
-      setTimeout(() => {
-        window.open(this.resume, '_blank');
-      }, 150)
+      window.open('https://1drv.ms/w/c/4d1885aa6fad65aa/IQTU8a0EucbURKlWM0CNlJibAfL-NHI8lnmzYYAUx9rnWnM', '_blank');
     },
     handleMouseEnterGitHub () {
       setTimeout(() => {
