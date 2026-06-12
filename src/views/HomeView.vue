@@ -2,7 +2,8 @@
   <UpperToolbar/>
   <SideBar/>
   <div class="section" id="upper-section">
-    <img src='img/dark_cover_image.png' class="upper-img"/>
+    <img src='img/cover_image.png' class="upper-img"/>
+    <h1 class="name">Sam Brothers</h1>
     <h1 class="header">Software Developer</h1>
   </div>
   <div class="section" id="middle-section">
@@ -39,9 +40,10 @@ export default {
   name: 'HomeView',
   data () {
     return {
-      textItems: ["I'm Sam Brothers, a software developer and computer science student at William & Mary",
-        'My skills range from front-end design to data structures and algorithms. My passion is uncovering elegant solutions to problems and creating beautiful, functional things like this website',
-        "Currently I'm pursuing my Masters in Business Analytics, and I love ultimate frisbee, good food, and travel"]
+      textItems: ["I'm Sam, a software developer based in Chapel Hill, NC.",
+        "My skills range from front-end design to data engineering and analytics.",
+        "My passion is uncovering elegant solutions to problems and creating engaging and functional user experiences.",
+        "Whenever I'm not coding, I'm likely pursuing my love of ultimate frisbee, good food, and travel"]
     }
   },
   methods: {
@@ -55,13 +57,11 @@ export default {
     darkMode () {
       var upperSection = document.getElementById('upper-section')
       var middleSection = document.getElementById('middle-section')
-      var image = document.querySelector('.upper-img')
       
       upperSection.style.backgroundColor = 'var(--dark-color)'
       upperSection.style.color = 'var(--light-color)'
       middleSection.style.backgroundColor = 'var(--dark-color)'
       middleSection.style.color = 'var(--light-color)'
-      image.src = 'img/dark_cover_image.png'
       
       var lowerSection = document.getElementById('lower-section')
       var panels = document.getElementsByClassName('panel')
@@ -80,13 +80,11 @@ export default {
     lightMode () {
       var upperSection = document.getElementById('upper-section')
       var middleSection = document.getElementById('middle-section')
-      var image = document.querySelector('.upper-img')
 
       upperSection.style.backgroundColor = 'var(--light-color)'
       upperSection.style.color = 'var(--dark-color)'
       middleSection.style.backgroundColor = 'var(--light-color)'
       middleSection.style.color = 'var(--dark-color)'
-      image.src = 'img/light_cover_image.png'
       
       var lowerSection = document.getElementById('lower-section')
       lowerSection.style.backgroundColor = 'var(--light-color)'
@@ -140,13 +138,17 @@ export default {
   transition: all 0.5s ease;
 }
 .upper-img{
-  width: 80%;
+  width: 30%;
+}
+.name{
+  margin: 50px;
+  font-size: 8vw;
+  line-height: 4vw;
 }
 .header{
   margin: 0px;
-  padding-top: 70px;
   padding-bottom: 50px;
-  font-size: 8vw;
+  font-size: 4vw;
   line-height: 12vw
 }
 #middle-section {

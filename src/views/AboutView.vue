@@ -15,8 +15,6 @@
           If there's one thing that bugs me, it's sloppy
           programming. That's why my code is future-proof,
           modular, and adaptable. 
-        </p>
-        <p>
           Working with me, we'll spend less time
           rewriting clunky code and more time
           pushing awesome features.
@@ -27,10 +25,7 @@
         <p>
           Software development is one of the fastest changing industries, which is
           why it requires a neuroplastic brain to excel. I'm constantly learning and
-          improving not just as a student, but as an engineer, and this is something
-          I plan to never change.
-        </p>
-        <p>
+          improving as an engineer, and this is something that won't change.
           My rigorous coursework at William & Mary and industry experience have
           exposed me to numerous projects, languages, frameworks, libraries, and modules -
           all of which I leverage effectively to
@@ -40,13 +35,12 @@
       <article> 
         <h2 class="header">You could not pay me to do this...</h2> 
         <p>
-          No, really, I love what I do so much that I would do it for free if I could.
-        </p> 
-        <p>
+          I love what I do so much that I would do it for free if I could.
           I strive to see tasks through the eyes of my collaborators and their users, 
           because I have a profound passion for discovering solutions that work for people.
         </p> 
       </article> 
+      <!-- remove or rework? -->
       <div class="slogan"> Let your problem be the next one I solve </div> 
     </section>
   </div>
