@@ -11,13 +11,6 @@ const path = require('path');
 const username = 'sambrothers0';
 const githubToken = process.env.GITHUB_TOKEN;
 
-const titles = [];
-const shortInfos = [];
-const longInfos = [];
-const dates = [];
-const urls = [];
-const thumbnails = [];
-
 async function fetchData(repo) {
   try {
     const response = await fetch(
@@ -36,32 +29,33 @@ async function fetchData(repo) {
     const content = Buffer.from(data.content, 'base64').toString('utf-8');
     const lines = content.split('\n');
 
-    titles.push(lines[0].trim());
+    const title = lines[0].trim();
 
     let cutoff = 80;
     let info = lines[1].trim();
+    let shortInfo;
     if (info.length > cutoff) {
       let lastSpaceIndex = info.lastIndexOf(' ', cutoff);
       let breakPoint = lastSpaceIndex > 0 ? lastSpaceIndex : cutoff;
-      let shortInfo = info.substring(0, breakPoint) + ' ...';
-      shortInfos.push(shortInfo);
+      shortInfo = info.substring(0, breakPoint) + ' ...';
     } else {
-      shortInfos.push(info);
+      shortInfo = info;
     }
-    longInfos.push(info);
     // If line 4 exists and is a non-empty custom URL, use it instead of repo URL
     let customUrl = lines[3] && lines[3].trim() ? lines[3].trim() : null;
-    if (customUrl) {
-      urls.push(customUrl);
-    } else {
-      urls.push(repo.html_url);
-    }
+    const url = customUrl || repo.html_url;
 
-    dates.push(lines[2].trim());
+    return {
+      title,
+      shortInfo,
+      longInfo: info,
+      date: lines[2].trim(),
+      url
+    };
   } catch (error) {
     console.error(`Failed to fetch pw-info.txt for ${repo.name}:`, error);
+    return null;
   }
-  return true;
 }
 
 async function fetchThumbnail(repo) {
@@ -78,11 +72,11 @@ async function fetchThumbnail(repo) {
       return null;
     }
     const data = await response.json();
-    thumbnails.push(`data:image/png;base64,${data.content.replace(/\n/g, '')}`);
+    return `data:image/png;base64,${data.content.replace(/\n/g, '')}`;
   } catch (error) {
     console.error(`Failed to fetch thumbnail for ${repo.name}:`, error);
+    return null;
   }
-  return true;
 }
 
 async function fetchGithubRepos() {
@@ -109,22 +103,19 @@ async function fetchGithubRepos() {
       page++;
     }
 
+    const repoData = [];
     for (let i = 0; i < allRepos.length; i++) {
-      // if repo is missing info or thumbnail, dont add the url
-      // repo should be completely emitted from final json
-      await fetchData(allRepos[i]);
-      await fetchThumbnail(allRepos[i]);
+      // if repo is missing info or thumbnail, dont add it at all
+      // repo should be completely omitted from final json
+      const info = await fetchData(allRepos[i]);
+      const thumbnail = await fetchThumbnail(allRepos[i]);
+      if (!info || !thumbnail) {
+        continue;
+      }
+      repoData.push({ ...info, thumbnail });
     }
 
     // Sort all repo data reverse chronologically by dates
-    const repoData = titles.map((title, idx) => ({
-      title,
-      shortInfo: shortInfos[idx],
-      longInfo: longInfos[idx],
-      date: dates[idx],
-      url: urls[idx],
-      thumbnail: thumbnails[idx]
-    }));
     repoData.sort((a, b) => {
       // Try to parse as Date, fallback to string compare
       const dateA = new Date(a.date);
