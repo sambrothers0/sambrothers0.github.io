@@ -37,7 +37,7 @@ export default defineComponent({
       'During development, I followed the Model-View-Controller artitecture in order to build a complete, functional, and bug-free desktop app ' +
       'with a leaderboard, settings, info screen and other features. This project demonstrated the complexity of even a ' +
       'simple desktop app, and the organizaitonal skills necessary to execute it. ',
-      imageOneSrc: 'img/connectn/connectn_board.png',
+      imageOneSrc: '/img/connectn/connectn_board.png',
       url: 'https://github.com/sambrothers0/ConnectNGUI',
       expanded: false
     }

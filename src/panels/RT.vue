@@ -36,7 +36,7 @@ export default defineComponent({
       'position of the shapes and light source, and creates a linked list using C++ pointers. ' +
       'It then uses ray tracing to render each object in space and perform realistic lighting ' +
       'calculations based on the position of the light source.',
-      imageOneSrc: 'img/RT/rt.jpg',
+      imageOneSrc: '/img/RT/rt.jpg',
       url: 'https://github.com/sambrothers0/ray-tracer',
       expanded: false
     }

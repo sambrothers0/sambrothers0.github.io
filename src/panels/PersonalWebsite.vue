@@ -36,8 +36,8 @@ export default defineComponent({
       'create clean and appealing web front-ends. With full mobile compatability, this website employs Vue 3, ' +
       'using the Vue store and router for complex ' +
       'state management and single-page routing. ',
-      imageOneSrc: 'img/personal_website/logo.png',
-      imageTwoSrc: 'img/personal_website/cover_banner.png',
+      imageOneSrc: '/img/personal_website/logo.png',
+      imageTwoSrc: '/img/personal_website/cover_banner.png',
       url: 'https://github.com/sambrothers0/sambrothers0.github.io',
       expanded: false
     }

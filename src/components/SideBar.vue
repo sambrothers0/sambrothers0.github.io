@@ -25,12 +25,12 @@ export default defineComponent({
       }
     },
     lightMode () {
-      document.querySelector('.img').src = 'img/side_bar_indigo.png'
+      document.querySelector('.img').src = '/img/side_bar_indigo.png'
       document.querySelector('.date-wrapper').style.color = 'var(--indigo-color)'
       document.querySelector('.location-wrapper').style.color = 'var(--indigo-color)'
     },
     darkMode () {
-      document.querySelector('.img').src = 'img/side_bar_gold.png'
+      document.querySelector('.img').src = '/img/side_bar_gold.png'
       document.querySelector('.date-wrapper').style.color = 'var(--gold-color)'
       document.querySelector('.location-wrapper').style.color = 'var(--gold-color)'
     }

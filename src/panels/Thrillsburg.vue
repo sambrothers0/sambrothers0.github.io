@@ -4,7 +4,7 @@
             <h1 style="font-size: 40px; margin-top: 3vh"> {{ title }} </h1>
             <div class="line-two-wrapper">
                 <img class="external-link" @click="handleNavigate"
-                :src="darkMode ? 'img/external_link_icon_light.png' : 'img/external_link_icon_dark.png'"
+                :src="darkMode ? '/img/external_link_icon_light.png' : '/img/external_link_icon_dark.png'"
                 style="height: 50%;
                 cursor: pointer;
                 margin-right: 1vw">
@@ -41,7 +41,7 @@ export default defineComponent({
       'Using Vue.js, with the Quasar wrapper for versatile user compatability, I implemented a functional web frontend ' +
       'which dynamically pulls information from our database of recent events using a custom API. Working with our web designer, ' +
       'I delivered a solution which positions Thrillsburg as a modern, presentable, and user-friendly web app. ',
-      imageOneSrc: 'img/thrillsburg_panel/logo.png',
+      imageOneSrc: '/img/thrillsburg_panel/logo.png',
       url: 'http://thrillsburg.com',
       expanded: false,
       darkMode: false
