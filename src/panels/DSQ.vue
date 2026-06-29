@@ -35,8 +35,8 @@ export default defineComponent({
       'Using Python, I made two different programs with identical functionality, but different structures: one array-based, ' +
       'and one with a custom linked list I made from scratch. Upon completion, ' +
       'I learned about the benefits and drawbacks of each implementation.',
-      imageOneSrc: 'img/DSQ/deque.png',
-      imageTwoSrc: 'img/DSQ/stack.png',
+      imageOneSrc: '/img/DSQ/deque.png',
+      imageTwoSrc: '/img/DSQ/stack.png',
       url: 'https://github.com/sambrothers0/Stack_Queue_Deque',
       expanded: false
     }

@@ -22,7 +22,7 @@ jobs:
           
       - name: Scrape GH Repos
         run: |
-          node scripts/gh-scraper.js
+          node scripts/gh-scraper.cjs
 
       - name: Commit and push changes
         run: |

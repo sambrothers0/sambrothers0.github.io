@@ -2,13 +2,13 @@
 <div id="cover-banner">
     <div id="home-button-container">
         <button @click="navigateHome" id="home-button">
-            <img src="img/website_icon.png" id="home-button-image"/>
+            <img src="/img/website_icon.png" id="home-button-image"/>
         </button>
     </div>
     <NavigationBar class="navigation-bar"/>
     <div id="appearance-button-container">
         <button @click="toggleDarkMode" id="appearance-button">
-            <img src="img/dark_button.png" id="appearance-button-image"/>
+            <img src="/img/dark_button.png" id="appearance-button-image"/>
         </button>
     </div>
 </div>
@@ -48,7 +48,7 @@ export default defineComponent({
       appearanceButton.style.border = '3px solid var(--light-color)'
 
       var appearanceButtonImage = document.getElementById('appearance-button-image')
-      appearanceButtonImage.src = 'img/light_button.png'
+      appearanceButtonImage.src = '/img/light_button.png'
     },
     lightMode () {
       var coverBanner = document.getElementById('cover-banner')
@@ -65,7 +65,7 @@ export default defineComponent({
       appearanceButton.style.border = '3px solid var(--dark-color)'
 
       var appearanceButtonImage = document.getElementById('appearance-button-image')
-      appearanceButtonImage.src = 'img/dark_button.png'
+      appearanceButtonImage.src = '/img/dark_button.png'
     },
     getAspectRatio () {
       return (window.innerWidth / window.innerHeight)

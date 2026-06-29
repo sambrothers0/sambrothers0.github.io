@@ -36,7 +36,7 @@ export default defineComponent({
       'since the tree automatically detects lopsidedness and rebalances itself to maintain the quickest performance. ' +
       'During the implementation, I learned about heaps and trees as a means of organizing data, ' +
       "and discovered the mechanism behind one of computer science's most important inventions. ",
-      imageOneSrc: 'img/BST/BST.png',
+      imageOneSrc: '/img/BST/BST.png',
       url: 'https://github.com/sambrothers0/Binary-Search-Tree',
       expanded: false
     }

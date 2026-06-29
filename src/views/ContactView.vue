@@ -4,32 +4,32 @@
   <div class="contact" id="master">
     <div class='title'>
       <h1 style="font-size: 8vw; font-weight: 100; margin-bottom: 0px;">Contact</h1>
-      <img style="width: 30vw; margin-left: 10vw" src="img/gold_divider_bar.png" >
+      <img style="width: 30vw; margin-left: 10vw" src="/img/gold_divider_bar.png" >
     </div>
     <img class="paper-airplane-img">
     <div class="link-wrapper">
       <div class="email-container" id="email">
         <button class="email-button" @click="handleClickEmail" @mouseenter="handleMouseEnterEmail" @mouseleave="handleMouseLeaveEmail">
-          <img class="email-img" src="img/mail_icon_light.png">
+          <img class="email-img" src="/img/mail_icon_light.png">
         </button>
       </div>
       <div class="resume-container" id="resume">
         <div class="resume-button" @click="handleClickResume" @mouseenter="handleMouseEnterResume" @mouseleave="handleMouseLeaveResume">
-          <img class="resume-img" src="img/resume_icon_light.png">
+          <img class="resume-img" src="/img/resume_icon_light.png">
           <p class="curriculum-text">C</p>
           <p class="vitae-text">V</p>
         </div>
       </div>
       <div class="github-container" id="github">
         <div class="github-button" @click="handleClickGitHub" @mouseenter="handleMouseEnterGitHub" @mouseleave="handleMouseLeaveGitHub">
-          <img class="github-img" src="img/github_icon_light.png">
+          <img class="github-img" src="/img/github_icon_light.png">
           <p class="git-text">G</p>
           <p class="hub-text">H</p>
         </div>
       </div>
       <div class="linkedin-container" id="linkedin">
         <div class="linkedin-button" @click="handleClickLinkedIn" @mouseenter="handleMouseEnterLinkedIn" @mouseleave="handleMouseLeaveLinkedIn">
-          <img class="linkedin-img" src="img/linkedin_icon_light.png">
+          <img class="linkedin-img" src="/img/linkedin_icon_light.png">
           <p class="linked-text">L</p>
           <p class="in-text">I</p>
         </div>
@@ -67,12 +67,12 @@ export default {
     lightMode () {
       document.getElementById('master').style.backgroundColor = 'var(--light-color)'
       document.querySelector('.title').style.color = 'var(--dark-color)'
-      document.querySelector('.paper-airplane-img').src = 'img/paper_airplane_dark.png'
+      document.querySelector('.paper-airplane-img').src = '/img/paper_airplane_dark.png'
     },
     darkMode () {
       document.getElementById('master').style.backgroundColor = 'var(--dark-color)'
       document.querySelector('.title').style.color = 'var(--light-color)'
-      document.querySelector('.paper-airplane-img').src = 'img/paper_airplane_light.png'
+      document.querySelector('.paper-airplane-img').src = '/img/paper_airplane_light.png'
     },
     updateMousePosition (event) {
       this.mouseX = event.clientX
@@ -115,7 +115,7 @@ export default {
       button.innerHTML = ''
 
       var img = document.createElement('img')
-      img.src = 'img/mail_icon_light.png'
+      img.src = '/img/mail_icon_light.png'
       img.height = '70'
       button.appendChild(img)
     },

@@ -2,7 +2,10 @@
   <UpperToolbar/>
   <SideBar/>
   <div class="section" id="upper-section">
-    <img src='img/cover_image.png' class="upper-img"/>
+    <picture>
+      <source srcset="/img/cover_image.webp" type="image/webp"/>
+      <img src='/img/cover_image_1600.png' class="upper-img" alt="Sam Brothers" fetchpriority="high" decoding="async"/>
+    </picture>
     <h1 class="name">Sam Brothers</h1>
     <h1 class="header">Software Developer</h1>
   </div>
@@ -73,9 +76,9 @@ export default {
         panels[i].style.color = 'var(--light-color)'
       }
 
-      document.querySelector('.info-icon').src = 'img/info_icon_light.png'
-      document.querySelector('.code-icon').src = 'img/code_icon_light.png'
-      document.querySelector('.elipsis-bubble-icon').src = 'img/elipsis_bubble_icon_light.png'
+      document.querySelector('.info-icon').src = '/img/info_icon_light.png'
+      document.querySelector('.code-icon').src = '/img/code_icon_light.png'
+      document.querySelector('.elipsis-bubble-icon').src = '/img/elipsis_bubble_icon_light.png'
     },
     lightMode () {
       var upperSection = document.getElementById('upper-section')
@@ -95,9 +98,9 @@ export default {
       for (let i = 0; i < panels.length; i++) {
         panels[i].style.color = 'var(--dark-color)'
       }
-      document.querySelector('.info-icon').src = 'img/info_icon_dark.png'
-      document.querySelector('.code-icon').src = 'img/code_icon_dark.png'
-      document.querySelector('.elipsis-bubble-icon').src = 'img/elipsis_bubble_icon_dark.png'
+      document.querySelector('.info-icon').src = '/img/info_icon_dark.png'
+      document.querySelector('.code-icon').src = '/img/code_icon_dark.png'
+      document.querySelector('.elipsis-bubble-icon').src = '/img/elipsis_bubble_icon_dark.png'
     },
     navigateAbout() {
       this.$router.push('/about')
@@ -139,6 +142,9 @@ export default {
 }
 .upper-img{
   width: 30%;
+}
+#upper-section picture{
+  display: contents;
 }
 .name{
   margin: 50px;

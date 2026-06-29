@@ -8,7 +8,7 @@
         color: isDarkMode ? 'var(--light-color)' : 'var(--dark-color)' }">
     <h1 class="title"> Creations </h1>
     <div class="frame-wrapper">
-      <img class="frame" src="img/gold_frame.png">
+      <img class="frame" src="/img/gold_frame.png">
     </div>
     <div class="panels-wrapper">
       <Thrillsburg/>
@@ -19,7 +19,7 @@
               <h1 style="font-size: 40px; margin-top: 3vh"> {{ this.titles[index] }} </h1>
               <div class="a-line-two-wrapper">
                 <img class="external-link" @click="handleNavigate(index)"
-                  :src="isDarkMode ? 'img/external_link_icon_light.png' : 'img/external_link_icon_dark.png'"
+                  :src="isDarkMode ? '/img/external_link_icon_light.png' : '/img/external_link_icon_dark.png'"
                   style="height: 50%;
                   cursor: pointer;
                   margin-right: 1vw">
@@ -55,7 +55,7 @@
               <h1 style="font-size: 40px; margin-top: 3vh"> {{ this.titles[index] }} </h1>
               <div class="b-line-two-wrapper">
                 <img class="external-link" @click="handleNavigate(index)"
-                :src="isDarkMode ? 'img/external_link_icon_light.png' : 'img/external_link_icon_dark.png'"
+                :src="isDarkMode ? '/img/external_link_icon_light.png' : '/img/external_link_icon_dark.png'"
                 style="height: 50%;
                 cursor: pointer;
                 margin-right: 1vw">
@@ -109,7 +109,7 @@ export default {
       document.getElementById('master').style.color = 'var(--dark-color)'
       const links = document.querySelectorAll('.external-link')
       for (let i = 0; i < links.length; i++) {
-        links[i].src = 'img/external_link_icon_dark.png'
+        links[i].src = '/img/external_link_icon_dark.png'
       }
     },
     darkMode () {
@@ -117,7 +117,7 @@ export default {
       document.getElementById('master').style.color = 'var(--light-color)'
       const links = document.querySelectorAll('.external-link')
       for (let i = 0; i < links.length; i++) {
-        links[i].src = 'img/external_link_icon_light.png'
+        links[i].src = '/img/external_link_icon_light.png'
       }
     },
     generateColors(grayEpsilon = 50, colorDifference = 200, seed = 42) {
@@ -235,7 +235,7 @@ export default {
     async fetchData() {
 
       try {
-        const response = await fetch('data/gh-data.json');
+        const response = await fetch('/data/gh-data.json');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

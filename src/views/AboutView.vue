@@ -5,12 +5,12 @@
     <section class="hero"> 
       <div id='title'>
         <h1 style="font-size: 6vw; font-weight: 400; color: #bebebe">Who is Sam Brothers?</h1>
-        <img style="width: 30vw; transform: rotate(180deg)" src="img/gold_divider_bar.png" >
+        <img style="width: 30vw; transform: rotate(180deg)" src="/img/gold_divider_bar.png" >
       </div>
     </section>
     <section class="content"> 
       <article> 
-        <h2 class="header">Slop-free software</h2> 
+        <h2 class="header">Quality</h2> 
         <p>
           If there's one thing that bugs me, it's sloppy
           programming. That's why my code is future-proof,
@@ -21,7 +21,7 @@
         </p> 
       </article> 
       <article> 
-        <h2 class="header">Keeping sharp</h2> 
+        <h2 class="header">Progress</h2> 
         <p>
           Software development is one of the fastest changing industries, which is
           why it requires a neuroplastic brain to excel. I'm constantly learning and
@@ -33,7 +33,7 @@
         </p> 
       </article> 
       <article> 
-        <h2 class="header">You could not pay me to do this...</h2> 
+        <h2 class="header">Passion</h2> 
         <p>
           I love what I do so much that I would do it for free if I could.
           I strive to see tasks through the eyes of my collaborators and their users, 
@@ -121,7 +121,8 @@ export default {
 
 .hero { 
   height: 100vh;
-  background-image: url('/public/img/wren_building.png');
+  background-image: url('/img/wren_building.png');
+  background-image: image-set(url('/img/wren_building.webp') type('image/webp'), url('/img/wren_building.png') type('image/png'));
   background-size: cover;
   background-position: center;
   display: flex;
@@ -139,7 +140,8 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('/public/img/noise.png'); // Replace with your noise image path
+    background-image: url('/img/noise.png');
+    background-image: image-set(url('/img/noise.webp') type('image/webp'), url('/img/noise.png') type('image/png')); // grain overlay
     opacity: 0.35; // Adjust the intensity of the grain effect
     pointer-events: none; // Make sure clicks go through to the main content
     mix-blend-mode: multiply; // Try different blend modes: multiply, overlay, screen
