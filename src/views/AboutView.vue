@@ -122,6 +122,7 @@ export default {
 .hero { 
   height: 100vh;
   background-image: url('/img/wren_building.png');
+  background-image: image-set(url('/img/wren_building.webp') type('image/webp'), url('/img/wren_building.png') type('image/png'));
   background-size: cover;
   background-position: center;
   display: flex;
@@ -139,7 +140,8 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('/img/noise.png'); // Replace with your noise image path
+    background-image: url('/img/noise.png');
+    background-image: image-set(url('/img/noise.webp') type('image/webp'), url('/img/noise.png') type('image/png')); // grain overlay
     opacity: 0.35; // Adjust the intensity of the grain effect
     pointer-events: none; // Make sure clicks go through to the main content
     mix-blend-mode: multiply; // Try different blend modes: multiply, overlay, screen
