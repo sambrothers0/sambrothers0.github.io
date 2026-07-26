@@ -11,6 +11,8 @@
       <img class="frame" src="/img/gold_frame.png">
     </div>
     <div class="panels-wrapper">
+      <!-- Hand-written panels for projects the GH scraper can't see (non-sambrothers0 repos) -->
+      <Hearth/>
       <Thrillsburg/>
       <div v-for="(title, index) in titles" :key="index" @click="handleClick(index)" class="panel">
         <div v-if="index % 2 === 0">
@@ -76,6 +78,7 @@
 <script>
 import UpperToolbar from '@/components/UpperToolbar.vue'
 import Thrillsburg from '@/panels/Thrillsburg.vue'
+import Hearth from '@/panels/Hearth.vue'
 
 export default {
   name: 'CreationsView',
@@ -94,7 +97,8 @@ export default {
   },
   components: {
     UpperToolbar,
-    Thrillsburg
+    Thrillsburg,
+    Hearth
   },
   methods: {
     checkAppearance () {
