@@ -1,15 +1,19 @@
 <template>
     <div id="nav-bar">
-        <button @click="navigateHome" class="nav-button" id="bar-home-button">
+        <button @click="navigateHome" class="nav-button"
+            :class="{ active: activePath === '/' }">
             Home
         </button>
-        <button @click="navigateAbout" class="nav-button" id="bar-about-button">
+        <button @click="navigateAbout" class="nav-button"
+            :class="{ active: activePath === '/about' }">
             About
         </button>
-        <button @click="navigateCreations" class="nav-button" id="bar-creations-button">
+        <button @click="navigateCreations" class="nav-button"
+            :class="{ active: activePath === '/creations' }">
             Creations
         </button>
-        <button @click="navigateContact" class="nav-button" id="bar-contact-button">
+        <button @click="navigateContact" class="nav-button"
+            :class="{ active: activePath === '/contact' }">
             Contact
         </button>
     </div>
@@ -22,29 +26,6 @@ import { useRoute } from 'vue-router'
 export default defineComponent({
   name: 'NaviagationBar',
   methods: {
-    checkAppearance () {
-      this.isDarkMode ? this.darkMode() : this.lightMode()
-    },
-    lightMode () {
-      document.getElementById('bar-home-button').style.color = 'var(--light-color)'
-      document.getElementById('bar-about-button').style.color = 'var(--light-color)'
-      document.getElementById('bar-creations-button').style.color = 'var(--light-color)'
-      document.getElementById('bar-contact-button').style.color = 'var(--light-color)'
-    },
-    darkMode () {
-      document.getElementById('bar-home-button').style.color = 'var(--dark-color)'
-      document.getElementById('bar-about-button').style.color = 'var(--dark-color)'
-      document.getElementById('bar-creations-button').style.color = 'var(--dark-color)'
-      document.getElementById('bar-contact-button').style.color = 'var(--dark-color)'
-    },
-    updateNavBar () { // set all to transparent, then set current button
-      var highlighted = this.currentButton 
-      document.getElementById('bar-home-button').style.border = 'transparent'
-      document.getElementById('bar-about-button').style.border = 'transparent'
-      document.getElementById('bar-creations-button').style.border = 'transparent'
-      document.getElementById('bar-contact-button').style.border = 'transparent'
-      highlighted.style.border = '2px solid var(--indigo-color)'
-    },
     navigateHome () {
       this.$router.push('/')
     },
@@ -59,31 +40,11 @@ export default defineComponent({
     }
   },
   computed: {
-    isDarkMode () {
-      return this.$store.getters.isDarkModeOn
-    },
-    currentButton () { // return currently highlighted button
-      if (this.route.path === '/') {
-        return document.getElementById('bar-home-button')
-      } else if (this.route.path === '/about') {
-        return document.getElementById('bar-about-button')
-      } else if (this.route.path === '/creations') {
-        return document.getElementById('bar-creations-button')
-      } else if (this.route.path === '/contact') {
-        return document.getElementById('bar-contact-button')
-      } else {
-        return document.getElementById('bar-home-button')
-      }
+    // unknown routes fall back to highlighting Home, as before
+    activePath () {
+      const known = ['/', '/about', '/creations', '/contact']
+      return known.includes(this.route.path) ? this.route.path : '/'
     }
-  },
-  watch: {
-    isDarkMode (newVal) {
-      newVal ? this.darkMode() : this.lightMode()
-    }
-  },
-  mounted () {
-    this.checkAppearance()
-    this.updateNavBar()
   },
   setup () {
     const route = useRoute()
@@ -97,32 +58,43 @@ export default defineComponent({
 
 <style scoped lang="scss">
 #nav-bar {
-  border-radius: 50px;
+  border-radius: var(--radius-pill);
   display: flex;
   height: 100%;
   width: 0vw;
   justify-content: center;
   align-items: center;
-  box-sizing: border-box;
 }
 .nav-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: transparent;
+  /* the border is always 2px so highlighting the active tab doesn't reflow the bar */
+  border: 2px solid transparent;
+  color: var(--bar-text);
   height: 50%;
-  margin: 1vw;
-  padding: 1vw;
-  box-sizing: border-box;
+  margin: 0.4vw;
+  padding: 0 1.4vw;
+  white-space: nowrap;
   background-color: transparent;
   cursor: pointer;
-  border-radius: 40px;
-  transition: color 0.3s ease, background-color 0.3s ease;
-  font-size: 2vh;
-  font-weight: 700;
+  border-radius: var(--radius-pill);
+  transition: color var(--dur-med) ease,
+              background-color var(--dur-med) ease,
+              border-color var(--dur-med) ease;
+  font-size: clamp(0.8rem, 2vh, 1.05rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
   font-family: 'Niramit', sans-serif;
 }
+/* the bar is inverted against the page, so its accent rung is too.
+   the border ring belongs to the active tab alone — hover never
+   touches it, so pointing at a tab can't be mistaken for being on it */
+.nav-button.active {
+  border-color: var(--bar-accent);
+}
 .nav-button:hover {
-  background-color: #3a419877;  //indigo color but transparent
+  background-color: var(--bar-accent-soft);
+  color: var(--bar-accent);
 }
 </style>

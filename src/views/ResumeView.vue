@@ -1,6 +1,11 @@
 <template>
-  <div>
-    <iframe src="https://1drv.ms/w/c/4d1885aa6fad65aa/IQTU8a0EucbURKlWM0CNlJibAfL-NHI8lnmzYYAUx9rnWnM" class="i-frame"></iframe>
+  <div class="resume-wrapper">
+    <!-- Drive's /preview endpoint is the embeddable form of the /view share link -->
+    <iframe
+      src="https://drive.google.com/file/d/1szUZxqeNLPvSKFsGfrmvasyu4-8L13hO/preview"
+      class="i-frame"
+      title="Sam Brothers — Resume"
+      allow="autoplay"></iframe>
   </div>
 </template>
 
@@ -11,7 +16,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.resume-wrapper {
+    background-color: var(--bg);
+}
+
 .i-frame {
+    display: block;
     width: 100%;
     height: 100vh;
     border: none;

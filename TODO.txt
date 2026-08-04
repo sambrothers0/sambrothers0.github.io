@@ -1,8 +1,0 @@
-TODO:
-
-dynamically pull and show projects from git in creations page
-
-add docs, specifically for any automated processes
-
-logo
--animation (low priority)

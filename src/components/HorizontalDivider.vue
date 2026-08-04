@@ -41,15 +41,23 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .horizontal-divider{
-  width: 99vw;
+  width: 100%;
   display: flex;
   justify-content: center;
 }
 .divider-body{
   width: 0%;
-  height: 5px;
-  transition: width 1s;
-  background-color: #3a4198;
+  height: 3px;
+  border-radius: var(--radius-pill);
+  transition: width 1s var(--ease-out);
+  /* fades out at both ends so the rule doesn't stop abruptly */
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--accent) 15%,
+    var(--accent) 85%,
+    transparent 100%
+  );
 }
 .divider-body.scrolled-over{
   width: 85%;

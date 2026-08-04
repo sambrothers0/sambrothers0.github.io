@@ -8,7 +8,8 @@
     <NavigationBar class="navigation-bar"/>
     <div id="appearance-button-container">
         <button @click="toggleDarkMode" id="appearance-button">
-            <img src="/img/dark_button.png" id="appearance-button-image"/>
+            <img :src="isDarkMode ? '/img/dark_button.png' : '/img/light_button.png'"
+                 id="appearance-button-image" alt="Toggle theme"/>
         </button>
     </div>
 </div>
@@ -30,42 +31,6 @@ export default defineComponent({
   methods: {
     toggleDarkMode () {
       this.$store.dispatch('toggleDarkMode')
-    },
-    checkAppearance () {
-      this.isDarkMode ? this.lightMode() : this.darkMode()
-    },
-    darkMode () {
-      var coverBanner = document.getElementById('cover-banner')
-      this.expanded ? coverBanner.style.backgroundColor = 'var(--dark-color)' : coverBanner.style.backgroundColor = 'transparent'
-
-      var homeButton = document.getElementById('home-button')
-      homeButton.style.border = '3px solid var(--light-color)'
-
-      var navigationBar = document.querySelector('.navigation-bar')
-      navigationBar.style.backgroundColor = '#1b1b1bcc'
-
-      var appearanceButton = document.getElementById('appearance-button')
-      appearanceButton.style.border = '3px solid var(--light-color)'
-
-      var appearanceButtonImage = document.getElementById('appearance-button-image')
-      appearanceButtonImage.src = '/img/light_button.png'
-    },
-    lightMode () {
-      var coverBanner = document.getElementById('cover-banner')
-      coverBanner.style.backgroundColor = 'var(--light-color)'
-      this.expanded ? coverBanner.style.backgroundColor = 'var(--light-color)' : coverBanner.style.backgroundColor = 'transparent'
-
-      var homeButton = document.getElementById('home-button')
-      homeButton.style.border = '3px solid var(--dark-color)'
-
-      var navigationBar = document.querySelector('.navigation-bar')
-      navigationBar.style.backgroundColor = '#bebebecc'
-
-      var appearanceButton = document.getElementById('appearance-button')
-      appearanceButton.style.border = '3px solid var(--dark-color)'
-
-      var appearanceButtonImage = document.getElementById('appearance-button-image')
-      appearanceButtonImage.src = '/img/dark_button.png'
     },
     getAspectRatio () {
       return (window.innerWidth / window.innerHeight)
@@ -98,6 +63,7 @@ export default defineComponent({
       window.scrollY < 100 ? this.expand() : this.condense()
     },
     condense () {
+      // the banner drops its fill on scroll; the nav pill keeps a scrim of its own
       document.getElementById('cover-banner').style.backgroundColor = 'transparent'
 
       document.getElementById('home-button-container').style.marginTop = '40px'
@@ -112,16 +78,15 @@ export default defineComponent({
 
       var navigationBar = document.querySelector('.navigation-bar')
       navigationBar.style.width = '65vw'
-      navigationBar.style.boxShadow = '0px 0px 15px 10px rgba(27, 27, 27, 0.6)'
+      navigationBar.style.boxShadow = 'var(--shadow-lg)'
       navigationBar.style.marginTop = '40px'
-      navigationBar.style.backdropFilter = 'blur(6px)'
+      navigationBar.style.backdropFilter = 'blur(12px) saturate(140%)'
 
       this.expanded = false
     },
     expand () {
-      var coverBanner = document.getElementById('cover-banner')
-      coverBanner.style.backgroundColor = 'var(--light-color)'
-      this.isDarkMode ? coverBanner.style.backgroundColor = 'var(--light-color)' : coverBanner.style.backgroundColor = 'var(--dark-color)'
+      // clear the inline override so the banner falls back to --bar-bg
+      document.getElementById('cover-banner').style.backgroundColor = ''
 
       document.getElementById('home-button-container').style.paddingLeft = '2vw'
       document.getElementById('home-button-container').style.marginTop = '0px'
@@ -155,15 +120,11 @@ export default defineComponent({
     }
   },
   watch: {
-    isDarkMode (newVal) {
-      this.checkAppearance()
-    },
     isMobile (newVal) {
       this.handleResize()
     }
   },
   mounted () {
-    this.checkAppearance()
     this.handleScroll()
     this.handleResize()
     window.addEventListener('scroll', this.handleScroll)
@@ -185,6 +146,8 @@ export default defineComponent({
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+/* the toolbar inverts against the page on purpose — light bar over the
+   dark theme, dark bar over the light one */
 #cover-banner{
   display: flex;
   justify-content: center;
@@ -193,6 +156,7 @@ export default defineComponent({
   z-index: 10;
   width: 100vw;
   height: 11vh;
+  background-color: var(--bar-bg);
   transition: background-color 0.5s ease;
 }
 
@@ -206,24 +170,30 @@ export default defineComponent({
   background-color: transparent;
   height: 9vh;
   width: 9vh;
-  border: 3px solid var(--dark-color);
+  padding: 0;
+  border: none;
   border-radius: 50%;
   cursor: pointer;
-  transition: border-color 0.5s ease, transform 0.1s, background-color 0.3s;
-
+  overflow: hidden;
+  transition: transform var(--dur-fast) var(--ease-out);
 }
 #home-button:active {
   transform: scale(0.92);
 }
 #home-button:hover {
-  background-color: #3a419877
+  transform: scale(1.06);
 }
 #home-button-image{
   width: 100%;
+  display: block;
 }
 
 .navigation-bar{
-  transition: all 0.5s
+  background-color: var(--bar-scrim);
+  transition: width var(--dur-slow) var(--ease-out),
+              margin var(--dur-slow) var(--ease-out),
+              background-color var(--dur-slow) ease,
+              box-shadow var(--dur-slow) ease;
 }
 
 #appearance-button-container{
@@ -236,19 +206,21 @@ export default defineComponent({
   background-color: transparent;
   width: 5.5vh;
   height: 5.5vh;
-  border: 3px solid var(--dark-color);
+  padding: 0;
+  border: none;
   border-radius: 50%;
   cursor: pointer;
-  transition: border-color 0.5s ease, transform 0.1s, background-color 0.3s;
-
+  overflow: hidden;
+  transition: transform var(--dur-fast) var(--ease-out);
 }
 #appearance-button:active {
   transform: scale(0.92);
 }
 #appearance-button:hover {
-  background-color: #3a419877
+  transform: scale(1.08);
 }
 #appearance-button-image {
   width: 100%;
+  display: block;
 }
 </style>

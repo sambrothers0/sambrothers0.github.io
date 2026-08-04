@@ -4,8 +4,8 @@
   <div class="about" id="master">
     <section class="hero"> 
       <div id='title'>
-        <h1 style="font-size: 6vw; font-weight: 400; color: #bebebe">Who is Sam Brothers?</h1>
-        <img style="width: 30vw; transform: rotate(180deg)" src="/img/gold_divider_bar.png" >
+        <h1 class="hero-heading">Who is Sam Brothers?</h1>
+        <span class="rule rule--reverse hero-rule" aria-hidden="true"></span>
       </div>
     </section>
     <section class="content"> 
@@ -62,43 +62,7 @@ export default {
       isLowerVisible: false
     }
   },
-  methods: {
-    checkAppearance () {
-      this.isDarkMode ? this.darkMode() : this.lightMode()
-    },
-    lightMode () {
-      const master = document.getElementById('master')
-      master.style.backgroundColor = 'var(--light-color)'
-
-      const title = document.getElementById('title')
-      title.style.color = 'var(--dark-color)'
-
-      const content = document.querySelector('.content')
-      content.style.color = 'var(--dark-color)'
-    },
-    darkMode () {
-      const master = document.getElementById('master')
-      master.style.backgroundColor = 'var(--dark-color)'
-      
-      const title = document.getElementById('title')
-      title.style.color = 'var(--light-color)'
-
-      const content = document.querySelector('.content')
-      content.style.color = 'var(--light-color)'
-    }
-  },
-  computed: {
-    isDarkMode () {
-      return this.$store.getters.isDarkModeOn
-    }
-  },
-  watch: {
-    isDarkMode (newVal) {
-      this.checkAppearance()
-    }
-  },
   mounted () {
-    this.checkAppearance()
     window.scrollTo(0, 0)
   },
   beforeRouteEnter (to, from, next) {
@@ -111,13 +75,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.about { 
-  width: 100%; 
+.about {
+  width: 100%;
   height: 100%;
   font-family: 'Outfit', sans-serif;
-  color: var(--dark-color);
-  transition: all 0.5s ease;
-} 
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color var(--dur-slow) ease, color var(--dur-slow) ease;
+}
 
 .hero { 
   height: 100vh;
@@ -166,40 +131,80 @@ export default {
 
 #title {
   font-size: 3em;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
   z-index: 2;
-} 
-  
-.content {
-  padding: 2em;
+}
+
+/* the hero sits on a photo, so it stays light in both themes */
+.hero-heading {
+  font-size: clamp(2rem, 6vw, 5rem);
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 0;
   color: var(--light-color);
+}
 
-  article { 
-    margin: 2em 0;
-    padding: 1em;
-    border-radius: 25px;
-    border: 3px solid var(--indigo-color);
+/* the hero sits on a photo in both themes, so its rule is pinned to the
+   light rung of indigo rather than following --accent */
+.hero-rule {
+  width: 30vw;
+  margin: 0.25em auto 0;
+  background:
+    linear-gradient(var(--indigo-300), var(--indigo-300)) 0 0 / 4px 100% no-repeat,
+    linear-gradient(var(--indigo-300), var(--indigo-300)) 9px 0 / 4px 100% no-repeat,
+    linear-gradient(to right, var(--indigo-300), var(--indigo-400)) 18px 0 / calc(100% - 18px) 100% no-repeat;
+}
 
-    h2 { 
-    font-size: 1.5em;
+.content {
+  padding: 4em 2em;
+  max-width: 1100px;
+  margin: 0 auto;
+  color: var(--text);
+
+  article {
+    margin: 1.75em 0;
+    padding: 1.75em 2em;
+    text-align: left;
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--accent);
+    transition: transform var(--dur-med) var(--ease-out),
+                box-shadow var(--dur-med) var(--ease-out),
+                background-color var(--dur-med) var(--ease-out);
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      background-color: var(--accent-softer);
+    }
+
+    /* section headings are accent, not highlight — the slogan below is
+       this page's single gold moment */
+    h2 {
+    font-size: 1.6em;
     font-family: 'Niramit', sans-serif;
-    margin-bottom: 0.5em;
-    line-height: 1.5em;
-    } 
-    p { 
-    font-size: 1.5em;
-    } 
-  } 
-  .slogan { 
+    font-weight: 600;
+    margin: 0 0 0.5em;
+    line-height: 1.2;
+    color: var(--accent-strong);
+    }
+    p {
+    font-size: 1.25em;
+    line-height: 1.65;
+    font-weight: 300;
+    max-width: 68ch;
+    margin: 0;
+    }
+  }
+  .slogan {
     text-align: center;
-    font-size: 3.5em;
+    font-size: clamp(1.75rem, 5vw, 3.25rem);
+    line-height: 1.15;
     font-weight: 700;
-    color: var(--gold-color);
+    letter-spacing: -0.02em;
+    color: var(--highlight);
     font-family: 'Niramit', sans-serif;
-    margin-top: 1em;
-
-
-  } 
+    margin-top: 1.5em;
+  }
 }
 
 </style>

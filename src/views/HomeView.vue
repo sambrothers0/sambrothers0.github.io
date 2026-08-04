@@ -20,15 +20,15 @@
   <div class="section" id="lower-section">
     <button @click="navigateAbout" class="panel" id="about-panel">
       <h1>About</h1>
-      <img class="info-icon lower-img">
+      <img class="lower-img" :src="icon('info_icon')" alt="">
     </button>
     <button @click="navigateCreations" class="panel" id="creations-panel">
       <h1>Creations</h1>
-      <img class="code-icon lower-img">
+      <img class="lower-img" :src="icon('code_icon')" alt="">
     </button>
     <button @click="navigateContact" class="panel" id="contact-panel">
       <h1>Contact</h1>
-      <img class="elipsis-bubble-icon lower-img">
+      <img class="lower-img" :src="icon('elipsis_bubble_icon')" alt="">
     </button>
   </div>
 
@@ -50,57 +50,9 @@ export default {
     }
   },
   methods: {
-    checkAppearance () {
-      if (this.isDarkMode) {
-        this.darkMode()
-      } else {
-        this.lightMode()
-      }
-    },
-    darkMode () {
-      var upperSection = document.getElementById('upper-section')
-      var middleSection = document.getElementById('middle-section')
-      
-      upperSection.style.backgroundColor = 'var(--dark-color)'
-      upperSection.style.color = 'var(--light-color)'
-      middleSection.style.backgroundColor = 'var(--dark-color)'
-      middleSection.style.color = 'var(--light-color)'
-      
-      var lowerSection = document.getElementById('lower-section')
-      var panels = document.getElementsByClassName('panel')
-      
-      lowerSection.style.backgroundColor = 'var(--dark-color)'
-      lowerSection.style.color = 'var(--light-color)'
-
-      for (let i = 0; i < panels.length; i++) {
-        panels[i].style.color = 'var(--light-color)'
-      }
-
-      document.querySelector('.info-icon').src = '/img/info_icon_light.png'
-      document.querySelector('.code-icon').src = '/img/code_icon_light.png'
-      document.querySelector('.elipsis-bubble-icon').src = '/img/elipsis_bubble_icon_light.png'
-    },
-    lightMode () {
-      var upperSection = document.getElementById('upper-section')
-      var middleSection = document.getElementById('middle-section')
-
-      upperSection.style.backgroundColor = 'var(--light-color)'
-      upperSection.style.color = 'var(--dark-color)'
-      middleSection.style.backgroundColor = 'var(--light-color)'
-      middleSection.style.color = 'var(--dark-color)'
-      
-      var lowerSection = document.getElementById('lower-section')
-      lowerSection.style.backgroundColor = 'var(--light-color)'
-      lowerSection.style.color = 'var(--dark-color)'
-
-      var panels = document.getElementsByClassName('panel')
-
-      for (let i = 0; i < panels.length; i++) {
-        panels[i].style.color = 'var(--dark-color)'
-      }
-      document.querySelector('.info-icon').src = '/img/info_icon_dark.png'
-      document.querySelector('.code-icon').src = '/img/code_icon_dark.png'
-      document.querySelector('.elipsis-bubble-icon').src = '/img/elipsis_bubble_icon_dark.png'
+    // the icons are two-tone PNGs, so they're the one thing CSS tokens can't theme
+    icon (name) {
+      return `/img/${name}_${this.isDarkMode ? 'light' : 'dark'}.png`
     },
     navigateAbout() {
       this.$router.push('/about')
@@ -121,14 +73,6 @@ export default {
     isDarkMode () {
       return this.$store.getters.isDarkModeOn
     }
-  },
-  watch: {
-    isDarkMode (newVal) {
-      newVal ? this.darkMode() : this.lightMode()
-    }
-  },
-  mounted () {
-    this.checkAppearance()
   }
 }
 </script>
@@ -137,47 +81,60 @@ export default {
 <style scoped lang="scss">
 #upper-section{
   padding-top: 15vh;
-  width: 99vw;
-  transition: all 0.5s ease;
+  width: 100%;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color var(--dur-slow) ease, color var(--dur-slow) ease;
 }
 .upper-img{
   width: 30%;
+  max-width: 420px;
+  filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.35));
 }
 #upper-section picture{
   display: contents;
 }
 .name{
-  margin: 50px;
-  font-size: 8vw;
-  line-height: 4vw;
+  margin: 50px 0 0;
+  font-size: clamp(2.75rem, 8vw, 7rem);
+  line-height: 1.05;
+  font-weight: 600;
+  letter-spacing: -0.03em;
 }
+/* Home's one gold element: the role line under the name. Nothing else on
+   this page is gold. */
 .header{
-  margin: 0px;
+  margin: 0.35em 0 0;
   padding-bottom: 50px;
-  font-size: 4vw;
-  line-height: 12vw
+  font-size: clamp(1.25rem, 4vw, 3rem);
+  line-height: 1.2;
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--highlight);
 }
 #middle-section {
-  background-color: var(--dark-color);
-  transition: all 0.5s ease;
-  width: 99vw;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color var(--dur-slow) ease, color var(--dur-slow) ease;
+  width: 100%;
 }
 .text-section {
   font-family: 'Outfit', sans-serif;
-  line-height: 40px;
+  line-height: 1.6;
   width: 100%;
-  font-size: 25px;
+  font-size: clamp(1.05rem, 1.6vw, 1.5rem);
+  font-weight: 300;
 }
 p {
-  padding-left: 5%;
-  padding-right: 5%;
-  padding-top: 5%;
-  padding-bottom: 5%;
+  max-width: 62ch;
+  margin: 0 auto;
+  padding: 4rem 6vw;
 }
 .lower-img{
   height: 50px;
   position: absolute;
-  transition: all 0.3s ease;
+  transition: transform var(--dur-med) var(--ease-out), opacity var(--dur-med) var(--ease-out);
   opacity: 0;
   margin-bottom: -150px;
 
@@ -186,35 +143,54 @@ p {
 #lower-section{
   display: flex;
   justify-content: center;
-  height: 50vh;
-  width: 99vw;
+  width: 100%;
   padding-top: 10vh;
-  background-color: var(--dark-color);
-  transition: background-color 0.5s ease;
+  padding-bottom: 10vh;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color var(--dur-slow) ease, color var(--dur-slow) ease;
 }
+/* the page's primary calls to action, so they're indigo, not gold */
 .panel{
   display: flex;
   width: 28%;
   height: 40vh;
-  border: 5px solid var(--gold-color);
+  border: 2px solid var(--accent);
   margin: 2vw;
   justify-content: center;
   align-items: center;
   background-color: transparent;
   cursor: pointer;
-  border-radius: 5vh;
-  transition: all 0.3s ease;
-  color: var(--light-color);
-  font-size: 1.2vh;
+  border-radius: var(--radius-xl);
+  transition: transform var(--dur-med) var(--ease-out),
+              box-shadow var(--dur-med) var(--ease-out),
+              background-color var(--dur-med) var(--ease-out),
+              border-color var(--dur-med) var(--ease-out);
+  color: var(--text);
   font-family: 'Niramit', sans-serif;
 }
+.panel h1{
+  font-size: clamp(1.35rem, 2.2vw, 2.1rem);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  margin: 0;
+  transition: transform var(--dur-med) var(--ease-out);
+}
+/* lift + glow instead of resizing the label, which used to nudge the layout */
 .panel:hover{
-  transform: translateY(-5px);
-  box-shadow: 0px 0px 20px 8px rgba(0, 0, 0, 0.1);
-  font-size: 1.8vh
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  background-color: var(--accent-soft);
+  border-color: var(--accent-strong);
+}
+.panel:hover h1{
+  transform: translateY(-10px);
 }
 .panel:hover img{
   transform: translateY(-15px);
   opacity: 1;
+}
+.panel:active{
+  transform: translateY(-2px);
 }
 </style>

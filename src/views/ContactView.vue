@@ -3,10 +3,11 @@
   <SideBar/>
   <div class="contact" id="master">
     <div class='title'>
-      <h1 style="font-size: 8vw; font-weight: 100; margin-bottom: 0px;">Contact</h1>
-      <img style="width: 30vw; margin-left: 10vw" src="/img/gold_divider_bar.png" >
+      <h1 class="title-heading">Contact</h1>
+      <span class="rule title-rule" aria-hidden="true"></span>
     </div>
-    <img class="paper-airplane-img">
+    <img class="paper-airplane-img"
+      :src="isDarkMode ? '/img/paper_airplane_light.png' : '/img/paper_airplane_dark.png'" alt="">
     <div class="link-wrapper">
       <div class="email-container" id="email">
         <button class="email-button" @click="handleClickEmail" @mouseenter="handleMouseEnterEmail" @mouseleave="handleMouseLeaveEmail">
@@ -56,24 +57,12 @@ export default {
       email: 'samueljbrothers@gmail.com',
       phone: '+1 (919) 407-9965',
       resume: '/resume',
+      resumeUrl: 'https://drive.google.com/file/d/1szUZxqeNLPvSKFsGfrmvasyu4-8L13hO/view?usp=drive_link',
       github: 'https://github.com/sambrothers0',
       linkedin: 'https://www.linkedin.com/in/samjbrothers/'
     }
   },
   methods: {
-    checkAppearance () {
-      this.isDarkMode ? this.darkMode() : this.lightMode()
-    },
-    lightMode () {
-      document.getElementById('master').style.backgroundColor = 'var(--light-color)'
-      document.querySelector('.title').style.color = 'var(--dark-color)'
-      document.querySelector('.paper-airplane-img').src = '/img/paper_airplane_dark.png'
-    },
-    darkMode () {
-      document.getElementById('master').style.backgroundColor = 'var(--dark-color)'
-      document.querySelector('.title').style.color = 'var(--light-color)'
-      document.querySelector('.paper-airplane-img').src = '/img/paper_airplane_light.png'
-    },
     updateMousePosition (event) {
       this.mouseX = event.clientX
       this.mouseY = event.clientY
@@ -93,14 +82,14 @@ export default {
         button.innerHTML = ''
         var email = document.createElement('p')
         email.textContent = this.email
-        email.style.color = 'var(--light-color)'
+        email.style.color = 'var(--on-accent)'
         email.style.fontSize = '22px'
         email.style.fontFamily = 'Outfit, sans-serif'
         email.style.fontWeight = '500'
 
         var phone = document.createElement('p')
         phone.textContent = this.phone
-        phone.style.color = 'var(--light-color)'
+        phone.style.color = 'var(--on-accent)'
         phone.style.fontSize = '22px'
         phone.style.fontFamily = 'Outfit, sans-serif'
         phone.style.fontWeight = '500'
@@ -114,9 +103,10 @@ export default {
       var button = document.querySelector('.email-button')
       button.innerHTML = ''
 
+      // built outside the template, so scoped styles don't reach it — size it inline
       var img = document.createElement('img')
       img.src = '/img/mail_icon_light.png'
-      img.height = '70'
+      img.style.height = '70px'
       button.appendChild(img)
     },
     handleClickEmail () {
@@ -142,7 +132,7 @@ export default {
       document.querySelector('.vitae-text').textContent = 'V'
     },
     handleClickResume () {
-      window.open('https://1drv.ms/w/c/4d1885aa6fad65aa/IQTU8a0EucbURKlWM0CNlJibAfL-NHI8lnmzYYAUx9rnWnM', '_blank');
+      window.open(this.resumeUrl, '_blank')
     },
     handleMouseEnterGitHub () {
       setTimeout(() => {
@@ -198,13 +188,7 @@ export default {
       return this.$store.getters.isDarkModeOn
     }
   },
-  watch: {
-    isDarkMode (newVal) {
-      this.checkAppearance()
-    }
-  },
   mounted () {
-    this.checkAppearance()
     window.scrollTo(0, 0)
     window.addEventListener('mousemove', this.updateMousePosition)
   },
@@ -226,7 +210,9 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  transition: background-color 0.5s ease, color 0.5s ease;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color var(--dur-slow) ease, color var(--dur-slow) ease;
 }
 
 .title{
@@ -234,9 +220,25 @@ export default {
   flex-direction: column;
   justify-content: center;
   height: 20vh;
+  /* nudged down without pushing the link pills, which are centered against it */
+  position: relative;
+  top: 6vh;
   margin-top: 0vh;
   margin-left: 40%;
-  transition: all 0.5s ease
+}
+
+.title-heading{
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 200;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.title-rule{
+  width: 30vw;
+  margin-left: 10vw;
+  margin-top: 0.25em;
 }
 
 .paper-airplane-img{
@@ -258,6 +260,53 @@ export default {
   z-index: 1;
 }
 
+/* one shared look for all four link pills */
+.email-button,
+.resume-button,
+.github-button,
+.linkedin-button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100px;
+  padding: 0;
+  color: var(--on-accent);
+  background-color: var(--accent-fill);
+  border: 2px solid transparent;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: width var(--dur-slow) var(--ease-out),
+              box-shadow var(--dur-med) var(--ease-out),
+              background-color var(--dur-med) var(--ease-out),
+              border-color var(--dur-med) var(--ease-out);
+}
+
+.email-button:hover,
+.resume-button:hover,
+.github-button:hover,
+.linkedin-button:hover{
+  background-color: var(--accent-fill-hover);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--accent-strong);
+}
+
+/* the letter pairs that expand into full words on hover */
+.curriculum-text,
+.vitae-text,
+.git-text,
+.hub-text,
+.linked-text,
+.in-text{
+  margin: 0;
+  font-size: clamp(1.5rem, 2.6vw, 2.35rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .email-container{
   display: flex;
   justify-content: right;
@@ -265,24 +314,18 @@ export default {
   width: 300px;
 }
 
+/* the email pill stacks its address over its phone number, so it lays out vertically */
 .email-button{
-  height: 100%;
-  width: 100px;
-  background-color: var(--indigo-color);
-  border: transparent;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: width 0.5s
+  flex-direction: column;
 }
 
 .email-button:hover{
   width: 100%;
-  transition: width 0.5s
 }
 
 .email-img{
   height: 70px;
-  transition: opacity 0.3s
+  transition: opacity var(--dur-med) ease;
 }
 
 .resume-container{
@@ -292,19 +335,6 @@ export default {
   width: 385px;
 }
 
-.resume-button{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100px;
-  background-color: var(--indigo-color);
-  border: transparent;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: width 0.5s
-}
-
 .resume-button:hover{
   width: 100%
 }
@@ -312,21 +342,20 @@ export default {
 .curriculum-text{
   text-align: left;
   width: 27%;
-  font-size: 40px;
-  transition: width 0.5s
+  transition: width var(--dur-slow) var(--ease-out);
 }
 
 .vitae-text{
   text-align: left;
   width: 35%;
-  font-size: 40px;
-  transition: width 0.5s
+  transition: width var(--dur-slow) var(--ease-out),
+              margin-left var(--dur-slow) var(--ease-out);
 }
 
 .resume-img{
   width: 0px;
   margin-right: 10px;
-  transition: width 0.5s
+  transition: width var(--dur-slow) var(--ease-out);
 }
 
 .resume-button:hover .curriculum-text{
@@ -335,6 +364,7 @@ export default {
 
 .resume-button:hover .vitae-text{
   width: 22%;
+  margin-left: -14px;
 }
 
 .resume-button:hover .resume-img{
@@ -348,19 +378,6 @@ export default {
   width: 200px;
 }
 
-.github-button{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100px;
-  background-color: var(--indigo-color);
-  border: transparent;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: width 0.5s
-}
-
 .github-button:hover{
   width: 100%
 }
@@ -368,21 +385,19 @@ export default {
 .git-text{
   text-align: left;
   width: 30%;
-  font-size: 40px;
-  transition: width 0.5s
+  transition: width var(--dur-slow) var(--ease-out);
 }
 
 .hub-text{
   text-align: left;
   width: 35%;
-  font-size: 40px;
-  transition: width 0.5s
+  transition: width var(--dur-slow) var(--ease-out);
 }
 
 .github-img{
   width: 0px;
   margin-right: 10px;
-  transition: width 0.5s
+  transition: width var(--dur-slow) var(--ease-out);
 }
 
 .github-button:hover .git-text{
@@ -404,19 +419,6 @@ export default {
   width: 235px;
 }
 
-.linkedin-button{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100px;
-  background-color: var(--indigo-color);
-  border: transparent;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: width 0.5s
-}
-
 .linkedin-button:hover{
   width: 100%
 }
@@ -424,21 +426,19 @@ export default {
 .linked-text{
   text-align: left;
   width: 25%;
-  font-size: 40px;
-  transition: width 0.5s
+  transition: width var(--dur-slow) var(--ease-out);
 }
 
 .in-text{
   text-align: left;
   width: 22%;
-  font-size: 40px;
-  transition: width 0.5s
+  transition: width var(--dur-slow) var(--ease-out);
 }
 
 .linkedin-img{
   width: 0px;
   margin-right: 10px;
-  transition: width 0.5s
+  transition: width var(--dur-slow) var(--ease-out);
 }
 
 .linkedin-button:hover .linked-text{
