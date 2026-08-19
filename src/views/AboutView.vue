@@ -1,8 +1,21 @@
 <template>
   <UpperToolbar/>
-  <SideBar/>
   <div class="about" id="master">
-    <section class="hero"> 
+    <section class="hero">
+      <!-- The photo used to be a CSS background, which gives no load event to
+           hang a placeholder off. As an <img> it behaves like the project
+           thumbnails: the shimmer holds the viewport, the photo cross-fades in
+           on top when it decodes. object-fit/position mirror the old
+           background-size: cover / background-position: center exactly. -->
+      <div class="image-skeleton hero-skeleton" :class="{ 'hero-skeleton--gone': heroLoaded }"
+        aria-hidden="true"></div>
+      <picture v-if="!heroFailed">
+        <source srcset="/img/wren_building.webp" type="image/webp">
+        <img ref="hero" class="hero-image" :class="{ 'hero-image--ready': heroLoaded }"
+          src="/img/wren_building.png" alt="" aria-hidden="true"
+          loading="eager" fetchpriority="high" decoding="async"
+          @load="heroLoaded = true" @error="onHeroError">
+      </picture>
       <div id='title'>
         <h1 class="hero-heading">Who is Sam Brothers?</h1>
         <span class="rule rule--reverse hero-rule" aria-hidden="true"></span>
@@ -12,12 +25,12 @@
       <article> 
         <h2 class="header">Quality</h2> 
         <p>
-          If there's one thing that bugs me, it's sloppy
-          programming. That's why my code is future-proof,
+          If there's one thing that bugs me, it's bugs.
+          That's why my code is future-proof,
           modular, and adaptable. 
           Working with me, we'll spend less time
-          rewriting clunky code and more time
-          pushing awesome features.
+          redoing old work and more time
+          shipping awesome features.
         </p> 
       </article> 
       <article> 
@@ -26,21 +39,20 @@
           Software development is one of the fastest changing industries, which is
           why it requires a neuroplastic brain to excel. I'm constantly learning and
           improving as an engineer, and this is something that won't change.
-          My rigorous coursework at William & Mary and industry experience have
-          exposed me to numerous projects, languages, frameworks, libraries, and modules -
-          all of which I leverage effectively to
-          create something that works for you.
+          My professional experience has
+          exposed me to numerous projects, languages, frameworks, libraries, and tools -
+          all of which I leverage to
+          create something that actually works for the user.
         </p> 
       </article> 
       <article> 
-        <h2 class="header">Passion</h2> 
+        <h2 class="header">Intention</h2> 
         <p>
           I love what I do so much that I would do it for free if I could.
           I strive to see tasks through the eyes of my collaborators and their users, 
-          because I have a profound passion for discovering solutions that work for people.
+          because I have a profound passion for discovering solutions that help people.
         </p> 
       </article> 
-      <!-- remove or rework? -->
       <div class="slogan"> Let your problem be the next one I solve </div> 
     </section>
   </div>
@@ -48,27 +60,33 @@
 
 <script>
 import UpperToolbar from '@/components/UpperToolbar.vue'
-import SideBar from '@/components/SideBar.vue'
 
 export default {
   name: 'AboutView',
   components: {
-    UpperToolbar,
-    SideBar
+    UpperToolbar
   },
   data () {
     return {
       isMiddleVisible: false,
-      isLowerVisible: false
+      isLowerVisible: false,
+      heroLoaded: false,
+      heroFailed: false
+    }
+  },
+  methods: {
+    /* A photo that never arrives should leave the plain page background, not a
+       broken-image glyph and not a shimmer that runs forever. */
+    onHeroError () {
+      this.heroFailed = true
+      this.heroLoaded = true
     }
   },
   mounted () {
-    window.scrollTo(0, 0)
-  },
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      window.scrollTo(0, 0)
-    })
+    /* A cached photo can finish before Vue binds @load, so the event never
+       fires and the shimmer sticks. Catch that case on mount. */
+    const hero = this.$refs.hero
+    if (hero?.complete && hero.naturalWidth > 0) this.heroLoaded = true
   }
 }
 
@@ -84,12 +102,8 @@ export default {
   transition: background-color var(--dur-slow) ease, color var(--dur-slow) ease;
 }
 
-.hero { 
+.hero {
   height: 100vh;
-  background-image: url('/img/wren_building.png');
-  background-image: image-set(url('/img/wren_building.webp') type('image/webp'), url('/img/wren_building.png') type('image/png'));
-  background-size: cover;
-  background-position: center;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -127,6 +141,32 @@ export default {
     90% { transform: translate(1%, -1%); }
     100% { transform: translate(0, 0); }
   }
+}
+
+.hero-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  transition: opacity var(--dur-med) var(--ease-out);
+}
+
+.hero-image--ready {
+  opacity: 1;
+}
+
+/* Unlike a card thumbnail, this shimmer covers the whole viewport, so popping
+   it out the instant the photo loads would flash the page background behind the
+   fade-in. It stays put and fades out under the photo instead. */
+.hero-skeleton {
+  transition: opacity var(--dur-med) var(--ease-out);
+}
+
+.hero-skeleton--gone {
+  opacity: 0;
 }
 
 #title {
@@ -171,14 +211,8 @@ export default {
                 box-shadow var(--dur-med) var(--ease-out),
                 background-color var(--dur-med) var(--ease-out);
 
-    &:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-md);
-      background-color: var(--accent-softer);
-    }
-
     /* section headings are accent, not highlight — the slogan below is
-       this page's single gold moment */
+       this page's single steel moment */
     h2 {
     font-size: 1.6em;
     font-family: 'Niramit', sans-serif;

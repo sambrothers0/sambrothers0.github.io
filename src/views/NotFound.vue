@@ -32,7 +32,7 @@
     padding: 20px;
 }
 
-/* this page's one gold element */
+/* this page's one steel element */
 .error-code {
     font-size: clamp(5rem, 18vw, 9rem);
     font-weight: 700;

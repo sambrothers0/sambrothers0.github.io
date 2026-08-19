@@ -8,9 +8,9 @@
             :class="{ active: activePath === '/about' }">
             About
         </button>
-        <button @click="navigateCreations" class="nav-button"
-            :class="{ active: activePath === '/creations' }">
-            Creations
+        <button @click="navigateProjects" class="nav-button"
+            :class="{ active: activePath === '/projects' }">
+            Projects
         </button>
         <button @click="navigateContact" class="nav-button"
             :class="{ active: activePath === '/contact' }">
@@ -32,17 +32,16 @@ export default defineComponent({
     navigateAbout () {
       this.$router.push('/about')
     },
-    navigateCreations () {
-      this.$router.push('/creations')
+    navigateProjects () {
+      this.$router.push('/projects')
     },
     navigateContact () {
       this.$router.push('/contact')
     }
   },
   computed: {
-    // unknown routes fall back to highlighting Home, as before
     activePath () {
-      const known = ['/', '/about', '/creations', '/contact']
+      const known = ['/', '/about', '/projects', '/contact']
       return known.includes(this.route.path) ? this.route.path : '/'
     }
   },
@@ -59,9 +58,13 @@ export default defineComponent({
 <style scoped lang="scss">
 #nav-bar {
   border-radius: var(--radius-pill);
+  /* the banner paints the pill's scrim + blur onto a ::before layer; the
+     stacking context keeps that layer behind the buttons without letting it
+     escape underneath the banner's own backing */
+  position: relative;
+  z-index: 0;
   display: flex;
   height: 100%;
-  width: 0vw;
   justify-content: center;
   align-items: center;
 }
@@ -69,7 +72,6 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
-  /* the border is always 2px so highlighting the active tab doesn't reflow the bar */
   border: 2px solid transparent;
   color: var(--bar-text);
   height: 50%;
@@ -79,8 +81,7 @@ export default defineComponent({
   background-color: transparent;
   cursor: pointer;
   border-radius: var(--radius-pill);
-  transition: color var(--dur-med) ease,
-              background-color var(--dur-med) ease,
+  transition: background-color var(--dur-med) ease,
               border-color var(--dur-med) ease;
   font-size: clamp(0.8rem, 2vh, 1.05rem);
   font-weight: 600;
@@ -95,6 +96,5 @@ export default defineComponent({
 }
 .nav-button:hover {
   background-color: var(--bar-accent-soft);
-  color: var(--bar-accent);
 }
 </style>

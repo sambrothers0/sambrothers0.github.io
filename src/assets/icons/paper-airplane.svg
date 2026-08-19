@@ -1,0 +1,24 @@
+<!-- Decorative flight path: one dashed trail that loops once, plus the origami
+     dart it ends at. Traced from the original two-tone PNG pair; the dashes are
+     a stroke-dasharray rather than baked geometry so they stay crisp at 50vw. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1155 228" fill="none" stroke="currentColor"
+  role="presentation" aria-hidden="true">
+  <path stroke-width="9" stroke-dasharray="19 15"
+    d="M3 228
+       C2 195 20 130 60 100
+       C88 76 135 36 200 26
+       C245 22 290 28 330 50
+       C370 78 430 105 505 148
+       C545 168 578 184 612 190
+       C665 188 706 152 713 80
+       C718 36 680 10 605 2
+       C560 4 534 30 539 92
+       C544 128 600 140 678 147
+       C740 148 800 145 865 143"/>
+  <g stroke-width="6" stroke-linejoin="round">
+    <path d="M872 17 1152 33 913 54Z"/>
+    <path d="M913 54 917 142 956 139"/>
+    <path d="M941 76 917 142"/>
+    <path d="M941 76 1152 33 963 163Z"/>
+  </g>
+</svg>

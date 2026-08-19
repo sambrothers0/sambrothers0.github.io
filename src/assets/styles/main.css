@@ -13,18 +13,23 @@
       states, borders that need to read as "you can touch this."
       Anything the user acts on is indigo.
 
-   3. GOLD — the highlight. Sparing by rule: at most ONE gold
-      element per page, and never on something interactive.
-      It marks the single line that matters most (the role line
-      on Home, the slogan on About, the 404). Gold is never a
-      hover state and never a border.
+   3. STEEL — the highlight, and indigo's lighter half. These two
+      are the logo: a steel S over an indigo B, one hue family at
+      two rungs. Because steel is indigo softened rather than
+      opposed to it, it cannot shout the way the old gold did —
+      it is the QUIET emphasis. Still at most ONE steel element
+      per page, still never interactive: it marks the line that
+      carries the page (the role line on Home, the slogan on
+      About, the 404) without competing with anything clickable.
 
    Components should use the SEMANTIC tokens (--bg, --text,
-   --accent, ...), not the raw ramps. The ramps exist so the
-   semantic tokens can pick a rung that is legible against the
-   current theme — indigo-600 is unreadable on the dark
-   background, indigo-400 is not, and that difference is the
-   whole reason this file has two theme blocks.
+   --accent, --highlight, ...), not the raw ramps. Note that
+   --accent-* semantic tokens are INDIGO; the steel ramp is
+   --steel-*. The ramps exist so the semantic tokens can pick a
+   rung that is legible against the current theme — indigo-600
+   is unreadable on the dark background, indigo-400 is not, and
+   that difference is the whole reason this file has two theme
+   blocks.
    ============================================================ */
 
 :root {
@@ -32,33 +37,61 @@
     --dark-color: #1b1b1b;
     --light-color: #bebebe;
     --indigo-color: #3a4198;
-    --gold-color: #b48a00;
+    --steel-color: #657cb1;
 
-    /* ── indigo ramp — accent ─────────────────────────────────── */
+    /* ── indigo ramp — primary accent ────────────────────────── */
     --indigo-900: #1e2145;
     --indigo-800: #262b60;
     --indigo-700: #2e3477;
-    --indigo-600: #3a4198; /* brand base */
+    --indigo-600: #3a4198; /* brand base — hsl(235, 45%, 41%) */
     --indigo-500: #4b54b8;
     --indigo-400: #6b74d4;
     --indigo-300: #9aa1e8;
 
-    /* ── gold ramp — highlight ────────────────────────────────── */
-    --gold-700: #5c4600; /* legible on the light background */
-    --gold-600: #7d6000;
-    --gold-500: #b48a00; /* brand base, legible on the dark background */
-    --gold-400: #d9a900;
+    /* ── steel ramp — highlight ───────────────────────────────────
+       Deliberately parallel to the indigo ramp, not a second hue:
+       13° of hue apart, a third less saturation, one step lighter.
+       The brand color lands at 500 rather than at the top of the
+       ramp — it is the light half of the logo, but the ramp has to
+       keep going lighter (400–200, for lifts on the dark theme) and
+       much darker (600–800, because 500 only manages 2.2:1 on the
+       light background and has to step down to 700 there).
+       Rung for rung the contrast mirrors indigo — steel-500 and
+       indigo-400 are both 4.2:1 on the dark background — which is
+       what keeps the pair looking like one system. */
+    --steel-800: #23304d;
+    --steel-700: #32436c; /* highlight on the light theme — 5.2:1 */
+    --steel-600: #465c91;
+    --steel-500: #657cb1; /* brand base — hsl(222, 33%, 55%), the logo */
+    --steel-400: #869ccb;
+    --steel-300: #a8bae1;
+    --steel-200: #cbd7f1;
 
     /* ── project panel tints ──────────────────────────────────────
+       Three tints, and all three come off the logo. The indigo B is
+       the first and the steel S is the last; the middle one is the
+       line between them carried one step further. Those two rungs
+       move 13° of hue toward cyan and shed some saturation on the
+       way, so the bridge keeps drifting the same direction (235° →
+       200°) rather than introducing a hue the mark does not
+       contain. It deliberately does NOT inherit steel's lightness
+       as well: continuing that half of the drift lands on a pale
+       slate that all but disappears against the light theme's
+       background, so the bridge holds indigo's weight instead.
+
+       The family is narrow by design, which costs some separation
+       between cards — indigo and steel are the closest pair, about
+       as far apart as ocean and indigo were before.
+
        A fixed, ordered rotation. Cards take their tint from their
-       position, so the page reads the same on every visit. Slots 4
-       and 5 are the Thrillsburg and Hearth product hues, folded
-       into the palette rather than left as one-offs. */
-    --tint-indigo: rgba(58, 65, 152, 0.2);
-    --tint-steel: rgba(42, 96, 140, 0.2);
-    --tint-plum: rgba(104, 56, 128, 0.2);
-    --tint-evergreen: rgba(16, 88, 64, 0.2);
-    --tint-ember: rgba(180, 69, 31, 0.2);
+       position, so the page reads the same on every visit.
+
+       Each is the hue at 20% strength already composited over --bg rather
+       than a translucent overlay: same rendered colour, but opaque, so
+       cards never double up their tint against whatever sits behind them. */
+    --tint-indigo: color-mix(in srgb, var(--indigo-color) 20%, var(--bg));
+    --tint-azure: color-mix(in srgb, #2f7fa6 20%, var(--bg));
+    --tint-steel: color-mix(in srgb, var(--steel-color) 20%, var(--bg));
 
     /* ── corner radii — one scale, used everywhere ────────────── */
     --radius-sm: 8px;
@@ -102,21 +135,25 @@
     --accent-soft: rgba(107, 116, 212, 0.16);
     --accent-softer: rgba(107, 116, 212, 0.08);
 
-    --highlight: var(--gold-500);
+    /* the logo color exactly — 4.2:1 on --bg, so display sizes only */
+    --highlight: var(--steel-500);
+    --highlight-strong: var(--steel-400);
 
     --bar-bg: var(--light-color);
     --bar-text: var(--dark-color);
     --bar-scrim: rgba(190, 190, 190, 0.8);
     --bar-accent: var(--indigo-600);
-    --bar-accent-soft: rgba(58, 65, 152, 0.14);
+    --bar-accent-soft: rgba(58, 65, 152, 0.3);
 }
 
 /* ── LIGHT THEME ──────────────────────────────────────────────
-   Indigo and gold both step darker here; their base rungs sit
+   Indigo and steel both step darker here; their base rungs sit
    too close to the light background to read. */
 :root[data-theme='light'] {
-    --bg: var(--light-color);
-    --bg-raised: #c9c9c9;
+    /* a touch lighter than --light-color, which stays the brand
+       anchor for text and the inverted toolbar */
+    --bg: #cbcbcb;
+    --bg-raised: #d6d6d6;
 
     --text: var(--dark-color);
     --text-strong: #101010;
@@ -133,13 +170,15 @@
     --accent-soft: rgba(58, 65, 152, 0.14);
     --accent-softer: rgba(58, 65, 152, 0.07);
 
-    --highlight: var(--gold-700);
+    /* steel-500 is only 2.2:1 here, so the highlight drops three rungs */
+    --highlight: var(--steel-700);
+    --highlight-strong: var(--steel-800);
 
     --bar-bg: var(--dark-color);
     --bar-text: var(--light-color);
     --bar-scrim: rgba(27, 27, 27, 0.8);
     --bar-accent: var(--indigo-400);
-    --bar-accent-soft: rgba(107, 116, 212, 0.18);
+    --bar-accent-soft: rgba(107, 116, 212, 0.34);
 }
 
 *,
@@ -182,7 +221,7 @@ img {
 
 /* ── brand rule ───────────────────────────────────────────────
    The two-dash-then-bar mark that sits under page titles. Used
-   to be three separate gold PNGs; now one accent-colored shape
+   to be three separate PNGs; now one accent-colored shape
    that follows the theme. */
 .rule {
     display: block;
@@ -197,6 +236,32 @@ img {
 /* dashes on the trailing end instead of the leading one */
 .rule--reverse {
     transform: scaleX(-1);
+}
+
+/* ── image loading skeleton ───────────────────────────────────
+   Stands in for a photo that has not decoded yet, so the space
+   it will occupy is never a blank hole. Deliberately quiet — it
+   reads as the surface underneath catching a highlight, not as a
+   second thing to look at while the copy is being read.
+
+   Fills its nearest positioned ancestor, so the consumer only
+   supplies position: relative and, if the photo is rounded, a
+   matching border-radius. */
+.image-skeleton {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: linear-gradient(100deg,
+            var(--accent-softer) 20%,
+            var(--accent-soft) 40%,
+            var(--accent-softer) 60%);
+    background-size: 250% 100%;
+    animation: image-shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes image-shimmer {
+    from { background-position: 150% 0; }
+    to { background-position: -50% 0; }
 }
 
 /* thin, on-brand scrollbar */

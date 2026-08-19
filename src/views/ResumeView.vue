@@ -2,9 +2,8 @@
   <div class="resume-wrapper">
     <!-- Drive's /preview endpoint is the embeddable form of the /view share link -->
     <iframe
-      src="https://drive.google.com/file/d/1szUZxqeNLPvSKFsGfrmvasyu4-8L13hO/preview"
+      src="https://drive.google.com/file/d/12IsJh-QRL67jswwiUNYH9NP-zZNbUcLD/preview"
       class="i-frame"
-      title="Sam Brothers — Resume"
       allow="autoplay"></iframe>
   </div>
 </template>

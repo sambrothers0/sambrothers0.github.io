@@ -1,11 +1,21 @@
 <template>
   <UpperToolbar/>
-  <SideBar/>
   <div class="section" id="upper-section">
-    <picture>
-      <source srcset="/img/cover_image.webp" type="image/webp"/>
-      <img src='/img/cover_image_1600.png' class="upper-img" alt="Sam Brothers" fetchpriority="high" decoding="async"/>
-    </picture>
+    <!-- The portrait is a separate request from the bundled markup, so the
+         frame reserves its square up front: the copy below never has to move
+         once the photo decodes, and the shimmer fills the reserved circle in
+         the meantime rather than leaving a hole. -->
+    <div class="upper-img-frame">
+      <div class="image-skeleton cover-skeleton"
+        :class="{ 'cover-skeleton--gone': coverLoaded }" aria-hidden="true"></div>
+      <picture v-if="!coverFailed">
+        <source srcset="/img/cover_image.webp" type="image/webp"/>
+        <img ref="cover" src='/img/cover_image_1600.png' class="upper-img"
+          :class="{ 'upper-img--ready': coverLoaded }"
+          alt="Sam Brothers" fetchpriority="high" decoding="async"
+          @load="coverLoaded = true" @error="onCoverError"/>
+      </picture>
+    </div>
     <h1 class="name">Sam Brothers</h1>
     <h1 class="header">Software Developer</h1>
   </div>
@@ -20,15 +30,15 @@
   <div class="section" id="lower-section">
     <button @click="navigateAbout" class="panel" id="about-panel">
       <h1>About</h1>
-      <img class="lower-img" :src="icon('info_icon')" alt="">
+      <InfoIcon class="lower-icon"/>
     </button>
-    <button @click="navigateCreations" class="panel" id="creations-panel">
-      <h1>Creations</h1>
-      <img class="lower-img" :src="icon('code_icon')" alt="">
+    <button @click="navigateProjects" class="panel" id="projects-panel">
+      <h1>Projects</h1>
+      <CodeIcon class="lower-icon"/>
     </button>
     <button @click="navigateContact" class="panel" id="contact-panel">
       <h1>Contact</h1>
-      <img class="lower-img" :src="icon('elipsis_bubble_icon')" alt="">
+      <ChatBubbleIcon class="lower-icon"/>
     </button>
   </div>
 
@@ -36,43 +46,52 @@
 
 <script>
 import UpperToolbar from '@/components/UpperToolbar.vue'
-import SideBar from '@/components/SideBar.vue'
 import HorizontalDivider from '@/components/HorizontalDivider.vue'
+import InfoIcon from '@/assets/icons/info.svg?component'
+import CodeIcon from '@/assets/icons/code.svg?component'
+import ChatBubbleIcon from '@/assets/icons/chat-bubble.svg?component'
 
 export default {
   name: 'HomeView',
   data () {
     return {
+      coverLoaded: false,
+      coverFailed: false,
       textItems: ["I'm Sam, a software developer based in Chapel Hill, NC.",
         "My skills range from front-end design to data engineering and analytics.",
         "My passion is uncovering elegant solutions to problems and creating engaging and functional user experiences.",
-        "Whenever I'm not coding, I'm likely pursuing my love of ultimate frisbee, good food, and travel"]
+        "Whenever I'm not coding, I'm likely pursuing my love of ultimate frisbee, good food, and travel."]
     }
   },
   methods: {
-    // the icons are two-tone PNGs, so they're the one thing CSS tokens can't theme
-    icon (name) {
-      return `/img/${name}_${this.isDarkMode ? 'light' : 'dark'}.png`
+    /* A photo that never arrives should leave the plain page background, not a
+       broken-image glyph and not a shimmer that runs forever. */
+    onCoverError() {
+      this.coverFailed = true
+      this.coverLoaded = true
     },
     navigateAbout() {
       this.$router.push('/about')
     },
-    navigateCreations() {
-      this.$router.push('/creations')
+    navigateProjects() {
+      this.$router.push('/projects')
     },
     navigateContact() {
       this.$router.push('/contact')
     }
   },
+  mounted () {
+    /* A cached photo can finish before Vue binds @load, so the event never
+       fires and the shimmer sticks. Catch that case on mount. */
+    const cover = this.$refs.cover
+    if (cover?.complete && cover.naturalWidth > 0) this.coverLoaded = true
+  },
   components: {
     UpperToolbar,
-    SideBar,
-    HorizontalDivider
-  },
-  computed: {
-    isDarkMode () {
-      return this.$store.getters.isDarkModeOn
-    }
+    HorizontalDivider,
+    InfoIcon,
+    CodeIcon,
+    ChatBubbleIcon
   }
 }
 </script>
@@ -86,13 +105,38 @@ export default {
   color: var(--text);
   transition: background-color var(--dur-slow) ease, color var(--dur-slow) ease;
 }
-.upper-img{
+/* Holds the portrait's square before the portrait exists, so the shimmer and
+   the photo occupy exactly the same box and nothing below them shifts. */
+.upper-img-frame{
+  position: relative;
   width: 30%;
   max-width: 420px;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+}
+.upper-img{
+  display: block;
+  width: 100%;
+  height: 100%;
   filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.35));
+  opacity: 0;
+  transition: opacity var(--dur-med) var(--ease-out);
+}
+.upper-img--ready{
+  opacity: 1;
 }
 #upper-section picture{
   display: contents;
+}
+/* The photo is a circular cut-out, so the shimmer standing in for it is round
+   too. It fades out under the photo rather than popping, which would flash the
+   page background through the cross-fade. */
+.cover-skeleton{
+  border-radius: 50%;
+  transition: opacity var(--dur-med) var(--ease-out);
+}
+.cover-skeleton--gone{
+  opacity: 0;
 }
 .name{
   margin: 50px 0 0;
@@ -101,8 +145,8 @@ export default {
   font-weight: 600;
   letter-spacing: -0.03em;
 }
-/* Home's one gold element: the role line under the name. Nothing else on
-   this page is gold. */
+/* Home's one accent element: the role line under the name. Nothing else on
+   this page is accent-colored. */
 .header{
   margin: 0.35em 0 0;
   padding-bottom: 50px;
@@ -131,13 +175,14 @@ p {
   margin: 0 auto;
   padding: 4rem 6vw;
 }
-.lower-img{
+/* inherits the panel's --text color through currentColor, so it themes itself */
+.lower-icon{
   height: 50px;
+  width: 50px;
   position: absolute;
   transition: transform var(--dur-med) var(--ease-out), opacity var(--dur-med) var(--ease-out);
   opacity: 0;
   margin-bottom: -150px;
-
 }
 
 #lower-section{
@@ -150,7 +195,7 @@ p {
   color: var(--text);
   transition: background-color var(--dur-slow) ease, color var(--dur-slow) ease;
 }
-/* the page's primary calls to action, so they're indigo, not gold */
+/* the page's primary calls to action, so they're indigo, not steel */
 .panel{
   display: flex;
   width: 28%;
@@ -186,7 +231,7 @@ p {
 .panel:hover h1{
   transform: translateY(-10px);
 }
-.panel:hover img{
+.panel:hover .lower-icon{
   transform: translateY(-15px);
   opacity: 1;
 }

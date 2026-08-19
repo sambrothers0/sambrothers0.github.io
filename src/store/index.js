@@ -8,7 +8,6 @@ export default createStore({
   mutations: {
     toggleDarkMode (state) {
       state.darkMode = !state.darkMode
-      console.log('Dark mode toggled:', state.darkMode)
     },
     mobileOn (state) {
       state.isMobile = true

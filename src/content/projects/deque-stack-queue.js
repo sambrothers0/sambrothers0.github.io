@@ -1,0 +1,10 @@
+import { SKILLS } from '@/content/skills'
+
+export default {
+  title: 'Deque Stack Queue',
+  date: '2022-11',
+  url: 'https://github.com/sambrothers0/Stack_Queue_Deque',
+  skills: [SKILLS.PYTHON],
+  thumbnail: '/img/projects/deque-stack-queue.png',
+  body: `I implemented a deque from scratch with both the functionality of a stack and queue. Thorough understanding of these data structures are fundamental to any programmer, so I coded a deque, which acts as a double ended stack and can be pushed or popped from either end. Using Python, I made two different programs with identical functionality, but different structures: one array-based, and one with a custom linked list I made from scratch. Upon completion, I learned about the benefits and drawbacks of each implementation.`
+}

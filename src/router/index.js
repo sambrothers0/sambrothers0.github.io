@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import AboutView from '@/views/AboutView.vue'
-import CreationsView from '@/views/CreationsView.vue'
+import ProjectsView from '@/views/ProjectsView.vue'
 import ContactView from '@/views/ContactView.vue'
 import ResumeView from '@/views/ResumeView.vue'
 import NotFound from '@/views/NotFound.vue'
@@ -22,10 +22,10 @@ const routes = [
 
   },
   {
-    path: '/creations',
-    name: 'creations',
-    component: CreationsView,
-    meta: { title: 'Creations | Sam Brothers | Software Developer' }
+    path: '/projects',
+    name: 'projects',
+    component: ProjectsView,
+    meta: { title: 'Projects | Sam Brothers | Software Developer' }
 
   },
   {
@@ -55,6 +55,9 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title || 'Default Title'
+  if (from.matched.length) {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+  }
   next()
 })
 
