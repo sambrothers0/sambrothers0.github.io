@@ -35,7 +35,7 @@ This is where I found myself after graduating, in need of a very scarce job very
 
 It turns out there's no perfect solution to the problem. Just like so many things in software. That nagging feeling I was experiencing is technically correct, it is less efficient to write my own code, and to some extent it will be the same quality output. But there's another benefit to actually writing your own code. Well, really two.
 
-On some level you have to practice writing code in order to know what's going on. Those who enjoyed the luxury of spending years of their career writing software themselves before AI fucked it all up, already have good practice doing this. I was not so fortunate. Even though much of software development is now prompting and understanding responses, some fundamental sense of best practice, code smell, and architectural intuition is necessary to be successful. Writing code is a great way to stretch the mental muscles that underpin these skills.
+On some level you have to practice writing code in order to know what's going on. Those who enjoyed years of their career doing manual programming before AI messed it all up, already have lots of this practice. I was not so fortunate. Even though much of software development is now prompting and understanding responses, some fundamental sense of best practice, code smell, and architectural intuition is necessary to be successful. Writing code is a great way to stretch the mental muscles that underpin these skills.
 
 More importantly, it's actually fun. It's kind of like exercise, I sometimes I had to force myself to exit Claude code, poke through the code editor, and sit with the discomfort of not knowing something. But once I did it, I found coding much more rewarding again.
 
