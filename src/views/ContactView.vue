@@ -15,7 +15,7 @@
           :target="link.external ? '_blank' : null"
           :rel="link.external ? 'noopener noreferrer' : null"
           :aria-label="link.copy ? 'Copy email address to clipboard' : null"
-          @click="link.copy ? copyEmail() : null">
+          @click="link.copy ? copyEmail($event) : null">
           <span class="pill-icon" aria-hidden="true"><component :is="link.icon"/></span>
           <span class="pill-label">
             <span class="pill-lines">
@@ -24,7 +24,10 @@
           </span>
         </component>
         <transition name="toast">
-          <span class="copied-toast" role="status" v-if="link.copy && copied">Copied!</span>
+          <span class="toast-anchor" :class="`toast-anchor--${toastPlacement}`"
+            :style="toastStyle" v-if="link.copy && copied">
+            <span class="copied-toast" role="status">Copied!</span>
+          </span>
         </transition>
       </div>
     </div>
@@ -41,6 +44,8 @@ import LinkedInIcon from '@/assets/icons/linkedin.svg?component'
 
 const EMAIL = 'samueljbrothers@gmail.com'
 const PHONE = '+1 (919) 407-9965'
+/* width the toast needs to the right of a pill before it drops below instead */
+const TOAST_SIDE_ROOM = 120
 
 export default {
   name: 'ContactView',
@@ -56,6 +61,8 @@ export default {
     return {
       copied: false,
       copyTimer: null,
+      toastPlacement: 'side',
+      toastStyle: null,
       links: [
         {
           id: 'email',
@@ -92,7 +99,9 @@ export default {
     clearTimeout(this.copyTimer)
   },
   methods: {
-    async copyEmail () {
+    async copyEmail (event) {
+      // read before awaiting — currentTarget is nulled once the handler returns
+      const pill = event.currentTarget
       try {
         if (navigator.clipboard && navigator.clipboard.writeText) {
           await navigator.clipboard.writeText(EMAIL)
@@ -103,7 +112,7 @@ export default {
         // clipboard API can reject on an insecure origin or a denied permission
         this.copyLegacy(EMAIL)
       }
-      this.flashCopied()
+      this.flashCopied(pill)
     },
     /* execCommand path for browsers without the async clipboard API */
     copyLegacy (text) {
@@ -117,7 +126,19 @@ export default {
       document.execCommand('copy')
       document.body.removeChild(field)
     },
-    flashCopied () {
+    /* The toast is fixed to the viewport rather than laid out in the page, so
+       showing it can never widen the document and shift the layout underneath.
+       It sits beside the pill when there is room and drops below it when the
+       narrow layout leaves none. */
+    flashCopied (pill) {
+      const box = pill.getBoundingClientRect()
+      if (window.innerWidth - box.right >= TOAST_SIDE_ROOM) {
+        this.toastPlacement = 'side'
+        this.toastStyle = { left: `${box.right + 14}px`, top: `${box.top + box.height / 2}px` }
+      } else {
+        this.toastPlacement = 'below'
+        this.toastStyle = { left: `${box.right}px`, top: `${box.bottom + 10}px` }
+      }
       clearTimeout(this.copyTimer)
       this.copied = true
       this.copyTimer = setTimeout(() => { this.copied = false }, 1400)
@@ -193,13 +214,26 @@ export default {
   width: 100%;
 }
 
-/* anchored to the email pill rather than the viewport — the confirmation
-   belongs next to the control that was clicked */
-.copied-toast{
-  position: absolute;
-  left: calc(100% + 14px);
-  top: 50%;
+/* placed against the pill that was clicked — the confirmation belongs next to
+   the control — but positioned off the viewport so it adds nothing to the
+   document's width; `left`/`top` come from the pill's rect at copy time */
+.toast-anchor{
+  position: fixed;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.toast-anchor--side .copied-toast{
   transform: translateY(-50%);
+}
+
+/* right edge flush with the pill's, sitting just under it */
+.toast-anchor--below .copied-toast{
+  transform: translateX(-100%);
+}
+
+.copied-toast{
+  display: inline-block;
   padding: 6px 16px;
   font-size: 1rem;
   font-weight: 500;
@@ -208,7 +242,6 @@ export default {
   background-color: transparent;
   border: 1px solid currentColor;
   border-radius: var(--radius-pill);
-  pointer-events: none;
 }
 
 .toast-enter-active{
@@ -222,7 +255,7 @@ export default {
 .toast-enter-from,
 .toast-leave-to{
   opacity: 0;
-  transform: translate(-8px, -50%);
+  transform: translateX(-8px);
 }
 
 .link-pill{
@@ -252,13 +285,18 @@ export default {
               border-color var(--dur-med) var(--ease-out);
 }
 
-.link-pill:hover,
-.link-pill:focus-visible{
-  width: 100%;
-  grid-template-columns: auto 1fr;
-  background-color: var(--accent-fill-hover);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--accent-strong);
+/* only a pointer that can hover gets the expanding label — on touch a tap is
+   the link itself, so the pill stays a circle instead of opening under the
+   finger */
+@media (hover: hover) and (pointer: fine){
+  .link-pill:hover,
+  .link-pill:focus-visible{
+    width: 100%;
+    grid-template-columns: auto 1fr;
+    background-color: var(--accent-fill-hover);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-strong);
+  }
 }
 
 .pill-icon{
@@ -288,10 +326,12 @@ export default {
   transition: opacity var(--dur-fast) ease;
 }
 
-.link-pill:hover .pill-lines,
-.link-pill:focus-visible .pill-lines{
-  opacity: 1;
-  transition: opacity var(--dur-med) ease var(--dur-fast);
+@media (hover: hover) and (pointer: fine){
+  .link-pill:hover .pill-lines,
+  .link-pill:focus-visible .pill-lines{
+    opacity: 1;
+    transition: opacity var(--dur-med) ease var(--dur-fast);
+  }
 }
 
 .pill-line{
@@ -305,5 +345,42 @@ export default {
 .link-pill--stacked .pill-line{
   font-size: clamp(1rem, 1.6vw, 1.375rem);
   line-height: 1.4;
+}
+
+/* the narrow layout has far less room to the right of the airplane, so the
+   pills shrink to keep their expanded labels on one line */
+@media (max-width: 700px){
+  /* collapsed size is height = width, so these keep the pill a circle:
+     icon = height - padding*2 - border*2 */
+  .link-slot{
+    height: 68px;
+  }
+
+  .link-pill{
+    width: 68px;
+    padding: 0 10px;
+  }
+
+  .pill-icon{
+    width: 44px;
+    height: 44px;
+  }
+
+  .pill-lines{
+    padding: 3px 0 3px 10px;
+  }
+
+  .pill-line{
+    font-size: clamp(0.875rem, 3.6vw, 1.25rem);
+  }
+
+  .link-pill--stacked .pill-line{
+    font-size: clamp(0.6875rem, 2.6vw, 0.875rem);
+  }
+
+  .copied-toast{
+    padding: 4px 10px;
+    font-size: 0.8125rem;
+  }
 }
 </style>
