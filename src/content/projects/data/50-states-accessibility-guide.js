@@ -1,4 +1,4 @@
-import { SKILLS } from '@/content/skills'
+import { SKILLS } from '@/content/projects/skills'
 
 export default {
   title: '50 States Accessibility Guide',
