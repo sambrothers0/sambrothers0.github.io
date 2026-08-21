@@ -67,6 +67,14 @@
     --steel-300: #a8bae1;
     --steel-200: #cbd7f1;
 
+    /* ── azure ─ the third tint's hue, given rungs ────────────
+       #2f7fa6 already sits in the panel tints as the bridge between indigo
+       and steel. The notes categories need it as *text*, not as a wash, so
+       it gets the same two-rung treatment the other ramps got: one rung that
+       clears 4.5:1 on the dark background, one that clears it on the light. */
+    --azure-700: #1b5470; /* 5.1:1 on the light background */
+    --azure-400: #5aa8cc; /* 6.5:1 on the dark background */
+
     /* ── project panel tints ──────────────────────────────────────
        Three tints, and all three come off the logo. The indigo B is
        the first and the steel S is the last; the middle one is the
@@ -144,6 +152,17 @@
     --bar-scrim: rgba(190, 190, 190, 0.8);
     --bar-accent: var(--indigo-600);
     --bar-accent-soft: rgba(58, 65, 152, 0.3);
+
+    /* one hue per notes category ─ the same three the panel tints use, at
+       rungs that are legible as small uppercase labels rather than as fills */
+    --cat-musings: var(--indigo-300);
+    --cat-art: var(--steel-400);
+    --cat-software: var(--azure-400);
+
+    /* what a category hue is legible as when it stops being a dot and
+       becomes a fill — all three rungs are light here, so the text on top
+       of them is the page's dark neutral rather than --on-accent */
+    --cat-on: var(--dark-color);
 }
 
 /* ── LIGHT THEME ──────────────────────────────────────────────
@@ -179,6 +198,13 @@
     --bar-scrim: rgba(27, 27, 27, 0.8);
     --bar-accent: var(--indigo-400);
     --bar-accent-soft: rgba(107, 116, 212, 0.34);
+
+    --cat-musings: var(--indigo-700);
+    --cat-art: var(--steel-700);
+    --cat-software: var(--azure-700);
+
+    /* the 700 rungs are dark fills, so this side matches --on-accent */
+    --cat-on: #eef0ff;
 }
 
 *,

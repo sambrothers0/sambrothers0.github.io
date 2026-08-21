@@ -1,49 +1,56 @@
 <template>
     <div id="nav-bar">
-        <button @click="navigateHome" class="nav-button"
-            :class="{ active: activePath === '/' }">
-            Home
-        </button>
-        <button @click="navigateAbout" class="nav-button"
-            :class="{ active: activePath === '/about' }">
-            About
-        </button>
-        <button @click="navigateProjects" class="nav-button"
-            :class="{ active: activePath === '/projects' }">
-            Projects
-        </button>
-        <button @click="navigateContact" class="nav-button"
-            :class="{ active: activePath === '/contact' }">
-            Contact
-        </button>
+        <!-- the tabs sit in their own row rather than directly in the pill:
+             the pill's width is animated, so it can't be measured, and the
+             condensed banner is sized around this row's natural width -->
+        <div id="nav-tabs" ref="tabs">
+            <button v-for="link in links" class="nav-button" :key="link.path"
+                :class="{ active: activePath === link.path }"
+                @click="navigate(link.path)">
+                {{ link.label }}
+            </button>
+        </div>
     </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
 import { useRoute } from 'vue-router'
+import { LINKS, TAB_LINKS, activeLinkPath } from '@/content/navigation'
 
 export default defineComponent({
   name: 'NaviagationBar',
+  emits: ['measure'],
   methods: {
-    navigateHome () {
-      this.$router.push('/')
-    },
-    navigateAbout () {
-      this.$router.push('/about')
-    },
-    navigateProjects () {
-      this.$router.push('/projects')
-    },
-    navigateContact () {
-      this.$router.push('/contact')
+    navigate (path) {
+      this.$router.push(path)
     }
   },
   computed: {
+    isMobile () {
+      return this.$store.getters.isMobileOn
+    },
+    /* the narrow layout hands Contact and Notes to the banner's hamburger, so
+       the row drops them rather than shrinking around them */
+    links () {
+      return this.isMobile ? TAB_LINKS : LINKS
+    },
     activePath () {
-      const known = ['/', '/about', '/projects', '/contact']
-      return known.includes(this.route.path) ? this.route.path : '/'
+      return activeLinkPath(this.route.path)
     }
+  },
+  /* The banner wraps its condensed pill around these tabs, and only the tabs
+     know how wide they end up: their padding is in vw, their type in vh, and
+     the row grows again when Niramit finishes loading. An observer catches
+     all three; a resize listener would miss the font. */
+  mounted () {
+    this.tabObserver = new ResizeObserver(() => {
+      this.$emit('measure', this.$refs.tabs.getBoundingClientRect().width)
+    })
+    this.tabObserver.observe(this.$refs.tabs)
+  },
+  unmounted () {
+    this.tabObserver.disconnect()
   },
   setup () {
     const route = useRoute()
@@ -67,6 +74,18 @@ export default defineComponent({
   height: 100%;
   justify-content: center;
   align-items: center;
+}
+/* height, not auto: the buttons size off it, and the banner must never
+   stretch or squeeze this row — it's the measurement the pill is built from.
+   the banner hands down where the row sits within that pill; a transform
+   rather than a margin, so sliding it can't disturb the width just measured */
+#nav-tabs {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  flex: none;
+  transform: translateX(var(--tabs-offset, 0px));
+  transition: transform var(--dur-slow) var(--ease-out);
 }
 .nav-button {
   display: flex;
@@ -96,5 +115,15 @@ export default defineComponent({
 }
 .nav-button:hover {
   background-color: var(--bar-accent-soft);
+}
+/* Three tabs, two icons, and a phone's width. The labels never wrap or
+   scroll — they step down instead, so the row still fits between the theme
+   toggle and the hamburger. */
+@media (max-width: 760px) {
+  .nav-button {
+    margin: 0.2vw;
+    padding: 0 1.6vw;
+    font-size: clamp(0.68rem, 1.6vh, 0.85rem);
+  }
 }
 </style>
