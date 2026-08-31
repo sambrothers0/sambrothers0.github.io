@@ -14,10 +14,21 @@ export { formatDate } from '@/utils/dates'
 
 const modules = import.meta.glob('./data/*.js', { eager: true })
 
-export const projects = Object.entries(modules)
+const newestFirst = Object.entries(modules)
   .map(([path, module]) => ({
     slug: path.match(/([^/]+)\.js$/)[1],
     ...module.default
   }))
   .filter(project => !project.hidden)
   .sort((a, b) => b.date.localeCompare(a.date))
+
+// Panels are laid out from a project's `layoutIndex` rather than its position
+// in the list above, which is newest-first and so renumbers everything below a
+// project the moment a newer one is published — flipping each card to the
+// other side of the page. Counting from the oldest project instead pins those
+// choices for good: a new project takes the next ordinal off the end and the
+// cards beneath it keep the side and tint they have always had.
+export const projects = newestFirst.map((project, index) => ({
+  ...project,
+  layoutIndex: newestFirst.length - 1 - index
+}))

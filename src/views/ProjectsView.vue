@@ -8,8 +8,8 @@
     <div class="panels-wrapper">
       <ProjectPanel v-for="(project, index) in projects"
         :project="project"
-        :tint="tintFor(index)"
-        :flipped="index % 2 === 1"
+        :tint="tintFor(project.layoutIndex)"
+        :flipped="project.layoutIndex % 2 === 1"
         :priority="index === 0"
         :key="project.slug"/>
     </div>
@@ -33,9 +33,11 @@ export default {
     ProjectPanel
   },
   methods: {
-    // rotating color tint for each project panel based on index
-    tintFor (index) {
-      return ['indigo', 'azure', 'steel'][index % 3]
+    // Rotating colour tint for each project panel. Keyed off the project's
+    // fixed layoutIndex, not its place in the list, so a card keeps its tint
+    // when newer projects appear above it.
+    tintFor (layoutIndex) {
+      return ['indigo', 'azure', 'steel'][layoutIndex % 3]
     }
   }
 }
