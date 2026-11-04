@@ -11,11 +11,18 @@
         aria-hidden="true"></div>
       <picture v-if="!heroFailed">
         <source srcset="/img/wren_building.webp" type="image/webp">
-        <img ref="hero" class="hero-image" :class="{ 'hero-image--ready': heroLoaded }"
+        <img ref="hero" class="hero-image"
+          :class="{ 'hero-image--ready': heroLoaded, 'hero-image--hidden': grainActive }"
           src="/img/wren_building.png" alt="" aria-hidden="true"
           loading="eager" fetchpriority="high" decoding="async"
           @load="heroLoaded = true" @error="onHeroError">
       </picture>
+      <!-- Animated film grain: the photo redrawn through a WebGL shader that
+           re-randomises the grain every frame. While it runs, the <img> is
+           hidden underneath; without WebGL, or with reduced motion, the plain
+           <img> shows instead. See utils/filmGrain.js. -->
+      <canvas ref="grain" class="hero-grain" :class="{ 'hero-grain--ready': grainActive }"
+        aria-hidden="true"></canvas>
       <div id='title'>
         <h1 class="hero-heading">Who is Sam Brothers?</h1>
         <span class="rule rule--reverse hero-rule" aria-hidden="true"></span>
@@ -60,6 +67,7 @@
 
 <script>
 import UpperToolbar from '@/components/UpperToolbar.vue'
+import { createFilmGrain } from '@/utils/filmGrain.js'
 
 export default {
   name: 'AboutView',
@@ -71,7 +79,13 @@ export default {
       isMiddleVisible: false,
       isLowerVisible: false,
       heroLoaded: false,
-      heroFailed: false
+      heroFailed: false,
+      grainActive: false
+    }
+  },
+  watch: {
+    heroLoaded (loaded) {
+      if (loaded) this.startGrain()
     }
   },
   methods: {
@@ -80,13 +94,45 @@ export default {
     onHeroError () {
       this.heroFailed = true
       this.heroLoaded = true
+    },
+    startGrain () {
+      const image = this.$refs.hero
+      const canvas = this.$refs.grain
+      if (this.grain || this.heroFailed || !image || !canvas) return
+      if (!image.complete || !image.naturalWidth) return
+      if (this.reducedMotion?.matches) return
+
+      this.grain = createFilmGrain({
+        canvas,
+        image,
+        intensity: 0.5, // Read Your Color's purple hero: intensity 50, shadow 0, speed 100
+        shadow: 0,
+        onContextLost: () => this.stopGrain()
+      })
+      this.grainActive = !!this.grain
+    },
+    stopGrain () {
+      this.grain?.destroy()
+      this.grain = null
+      this.grainActive = false
+    },
+    onReducedMotionChange (event) {
+      event.matches ? this.stopGrain() : this.startGrain()
     }
   },
   mounted () {
+    /* Animated grain is motion; honour the OS setting, live. */
+    this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    this.reducedMotion.addEventListener('change', this.onReducedMotionChange)
+
     /* A cached photo can finish before Vue binds @load, so the event never
        fires and the shimmer sticks. Catch that case on mount. */
     const hero = this.$refs.hero
     if (hero?.complete && hero.naturalWidth > 0) this.heroLoaded = true
+  },
+  beforeUnmount () {
+    this.reducedMotion?.removeEventListener('change', this.onReducedMotionChange)
+    this.stopGrain()
   }
 }
 
@@ -111,36 +157,6 @@ export default {
   font-size: 2em;
   position: relative;
   overflow: hidden;
-  
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('/img/noise.png');
-    background-image: image-set(url('/img/noise.webp') type('image/webp'), url('/img/noise.png') type('image/png')); // grain overlay
-    opacity: 0.35; // Adjust the intensity of the grain effect
-    pointer-events: none; // Make sure clicks go through to the main content
-    mix-blend-mode: multiply; // Try different blend modes: multiply, overlay, screen
-    z-index: 1;
-    animation: noise 0.1s steps(20) infinite; // Creates subtle animation
-  }
-
-  @keyframes noise {
-    0% { transform: translate(0, 0); }
-    10% { transform: translate(-1%, -1%); }
-    20% { transform: translate(1%, 1%); }
-    30% { transform: translate(-1%, 1%); }
-    40% { transform: translate(1%, -1%); }
-    50% { transform: translate(-1%, 0%); }
-    60% { transform: translate(1%, 0%); }
-    70% { transform: translate(0%, 1%); }
-    80% { transform: translate(0%, -1%); }
-    90% { transform: translate(1%, -1%); }
-    100% { transform: translate(0, 0); }
-  }
 }
 
 .hero-image {
@@ -155,6 +171,26 @@ export default {
 }
 
 .hero-image--ready {
+  opacity: 1;
+}
+
+/* the grain canvas draws the photo itself, so the <img> beneath steps aside */
+.hero-image--hidden {
+  visibility: hidden;
+}
+
+.hero-grain {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--dur-med) var(--ease-out);
+}
+
+.hero-grain--ready {
   opacity: 1;
 }
 
