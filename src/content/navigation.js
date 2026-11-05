@@ -21,7 +21,12 @@ export const OVERFLOW_LINKS = LINKS.filter(link => OVERFLOW_PATHS.includes(link.
 /* A note's own page is still the Notes tab, so a tab claims its subpaths too.
    Home is the fallback rather than a prefix match — every path starts with
    '/'. */
+/* Pages with no tab of their own, mapped to the tab they are reached from, so
+   the bar still shows where the reader came in. */
+const PARENT_PATHS = { '/resume': '/contact' }
+
 export function activeLinkPath (path) {
+  if (PARENT_PATHS[path]) return PARENT_PATHS[path]
   const match = LINKS.find(link => link.path !== '/' &&
     (path === link.path || path.startsWith(`${link.path}/`)))
   return match ? match.path : '/'

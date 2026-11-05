@@ -76,7 +76,7 @@ export default {
           icon: 'ResumeIcon',
           lines: ['Resume'],
           href: '/resume',
-          external: true
+          external: false
         },
         {
           id: 'github',
