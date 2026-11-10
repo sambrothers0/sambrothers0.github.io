@@ -154,7 +154,9 @@ export default defineComponent({
       this.isMenuOpen = false
     }
   },
-  created () {
+  // beforeMount, not created: both read the window, which the build-time
+  // prerender does not have
+  beforeMount () {
     this.handleResize()   // settles isMobile first, so the scroll check sees it
     this.handleScroll()   // don't assume we start at the top; reloads restore scroll
   },

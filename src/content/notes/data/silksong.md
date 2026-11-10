@@ -2,6 +2,7 @@
 title: Storytelling in Silksong
 categories: [musings, art]
 date: '2026-08'
+description: How playing Hollow Knight Silksong changed my outlook on games as a storytelling device. Spoilers for the whole game.
 draft: false
 ---
 

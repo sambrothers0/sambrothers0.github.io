@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "serve": "vite",
-    "build": "vite build",
+    "build": "vite build && vite build --ssr src/entry-server.js --outDir dist-ssr && node scripts/prerender.js",
     "preview": "vite preview"
   },
   "dependencies": {

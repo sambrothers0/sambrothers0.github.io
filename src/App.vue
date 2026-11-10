@@ -16,6 +16,8 @@ export default {
     isDarkMode: {
       immediate: true,
       handler (dark) {
+        // absent during the build-time prerender; the client sets it on mount
+        if (typeof document === 'undefined') return
         document.documentElement.dataset.theme = dark ? 'dark' : 'light'
       }
     }

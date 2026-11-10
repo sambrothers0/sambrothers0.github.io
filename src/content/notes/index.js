@@ -35,8 +35,11 @@
 //     url:        'https://…',       // where a .js note's row goes
 //     linkLabel:  'Listen on Spotify',// optional; names the link, in place of
 //                                    // the hostname the row falls back to
-//     body:       '…'                // plain text; markdown files use the
-//   }                                // body of the file instead
+//     body:       '…',               // plain text; markdown files use the
+//                                    // body of the file instead
+//     description: '…'               // optional, markdown only: the search
+//   }                                // and link-preview summary, for when
+//                                    // the first paragraph is a poor one
 //
 // The entries sit in their own subdirectory rather than beside this file, so
 // the globs below cannot pick up the loader or the category vocabulary.

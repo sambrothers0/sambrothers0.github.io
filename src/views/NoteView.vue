@@ -57,8 +57,9 @@ export default {
     }
   },
   /* The router's own title comes from the route meta, which cannot know which
-     note this is; set the real one once the component knows. */
-  created () {
+     note this is; set the real one once the component knows. Not in created:
+     the build-time prerender has no document (it writes the title itself). */
+  beforeMount () {
     document.title = `${this.note.title} | Sam Brothers | Software Developer`
   }
 }
